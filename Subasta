@@ -69,18 +69,7 @@ https://studio.firebase.google.com/lumers-web-81346186
 </script>
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "lumers-web-81346186.firebaseapp.com",
-    databaseURL: "https://lumers-web-81346186-default-rtdb.firebaseio.com",
-    projectId: "lumers-web-81346186",
-    storageBucket: "lumers-web-81346186.appspot.com",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
-  };
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></
 
   // Inicializar Firebase
   firebase.initializeApp(firebaseConfig);
