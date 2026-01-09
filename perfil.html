@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Lumers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mb-8 flex flex-col md:flex-row items-center gap-6">
+            <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg shadow-blue-200">
+                A
+            </div>
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-2xl font-bold text-slate-900">Anig Romero</h1>
+                <p class="text-slate-500 text-sm">Miembro desde Enero 2026</p>
+                <div class="flex items-center justify-center md:justify-start mt-2 gap-1 text-yellow-500">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    <span class="text-slate-400 text-xs ml-2">(12 reseñas)</span>
+                </div>
+            </div>
+            <div class="flex flex-col items-center p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="text-xs font-bold text-slate-400 uppercase">Saldo Lumers</span>
+                <span class="text-2xl font-extrabold text-blue-600">$120.00</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    📦 Envíos Activos
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-xl">💻</div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Laptop Dell XPS</p>
+                            <p class="text-xs text-blue-500 font-medium">En tránsito - Madrid</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    ⚙️ Configuración
+                </h3>
+                <div class="space-y-2">
+                    <a href="delete-account.html" class="flex items-center justify-between p-3 hover:bg-red-50 text-red-500 rounded-xl transition font-medium">
+                        <span>Eliminar Cuenta</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
