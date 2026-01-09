@@ -1,26 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>LUMERS – Chat</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensajería | Lumers</title>
+    <script src="https://cdn.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .chat-container { height: calc(100vh - 160px); }
+    </style>
 </head>
+<body class="bg-slate-50">
 
-<body style="font-family:Arial; padding:30px;">
+    <header class="bg-white border-b border-slate-200 p-4 sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="text-slate-400 hover:text-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </a>
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">P</div>
+                <div>
+                    <h2 class="font-bold text-slate-800">Soporte Lumers / Portador</h2>
+                    <span class="text-xs text-green-500 font-medium">● En línea</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<h1>Chat del envío</h1>
+    <main class="max-w-4xl mx-auto p-4">
+        <div id="chatBox" class="chat-container overflow-y-auto space-y-4 mb-4 p-2">
+            
+            <div class="flex items-end gap-2 max-w-[80%]">
+                <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-bl-none shadow-sm">
+                    <p class="text-sm text-slate-700">¡Hola! He visto tu envío de la laptop. ¿Tienes las dimensiones exactas de la caja? 📦</p>
+                    <span class="text-[10px] text-slate-400 mt-1 block">10:42 AM</span>
+                </div>
+            </div>
 
-<div style="border:1px solid #ccc; padding:15px; height:200px; overflow:auto;">
-  <p><strong>Remitente:</strong> Hola, ¿podés llevarlo mañana?</p>
-  <p><strong>Portador:</strong> Sí, sin problema.</p>
-</div>
+            <div class="flex items-end gap-2 max-w-[80%] ml-auto flex-row-reverse">
+                <div class="bg-blue-600 p-4 rounded-2xl rounded-br-none shadow-md">
+                    <p class="text-sm text-white">¡Hola! Sí, mide 32x22x2 cm. Pesa muy poco. ¿Podrías llevarla en tu equipaje de mano?</p>
+                    <span class="text-[10px] text-blue-200 mt-1 block">10:45 AM</span>
+                </div>
+            </div>
 
-<br>
-<input type="text" placeholder="Escribí tu mensaje">
-<button>Enviar</button>
+        </div>
 
-<br><br>
-<a href="index.html">← Volver al inicio</a>
+        <div class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 p-4">
+            <div class="max-w-4xl mx-auto flex gap-2">
+                <button class="p-3 bg-slate-100 rounded-xl text-slate-500 hover:bg-slate-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                </button>
+                <input type="text" placeholder="Escribe un mensaje..." class="flex-1 bg-slate-100 border-none rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                <button class="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>
+
