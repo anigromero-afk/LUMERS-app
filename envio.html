@@ -1,0 +1,25 @@
+// Importar los módulos de Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+// Configuración de tu proyecto (la sacas de Firebase Console)
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "lumers-web.firebaseapp.com",
+  projectId: "lumers-web-81346186",
+  storageBucket: "lumers-web-81346186.appspot.com",
+  // ... resto de tu config
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Función para guardar el envío
+async function guardarEnvio(datos) {
+  try {
+    const docRef = await addDoc(collection(db, "envios"), datos);
+    console.log("Envío registrado con ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error al añadir: ", e);
+  }
+}
