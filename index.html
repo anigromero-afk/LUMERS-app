@@ -1,82 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="manifest" href="manifest.json">
-  <meta charset="UTF-8">
-  <title>LUMERS – Envíos con subasta en tiempo real</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="LUMERS es una plataforma de envíos con subasta en tiempo real. Elegí quién lleva tu paquete al mejor precio y reputación.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumers | Conectando entregas globales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
 </head>
+<body class="bg-slate-50 text-slate-900">
 
-<body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+    <nav class="fixed w-full z-50 glass border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
+                <span class="text-xl font-extrabold tracking-tight">LUMERS</span>
+            </div>
+            <div class="space-x-8 hidden md:flex font-medium text-slate-600">
+                <a href="Subasta.html" class="hover:text-blue-600 transition">Subastas</a>
+                <a href="crear-envio.html" class="hover:text-blue-600 transition">Enviar</a>
+                <a href="#" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:shadow-lg hover:bg-blue-700 transition">Ingresar</a>
+            </div>
+        </div>
+    </nav>
 
-  <section style="padding:40px; background:#111; color:white; text-align:center;">
-    <h1>LUMERS</h1>
-    <h2>Envíos con subasta en tiempo real</h2>
-    <p>Tu paquete. Varias ofertas. Vos elegís.</p>
-    <button style="padding:15px 25px; font-size:16px;">
-      Quiero enviar un paquete
-<a href="crear-envio.html">
-  <button style="padding:15px 25px; font-size:16px;">
-  </button>
-</a>
-  <section style="padding:40px;">
-    <h2>¿Cómo funciona?</h2>
-    <ol>
-      <li>Cargás tu envío</li>
-      <li>Transportistas ofertan en tiempo real</li>
-      <li>Elegís precio + reputación</li>
-      <li>Seguís el envío hasta la entrega</li>
-    </ol>
-  </section>
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 inline-block">Logística Colaborativa 2.0</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                La comunidad que conecta el mundo, <br>
+                <span class="text-blue-600">una entrega a la vez.</span>
+            </h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
+                Envía paquetes de forma legal y segura con viajeros verificados. Ahorra costos y optimiza tiempos con nuestra red global de portadores.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="crear-envio.html" class="px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:scale-105 transition shadow-xl">Crear Envío</a>
+                <a href="Subasta.html" class="px-8 py-4 bg-white border border-slate-200 rounded-2xl font-bold hover:bg-slate-50 transition">Ver Subastas</a>
+            </div>
+        </div>
+    </section>
 
-  <section style="padding:40px; background:#f4f4f4;">
-    <h2>¿Por qué LUMERS?</h2>
-    <ul>
-      <li>Subasta transparente</li>
-      <li>Chat directo</li>
-      <li>Seguimiento en tiempo real</li>
-      <li>Pagos seguros</li>
-    </ul>
-  </section>
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+            <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100">
+                <div class="text-3xl mb-4">🛡️</div>
+                <h3 class="text-xl font-bold mb-2">100% Seguro</h3>
+                <p class="text-slate-600 italic">Identidad verificada (KYC) y trazabilidad total en cada hito del viaje.</p>
+            </div>
+            <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100">
+                <div class="text-3xl mb-4">⚖️</div>
+                <h3 class="text-xl font-bold mb-2">Cumplimiento Legal</h3>
+                <p class="text-slate-600 italic">Garantizamos que cada traslado cumpla con las leyes aduaneras internacionales.</p>
+            </div>
+            <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100">
+                <div class="text-3xl mb-4">💸</div>
+                <h3 class="text-xl font-bold mb-2">Escrow de Pagos</h3>
+                <p class="text-slate-600 italic">Tu dinero está protegido. El portador solo cobra cuando confirmas la recepción.</p>
+            </div>
+        </div>
+    </section>
 
-  <section style="padding:40px; text-align:center;">
-    <h2>Sumate</h2>
-    <p>Estamos lanzando la plataforma en Argentina.</p>
-    <p>📧 contacto@lumers.app</p>
-  </section>
-      <section style="padding:40px; background:#eee; text-align:center;">
-  <h2>Acceso anticipado</h2>
-  <p>Dejá tu email y sé parte del lanzamiento</p>
-
-  <form>
-    <input type="email" placeholder="Tu email">
-    <button>Quiero entrar</button>
-  </form>
-</section>
-<nav>
-  <ul>
-    <li>index.htmlInicio</a></li>
-    <li>Subasta.htmlSubastas</a></li>
-    <li>Chat.htmlChat</a></li>
-    <li>crear-envio.htmlCrear Envío</a></li>
-    <li>indice.htmlÍndice</a></li>
-  </ul>
-</nav>
-<style>
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-}
-nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-}
-nav a:hover {
-  color: #007bff;
-}
-</style>
+</body>
 </html>
+
