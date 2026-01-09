@@ -131,6 +131,39 @@ const subastaRef = db.ref("subasta/actual");
     });
   }
 </script>
+import { getFirestore, collection, query, where, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+// Escuchar envíos disponibles para subasta en tiempo real
+const q = query(collection(db, "envios"), where("estado", "==", "abierto"));
+
+onSnapshot(q, (snapshot) => {
+    const contenedor = document.getElementById('listaSubastas');
+    contenedor.innerHTML = ''; // Limpiar vista
+    
+    snapshot.forEach((doc) => {
+        const envio = doc.data();
+        contenedor.innerHTML += `
+            <div class="card-subasta">
+                <img src="${envio.fotoUrl}" width="100">
+                <p>${envio.descripcion}</p>
+                <input type="number" id="oferta-${doc.id}" placeholder="Tu oferta ($)">
+                <button onclick="pujar('${doc.id}')">Enviar Oferta</button>
+            </div>
+        `;
+    });
+});
+
+// Función para que el portador envíe una puja
+window.pujar = async (envioId) => {
+    const monto = document.getElementById(`oferta-${envioId}`).value;
+    await addDoc(collection(db, "pujas"), {
+        envioId: envioId,
+        monto: parseFloat(monto),
+        portadorId: "ID_USUARIO_ACTUAL",
+        fecha: new Date()
+    });
+    alert("Oferta enviada");
+};
 
 </body>
 </html>
