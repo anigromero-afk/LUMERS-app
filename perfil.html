@@ -7,52 +7,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
-    </style>
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
-<body class="bg-slate-50 min-h-screen pb-24">
+<body class="bg-slate-50 min-h-screen pb-24 text-slate-900">
 
-    <nav class="glass border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
+    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
         <div class="max-w-md mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-extrabold tracking-tight text-slate-800">Mi Perfil</h1>
-            <button onclick="cerrarSesion()" class="text-red-500 font-bold text-sm">Salir</button>
+            <h1 class="text-xl font-extrabold text-slate-800">Mi Cuenta</h1>
+            <button onclick="cerrarSesion()" class="text-red-500 font-bold text-sm">Cerrar Sesión</button>
         </div>
     </nav>
 
     <div class="max-w-md mx-auto px-6 pt-8">
-        <div id="cardUsuario" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 text-center mb-8">
-            <div class="animate-pulse flex flex-col items-center">
-                <div class="w-20 h-20 bg-slate-200 rounded-full mb-4"></div>
-                <div class="h-4 bg-slate-200 w-32 rounded"></div>
-            </div>
+        <div id="cardUsuario" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 text-center mb-6">
+            <p class="text-slate-400 animate-pulse">Cargando perfil...</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mb-8">
-            <div class="bg-blue-600 p-4 rounded-2xl text-white">
-                <p class="text-xs opacity-80">Envíos Totales</p>
-                <p id="countTotal" class="text-2xl font-bold">0</p>
-            </div>
-            <div class="bg-white p-4 rounded-2xl border border-slate-200">
-                <p class="text-xs text-slate-500">Completados</p>
-                <p id="countCompletados" class="text-2xl font-bold text-slate-800">0</p>
-            </div>
-        </div>
-
-        <h3 class="font-extrabold text-lg text-slate-800 mb-4 flex items-center gap-2">
-            📦 Mis Paquetes Publicados
-        </h3>
-        
-        <div id="galeriaEnvios" class="grid grid-cols-1 gap-4">
-            <p class="text-slate-400 text-center py-10">Buscando tus paquetes...</p>
+        <h3 class="font-extrabold text-lg mb-4 px-2 text-slate-800">Mis Publicaciones</h3>
+        <div id="galeriaEnvios" class="space-y-4">
+            <p class="text-slate-400 text-center py-10 text-sm italic">Buscando tus paquetes en la nube...</p>
         </div>
     </div>
 
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl flex gap-10 z-50 items-center">
-        <a href="index.html" class="text-xl hover:scale-110 transition">🏠</a>
-        <a href="Subasta.html" class="text-xl hover:scale-110 transition">🌍</a>
-        <a href="crear-envio.html" class="bg-blue-600 p-3 rounded-full hover:scale-110 transition -mt-2">➕</a>
+        <a href="index.html" class="text-xl">🏠</a>
+        <a href="Subasta.html" class="text-xl">🌍</a>
+        <a href="crear-envio.html" class="bg-blue-600 p-3 rounded-full -mt-2">➕</a>
     </div>
 
     <script type="module">
@@ -73,100 +53,79 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- MANEJO DE SESIÓN ---
+        // 1. Verificar Sesión
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                renderUser(user);
-                escucharEnvios(user.uid);
+                document.getElementById('cardUsuario').innerHTML = `
+                    <img src="${user.photoURL}" class="w-20 h-20 rounded-full mx-auto mb-3 border-4 border-blue-50">
+                    <h2 class="text-xl font-extrabold">${user.displayName}</h2>
+                    <p class="text-slate-400 text-xs">${user.email}</p>
+                `;
+                cargarMisPaquetes(user.uid);
             } else {
                 window.location.href = "index.html";
             }
         });
 
-        function renderUser(user) {
-            document.getElementById('cardUsuario').innerHTML = `
-                <img src="${user.photoURL}" class="w-20 h-20 rounded-full mx-auto mb-3 border-4 border-blue-50 shadow-sm">
-                <h2 class="text-xl font-extrabold text-slate-800">${user.displayName}</h2>
-                <p class="text-slate-500 text-sm">${user.email}</p>
-            `;
-        }
-
-        // --- CARGAR MIS ENVÍOS EN TIEMPO REAL ---
-        function escucharEnvios(uid) {
+        // 2. Cargar Paquetes (Sin filtros complejos para evitar errores de índice)
+        function cargarMisPaquetes(uid) {
+            const galeria = document.getElementById('galeriaEnvios');
+            // Nota: Si esto falla, quita el 'where' y usa solo collection(db, "envios") para ver si carga algo
             const q = query(collection(db, "envios"), where("usuarioId", "==", uid));
-            
-            onSnapshot(q, (snapshot) => {
-                const contenedor = document.getElementById('galeriaEnvios');
-                const totalText = document.getElementById('countTotal');
-                const compText = document.getElementById('countCompletados');
-                
-                let completados = 0;
-                totalText.innerText = snapshot.size;
 
+            onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) {
-                    contenedor.innerHTML = '<div class="bg-white p-8 rounded-3xl border border-dashed border-slate-300 text-center text-slate-400 text-sm">Aún no has creado ningún envío.</div>';
+                    galeria.innerHTML = '<div class="bg-white p-10 rounded-3xl border border-dashed border-slate-200 text-center text-slate-400 text-sm">Aún no has publicado paquetes.</div>';
                     return;
                 }
 
-                contenedor.innerHTML = '';
+                galeria.innerHTML = '';
                 snapshot.forEach((docSnap) => {
-                    const env = docSnap.data();
+                    const data = docSnap.data();
                     const id = docSnap.id;
-                    if (env.estado === 'Entregado') completados++;
+                    const entregado = data.estado === "Entregado";
 
-                    contenedor.innerHTML += `
-                        <div class="bg-white p-4 rounded-3xl border border-slate-200 flex gap-4 items-center shadow-sm">
-                            <img src="${env.foto}" class="w-20 h-20 rounded-2xl object-cover shadow-inner">
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-bold text-slate-800 truncate">${env.nombre}</h4>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${env.estado === 'Entregado' ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}">
-                                        ${env.estado}
-                                    </span>
-                                    <span class="text-sm font-bold text-slate-900">$${env.valor}</span>
-                                </div>
-                                ${env.estado !== 'Entregado' ? `
-                                    <button onclick="confirmarEntrega('${id}', '${env.nombre}')" class="mt-2 w-full bg-slate-900 text-white text-[11px] font-bold py-2 rounded-xl hover:bg-green-600 transition">
-                                        Confirmar Recibido
-                                    </button>
-                                ` : '<p class="text-[10px] text-slate-400 mt-2 font-medium italic">¡Envío completado!</p>'}
+                    galeria.innerHTML += `
+                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex gap-4 items-center">
+                            <img src="${data.foto || 'https://via.placeholder.com/150'}" class="w-16 h-16 rounded-2xl object-cover">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm">${data.nombre}</h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${entregado ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}">
+                                    ${data.estado || 'Abierto'}
+                                </span>
                             </div>
+                            ${!entregado ? `
+                                <button onclick="marcarRecibido('${id}')" class="bg-slate-900 text-white text-[10px] px-3 py-2 rounded-xl font-bold">
+                                    Recibido
+                                </button>
+                            ` : '✅'}
                         </div>
                     `;
                 });
-                compText.innerText = completados;
+            }, (error) => {
+                console.error("Error en Snapshot:", error);
+                galeria.innerHTML = `<p class="text-red-500 text-center text-xs">Error de conexión. Revisa las reglas de Firebase.</p>`;
             });
         }
 
-        // --- FUNCIÓN PARA CERRAR ENVÍO ---
-        window.confirmarEntrega = async (id, nombre) => {
-            if (confirm(`¿Confirmas que recibiste "${nombre}"?`)) {
+        // 3. Confirmar Entrega
+        window.marcarRecibido = async (id) => {
+            if(confirm("¿Confirmas que recibiste este paquete?")) {
                 try {
-                    await updateDoc(doc(db, "envios", id), {
+                    await updateDoc(doc(db, "envios", id), { 
                         estado: "Entregado",
-                        fechaFinalizacion: serverTimestamp()
+                        fechaCierre: serverTimestamp() 
                     });
-                    
-                    // Lanzar confeti
-                    confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 }
-                    });
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
                 } catch (e) {
                     alert("Error al actualizar: " + e.message);
                 }
             }
         };
 
-        // --- CERRAR SESIÓN ---
-        window.cerrarSesion = () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            });
-        };
+        // 4. Logout
+        window.cerrarSesion = () => signOut(auth).then(() => window.location.href = "index.html");
     </script>
 </body>
 </html>
-
 
