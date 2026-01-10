@@ -3,119 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat de Envío | Lumers</title>
+    <title>Chat de Negociación | Lumers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .chat-container { height: calc(100vh - 180px); }
+    </style>
 </head>
-<body class="bg-slate-50 h-screen flex flex-col">
+<body class="bg-slate-100 min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 p-4 flex items-center gap-4">
-        <button onclick="window.history.back()" class="p-2 hover:bg-slate-100 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-        </button>
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4 flex items-center gap-4">
+        <a href="Subasta.html" class="text-slate-400">⬅️</a>
         <div>
-            <h2 id="tituloChat" class="font-bold text-slate-800 text-lg">Cargando chat...</h2>
-            <p class="text-xs text-green-500 font-bold uppercase tracking-wider">En línea ahora</p>
+            <h1 id="chatTitulo" class="text-lg font-extrabold text-slate-800 uppercase tracking-tight text-sm">Cargando Chat...</h1>
+            <p class="text-[10px] text-green-500 font-bold uppercase">En línea ahora</p>
         </div>
     </nav>
 
-    <div id="mensajesChat" class="flex-1 overflow-y-auto p-6 space-y-4 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+    <div id="mensajesChat" class="chat-container overflow-y-auto px-6 py-6 flex flex-col gap-4">
         </div>
 
-    <div class="p-4 bg-white border-t border-slate-200">
-        <div class="max-w-4xl mx-auto flex gap-2">
-            <input type="text" id="inputMensaje" placeholder="Escribe un mensaje..." 
-                   class="flex-1 p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500 outline-none">
-            <button onclick="enviarMensaje()" class="bg-blue-600 text-white p-4 rounded-2xl hover:bg-blue-700 transition shadow-lg shadow-blue-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
+    <div class="fixed bottom-0 w-full bg-white border-t border-slate-200 p-4 pb-8">
+        <form id="formMensaje" class="max-w-md mx-auto flex gap-2">
+            <input type="text" id="inputMensaje" placeholder="Escribe tu oferta..." class="flex-1 bg-slate-100 border-none rounded-2xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+            <button type="submit" class="bg-blue-600 text-white p-3 rounded-2xl hover:bg-blue-700 transition">
+                🚀
             </button>
-        </div>
+        </form>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
             authDomain: "lumers-d1d36.firebaseapp.com",
             projectId: "lumers-d1d36",
-            storageBucket: "lumers-d1d36.firebasestorage.app"
+            storageBucket: "lumers-d1d36.firebasestorage.app",
+            messagingSenderId: "798769127070",
+            appId: "1:798769127070:web:6b591851e4c5c62758258f"
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
+        // Obtener el ID del paquete desde la URL
         const urlParams = new URLSearchParams(window.location.search);
         const envioId = urlParams.get('id');
-        const contenedor = document.getElementById('mensajesChat');
 
         onAuthStateChanged(auth, async (user) => {
-            if (!user) return window.location.href = "index.html";
+            if (!user) {
+                window.location.href = "index.html";
+                return;
+            }
+            if (envioId) {
+                obtenerInfoPaquete();
+                escucharMensajes(user);
+            }
+        });
 
-            // 1. Obtener datos del paquete para el título
+        async function obtenerInfoPaquete() {
             const docRef = doc(db, "envios", envioId);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                document.getElementById('tituloChat').innerText = docSnap.data().nombre;
+                document.getElementById('chatTitulo').innerText = docSnap.data().nombre;
             }
+        }
 
-            // 2. Escuchar mensajes en tiempo real
-            const q = query(collection(db, `envios/${envioId}/mensajes`), orderBy("fecha", "asc"));
+        function escucharMensajes(user) {
+            const q = query(
+                collection(db, "mensajes"),
+                where("envioId", "==", envioId),
+                orderBy("fecha", "asc")
+            );
+
             onSnapshot(q, (snapshot) => {
+                const contenedor = document.getElementById('mensajesChat');
                 contenedor.innerHTML = '';
+                
                 snapshot.forEach((doc) => {
                     const msg = doc.data();
                     const esMio = msg.usuarioId === user.uid;
                     
                     contenedor.innerHTML += `
-                        <div class="flex ${esMio ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2">
-                            <div class="${esMio ? 'bg-blue-600 text-white' : 'bg-white text-slate-800'} px-4 py-3 rounded-2xl max-w-[80%] shadow-sm border border-slate-100">
-                                <p class="text-[10px] opacity-70 mb-1 font-bold">${msg.nombre}</p>
-                                <p class="text-sm leading-relaxed">${msg.texto}</p>
+                        <div class="flex ${esMio ? 'justify-end' : 'justify-start'}">
+                            <div class="max-w-[80%] px-4 py-2 rounded-2xl text-sm font-medium shadow-sm ${esMio ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-white text-slate-800 rounded-tl-none'}">
+                                ${msg.texto}
+                                <p class="text-[8px] opacity-60 mt-1 text-right">${new Date(msg.fecha?.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
                             </div>
-                        </div>`;
+                        </div>
+                    `;
                 });
                 contenedor.scrollTop = contenedor.scrollHeight;
             });
+        }
 
-            // 3. Función para enviar mensaje
-            window.enviarMensaje = async () => {
-                const input = document.getElementById('inputMensaje');
-                if (!input.value.trim()) return;
+        document.getElementById('formMensaje').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('inputMensaje');
+            const texto = input.value.trim();
 
-                const texto = input.value;
-                input.value = '';
-
-                await addDoc(collection(db, `envios/${envioId}/mensajes`), {
+            if (texto && auth.currentUser) {
+                await addDoc(collection(db, "mensajes"), {
+                    envioId: envioId,
                     texto: texto,
-                    nombre: user.displayName,
-                    usuarioId: user.uid,
+                    usuarioId: auth.currentUser.uid,
+                    nombreUsuario: auth.currentUser.displayName,
                     fecha: serverTimestamp()
                 });
-
-                // Crear notificación para el dueño (opcional)
-                if (user.uid !== docSnap.data().usuarioId) {
-                    await addDoc(collection(db, "notificaciones"), {
-                        para: docSnap.data().usuarioId,
-                        texto: `Nuevo mensaje en tu envío: ${docSnap.data().nombre}`,
-                        leido: false,
-                        fecha: serverTimestamp()
-                    });
-                }
-            };
-        });
-
-        // Enviar con la tecla Enter
-        document.getElementById('inputMensaje').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') enviarMensaje();
+                input.value = '';
+            }
         });
     </script>
 </body>
