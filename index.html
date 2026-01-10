@@ -9,56 +9,65 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        /* Animación suave para el panel */
+        #panelNotificaciones { transition: all 0.2s ease-out; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
-    <    <nav class="fixed w-full z-50 glass border-b border-slate-200">
+    <nav class="fixed w-full z-50 glass border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
                 <span class="text-xl font-extrabold tracking-tight">LUMERS</span>
             </div>
-            
-            <div class="flex items-center gap-4"> <button id="notificacionesBtn" class="relative p-2 text-slate-600 hover:text-blue-600 focus:outline-none">
-                    <div id="iconoNotificacion" class="relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </div>
-                </button>
 
-                <div class="space-x-4 hidden md:flex font-medium text-slate-600 items-center">
+            <div class="flex items-center gap-4">
+                
+                <div class="relative">
+                    <button id="notificacionesBtn" class="relative p-2 text-slate-600 hover:text-blue-600 focus:outline-none transition">
+                        <div id="iconoNotificacion" class="relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </div>
+                    </button>
+
+                    <div id="panelNotificaciones" class="hidden absolute right-0 mt-4 w-80 bg-white rounded-2xl shadow-2xl border border-slate-100 z-50 overflow-hidden">
+                        <div class="p-4 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+                            <h3 class="font-bold text-slate-800 text-sm">Notificaciones</h3>
+                            <button onclick="marcarTodoComoLeido()" class="text-[10px] text-blue-600 font-bold hover:underline">Limpiar</button>
+                        </div>
+                        <div id="listaNotificaciones" class="max-h-80 overflow-y-auto p-2">
+                            <p class="text-center text-slate-400 text-xs py-10">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-x-4 hidden md:flex font-medium text-slate-600 items-center border-l pl-4 border-slate-200">
                     <a href="Subasta.html" class="hover:text-blue-600 transition">Subastas</a>
                     <a href="crear-envio.html" class="hover:text-blue-600 transition">Enviar</a>
-                    <button onclick="loginConGoogle()" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:shadow-lg hover:bg-blue-700 transition">Ingresar</button>
+                    <button id="btnAuth" onclick="loginConGoogle()" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:shadow-lg hover:bg-blue-700 transition">Ingresar</button>
                 </div>
             </div>
         </div>
     </nav>
- class="fixed w-full z-50 glass border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
-                <span class="text-xl font-extrabold tracking-tight">LUMERS</span>
-            </div>
-            <div class="space-x-8 hidden md:flex font-medium text-slate-600">
-                <a href="Subasta.html" class="hover:text-blue-600 transition">Subastas</a>
-                <a href="crear-envio.html" class="hover:text-blue-600 transition">Enviar</a>
-                <a href="#" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:shadow-lg hover:bg-blue-700 transition">Ingresar</a>
+
+    <section class="pt-40 pb-20 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 inline-block">Logística Colaborativa 2.0</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                La comunidad que conecta el mundo, <br>
+                <span class="text-blue-600">una entrega a la vez.</span>
+            </h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
+                Envía paquetes de forma legal y segura con viajeros verificados. Ahorra costos y optimiza tiempos con nuestra red global de portadores.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="crear-envio.html" class="px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:scale-105 transition shadow-xl">Crear Envío</a>
+                <a href="Subasta.html" class="px-8 py-4 bg-white border border-slate-200 rounded-2xl font-bold hover:bg-slate-50 transition">Ver Subastas</a>
             </div>
         </div>
-    </nav>
-<div id="panelNotificaciones" class="hidden absolute right-0 mt-12 w-80 bg-white rounded-2xl shadow-2xl border border-slate-100 z-50 overflow-hidden">
-    <div class="p-4 border-b border-slate-50 flex justify-between items-center">
-        <h3 class="font-bold text-slate-800">Notificaciones</h3>
-        <button onclick="marcarTodoComoLeido()" class="text-xs text-blue-600 hover:underline">Marcar todo como leído</button>
-    </div>
-    <div id="listaNotificaciones" class="max-h-96 overflow-y-auto p-2 space-y-2">
-        <p class="text-center text-slate-400 text-sm py-4">No tienes notificaciones nuevas</p>
-    </div>
-</div>
-
     </section>
 
     <section class="py-20 bg-white">
@@ -66,112 +75,116 @@
             <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100">
                 <div class="text-3xl mb-4">🛡️</div>
                 <h3 class="text-xl font-bold mb-2">100% Seguro</h3>
-                <p class="text-slate-600 italic">Identidad verificada (KYC) y trazabilidad total en cada hito del viaje.</p>
+                <p class="text-slate-600 italic text-sm">Identidad verificada (KYC) y trazabilidad total en cada hito del viaje.</p>
             </div>
             <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100">
                 <div class="text-3xl mb-4">⚖️</div>
                 <h3 class="text-xl font-bold mb-2">Cumplimiento Legal</h3>
-                <p class="text-slate-600 italic">Garantizamos que cada traslado cumpla con las leyes aduaneras internacionales.</p>
+                <p class="text-slate-600 italic text-sm">Garantizamos que cada traslado cumpla con las leyes aduaneras internacionales.</p>
             </div>
             <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100">
                 <div class="text-3xl mb-4">💸</div>
                 <h3 class="text-xl font-bold mb-2">Escrow de Pagos</h3>
-                <p class="text-slate-600 italic">Tu dinero está protegido. El portador solo cobra cuando confirmas la recepción.</p>
+                <p class="text-slate-600 italic text-sm">Tu dinero está protegido. El portador solo cobra cuando confirmas la recepción.</p>
             </div>
         </div>
     </section>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // USA ESTA CONFIGURACIÓN QUE ES LA QUE TIENE TUS DATOS REALES
-  const firebaseConfig = {
-    apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
-    authDomain: "lumers-d1d36.firebaseapp.com",
-    projectId: "lumers-d1d36",
-    storageBucket: "lumers-d1d36.firebasestorage.app",
-    messagingSenderId: "798769127070",
-    appId: "1:798769127070:web:6b591851e4c5c62758258f"
-  };
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, onSnapshot, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const provider = new GoogleAuthProvider();
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
+            authDomain: "lumers-d1d36.firebaseapp.com",
+            projectId: "lumers-d1d36",
+            storageBucket: "lumers-d1d36.firebasestorage.app",
+            messagingSenderId: "798769127070",
+            appId: "1:798769127070:web:6b591851e4c5c62758258f"
+        };
 
-  // Función de Login
-  window.loginConGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      window.location.href = "perfil.html";
-    } catch (error) {
-      alert("Error: " + error.message);
-    }
-  };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
 
-  // --- LÓGICA DE NOTIFICACIONES MEJORADA ---
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const btn = document.getElementById('notificacionesBtn');
-    const panel = document.getElementById('panelNotificaciones');
-    const lista = document.getElementById('listaNotificaciones');
-    const campana = document.getElementById('iconoNotificacion');
+        // 1. LOGIN CON GOOGLE
+        window.loginConGoogle = async () => {
+            try {
+                await signInWithPopup(auth, provider);
+                window.location.href = "perfil.html";
+            } catch (error) {
+                console.error("Error Login:", error);
+            }
+        };
 
-    // 1. Abrir/Cerrar panel al tocar la campana
-    btn.onclick = () => panel.classList.toggle('hidden');
+        // 2. LÓGICA DE NOTIFICACIONES Y ESTADO DE SESIÓN
+        onAuthStateChanged(auth, (user) => {
+            const btnAuth = document.getElementById('btnAuth');
+            const btnNoti = document.getElementById('notificacionesBtn');
+            const panel = document.getElementById('panelNotificaciones');
+            const lista = document.getElementById('listaNotificaciones');
+            const campana = document.getElementById('iconoNotificacion');
 
-    // 2. Escuchar notificaciones en tiempo real
-    const q = query(
-      collection(db, "notificaciones"), 
-      where("para", "==", user.uid),
-      orderBy("fecha", "desc") // Necesitas crear un índice en Firebase si falla
-    );
+            if (user) {
+                // Cambiar botón login por link a perfil
+                btnAuth.innerHTML = "Mi Perfil";
+                btnAuth.onclick = () => window.location.href = 'perfil.html';
 
-    onSnapshot(q, (snapshot) => {
-      // Punto rojo
-      const tieneSinLeer = snapshot.docs.some(d => d.data().leido === false);
-      const punto = campana.querySelector('.bg-red-500');
-      if (punto) punto.remove();
-      if (tieneSinLeer) {
-        campana.innerHTML += `<span class="absolute top-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-red-500"></span>`;
-      }
+                // Manejo de Panel
+                btnNoti.onclick = (e) => {
+                    e.stopPropagation();
+                    panel.classList.toggle('hidden');
+                };
 
-      // Llenar la lista
-      if (snapshot.empty) {
-        lista.innerHTML = '<p class="text-center text-slate-400 text-sm py-4">No hay notificaciones</p>';
-      } else {
-        lista.innerHTML = '';
-        snapshot.forEach((docSnap) => {
-          const noti = docSnap.data();
-          lista.innerHTML += `
-            <div class="p-3 rounded-xl ${noti.leido ? 'bg-white' : 'bg-blue-50'} border border-slate-50 transition">
-              <p class="text-sm text-slate-700">${noti.texto}</p>
-              <p class="text-[10px] text-slate-400 mt-1">${new Date(noti.fecha?.toDate()).toLocaleString()}</p>
-            </div>
-          `;
+                // Escuchar Notificaciones
+                const q = query(collection(db, "notificaciones"), where("para", "==", user.uid));
+                onSnapshot(q, (snapshot) => {
+                    const sinLeer = snapshot.docs.filter(d => !d.data().leido).length;
+                    
+                    // Punto rojo
+                    const puntoExistente = campana.querySelector('.bg-red-500');
+                    if (puntoExistente) puntoExistente.remove();
+                    if (sinLeer > 0) {
+                        campana.innerHTML += `<span class="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white bg-red-500"></span>`;
+                    }
+
+                    // Render lista
+                    if (snapshot.empty) {
+                        lista.innerHTML = '<p class="text-center text-slate-400 text-[10px] py-8">No tienes notificaciones</p>';
+                    } else {
+                        lista.innerHTML = '';
+                        snapshot.forEach(docSnap => {
+                            const n = docSnap.data();
+                            lista.innerHTML += `
+                                <div class="p-3 mb-1 rounded-xl ${n.leido ? 'bg-white' : 'bg-blue-50 border-l-4 border-blue-500'} text-[11px]">
+                                    <p class="text-slate-700">${n.texto}</p>
+                                </div>`;
+                        });
+                    }
+                });
+
+            } else {
+                btnNoti.onclick = () => alert("Ingresa para ver tus notificaciones");
+            }
         });
-      }
-    });
 
-    // 3. Función para marcar como leído (opcional pero recomendado)
-    window.marcarTodoComoLeido = async () => {
-      const qSinLeer = query(collection(db, "notificaciones"), where("para", "==", user.uid), where("leido", "==", false));
-      const docs = await getDocs(qSinLeer);
-      docs.forEach(async (d) => {
-        await updateDoc(d.ref, { leido: true });
-      });
-    };
-  }
-});
+        // Cerrar panel al hacer clic fuera
+        document.onclick = () => document.getElementById('panelNotificaciones').classList.add('hidden');
 
-</script>
-
-</script>
-
-
-      </body>
-</script>
-
+        // Función para limpiar notificaciones
+        window.marcarTodoComoLeido = async () => {
+            const user = auth.currentUser;
+            if (!user) return;
+            const q = query(collection(db, "notificaciones"), where("para", "==", user.uid), where("leido", "==", false));
+            const snapshot = await getDocs(q);
+            snapshot.forEach(async (d) => {
+                await updateDoc(d.ref, { leido: true });
+            });
+        };
+    </script>
+</body>
 </html>
+
 
