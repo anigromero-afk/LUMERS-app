@@ -64,6 +64,36 @@
         </div>
     </section>
 
-</body>
+</body><script type="module">
+  // 1. Importamos la herramienta de Google
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  // 2. Tu configuración (Cópiala de tu consola de Firebase)
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "lumers-web.firebaseapp.com",
+    projectId: "lumers-web-81346186",
+    storageBucket: "lumers-web-81346186.appspot.com",
+  };
+
+  // 3. Inicializamos
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // 4. Función para entrar con Google
+  window.loginConGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log("Usuario entró:", result.user.displayName);
+      // Cuando entra, lo mandamos a su perfil
+      window.location.href = "perfil.html";
+    } catch (error) {
+      alert("Error al entrar: " + error.message);
+    }
+  }
+</script>
+
 </html>
 
