@@ -3,30 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumers | Inicio</title>
+    <title>Lumers | Conectando entregas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <nav class="fixed w-full z-50 glass border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
                 <span class="text-xl font-extrabold tracking-tight">LUMERS</span>
             </div>
-            <div class="flex items-center gap-4">
-                <button id="btnAuth" onclick="loginConGoogle()" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-bold text-sm">Ingresar</button>
+            <div>
+                <button id="btnAuth" onclick="loginConGoogle()" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                    Ingresar
+                </button>
             </div>
         </div>
     </nav>
 
     <section class="pt-40 pb-20 px-6 text-center">
-        <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Conecta tus entregas <br><span class="text-blue-600">con el mundo.</span></h1>
-        <div class="flex gap-4 justify-center">
-            <a href="Subasta.html" class="px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold">Ver Subastas</a>
-            <a href="crear-envio.html" class="px-8 py-4 bg-white border border-slate-200 rounded-2xl font-bold">Enviar</a>
+        <div class="max-w-4xl mx-auto">
+            <span class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-xs font-bold mb-6 inline-block uppercase tracking-wider">Logística Colaborativa</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight text-slate-900">
+                Tu paquete llega <br><span class="text-blue-600">donde tú estés.</span>
+            </h1>
+            <p class="text-lg text-slate-500 max-w-2xl mx-auto mb-10">
+                La red global que conecta a personas que necesitan enviar algo con viajeros dispuestos a ayudar.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="crear-envio.html" class="px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:scale-105 transition shadow-xl">Crear Envío</a>
+                <a href="Subasta.html" class="px-8 py-4 bg-white border border-slate-200 rounded-2xl font-bold hover:bg-slate-50 transition">Ver Subastas</a>
+            </div>
         </div>
     </section>
 
@@ -51,18 +64,20 @@
             try {
                 await signInWithPopup(auth, provider);
                 window.location.href = "perfil.html";
-            } catch (e) { console.error(e); }
+            } catch (error) {
+                console.error("Error en login:", error);
+            }
         };
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('btnAuth').innerText = "Mi Perfil";
-                document.getElementById('btnAuth').onclick = () => window.location.href = 'perfil.html';
+            const btn = document.getElementById('btnAuth');
+            if (user && btn) {
+                btn.innerText = "Mi Perfil";
+                btn.onclick = () => window.location.href = "perfil.html";
             }
         });
     </script>
 </body>
 </html>
-
 
 
