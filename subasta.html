@@ -3,17 +3,6 @@
             <h1 class="text-3xl font-extrabold text-slate-900">subastas activas</h1>
             <p class="text-slate-500">Encuentra envíos cerca de tu ruta.</p>
         </header>
-        // Al principio de tu script en subasta.html
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log("Acceso confirmado para:", user.email);
-        // Aquí recién ejecutas la carga de los paquetes
-        cargarsubasta(); 
-    } else {
-        // Solo si después de cargar Firebase confirma que NO hay nadie, volvemos
-        window.location.replace("index.html");
-    }
-});
         <div class="mb-8">
             <input type="text" id="inputBusqueda" placeholder="Buscar por ruta o producto..." 
             class="w-full p-5 bg-white rounded-[2rem] border-none shadow-sm focus:ring-2 focus:ring-blue-500 font-medium">
