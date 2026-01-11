@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    // Dentro de tu script de index.html
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // Usar replace evita que el botón "atrás" te cause problemas
+        window.location.replace("subasta.html");
+    }
+});
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumers | Ingreso Premium</title>
