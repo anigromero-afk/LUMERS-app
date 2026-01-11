@@ -6,45 +6,64 @@
     <title>Mi Perfil | Lumers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .profile-card { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+    </style>
 </head>
-<body class="bg-slate-50 min-h-screen pb-24 text-slate-900">
+<body class="bg-slate-50 min-h-screen pb-32">
 
-    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-extrabold text-slate-800">Mi Perfil</h1>
-            <button onclick="cerrarSesion()" class="text-red-500 font-bold text-sm">Salir</button>
+    <header class="profile-card pt-16 pb-24 px-6 rounded-b-[3rem] shadow-2xl shadow-blue-200">
+        <div class="max-w-md mx-auto text-center">
+            <div class="relative inline-block">
+                <img id="userPhoto" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-3xl border-4 border-white/30 mx-auto mb-4 shadow-xl object-cover">
+                <div class="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 border-4 border-blue-600 rounded-full"></div>
+            </div>
+            <h1 id="userName" class="text-2xl font-black text-white tracking-tight">Cargando...</h1>
+            <p id="userEmail" class="text-blue-100 text-sm opacity-80 mb-6 font-medium">--</p>
+            
+            <button onclick="logout()" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-2 rounded-full text-xs font-bold hover:bg-white/20 transition">
+                Cerrar Sesión
+            </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="max-w-md mx-auto px-6 pt-8">
-        <div id="cardUsuario" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 text-center mb-6">
-            <p class="text-slate-400 animate-pulse">Cargando datos del usuario...</p>
-        </div>
-
-        <div class="flex justify-between items-center mb-4 px-2">
-            <h3 class="font-extrabold text-lg text-slate-800">Mis Publicaciones</h3>
-            <span id="contadorPaquetes" class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-bold">0</span>
-        </div>
-
-        <div id="galeriaEnvios" class="space-y-4">
-            <p class="text-slate-400 text-center py-10 text-sm italic">Buscando tus envíos en la nube...</p>
+    <div class="max-w-md mx-auto px-6 -mt-10">
+        <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 flex justify-around border border-slate-100">
+            <div class="text-center">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mis Envíos</p>
+                <p id="countEnvios" class="text-2xl font-black text-slate-800">0</p>
+            </div>
+            <div class="w-[1px] bg-slate-100"></div>
+            <div class="text-center">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</p>
+                <p class="text-2xl font-black text-green-500">Activo</p>
+            </div>
         </div>
     </div>
 
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl flex gap-10 z-50 items-center">
-        <a href="index.html" class="text-xl hover:scale-110 transition">🏠</a>
-        <a href="Subasta.html" class="text-xl hover:scale-110 transition">🌍</a>
-        <a href="crear-envio.html" class="bg-blue-600 p-3 rounded-full hover:scale-110 transition -mt-2">➕</a>
+    <main class="max-w-md mx-auto px-6 mt-10">
+        <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
+            📦 Gestión de envíos
+        </h2>
+        
+        <div id="misEnviosList" class="space-y-4">
+            <p class="text-center text-slate-400 py-10 text-sm">Buscando tus paquetes...</p>
+        </div>
+    </main>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl flex gap-10 z-50 items-center border border-white/10">
+        <a href="index.html" class="text-xl opacity-50 hover:opacity-100">🏠</a>
+        <a href="Subasta.html" class="text-xl opacity-50 hover:opacity-100">🌍</a>
+        <a href="crear-envio.html" class="bg-blue-600 p-3 rounded-full -mt-2 shadow-lg shadow-blue-500/20">➕</a>
+        <a href="perfil.html" class="text-xl text-blue-400">👤</a>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, onSnapshot, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Configuración de tu proyecto Lumers
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
             authDomain: "lumers-d1d36.firebaseapp.com",
@@ -58,104 +77,53 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 1. Manejo del Estado de la Sesión
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Mostrar info del usuario de Google
-                document.getElementById('cardUsuario').innerHTML = `
-                    <img src="${user.photoURL}" class="w-20 h-20 rounded-full mx-auto mb-3 border-4 border-blue-50 shadow-md">
-                    <h2 class="text-xl font-extrabold text-slate-800">${user.displayName}</h2>
-                    <p class="text-slate-500 text-xs">${user.email}</p>
-                `;
-                // Cargar sus paquetes específicos
-                cargarMisPaquetes(user.uid);
+                document.getElementById('userName').innerText = user.displayName;
+                document.getElementById('userEmail').innerText = user.email;
+                document.getElementById('userPhoto').src = user.photoURL;
+                cargarMisEnvios(user.uid);
             } else {
-                // Si no hay usuario, redirigir al inicio
                 window.location.href = "index.html";
             }
         });
 
-        // 2. Cargar Paquetes del Usuario en Tiempo Real
-        function cargarMisPaquetes(uid) {
-            const galeria = document.getElementById('galeriaEnvios');
-            const contador = document.getElementById('contadorPaquetes');
-            
-            // Consulta para traer solo los paquetes creados por este usuario
-            const q = query(collection(db, "envios"), where("usuarioId", "==", uid));
+        function cargarMisEnvios(userId) {
+            const listContainer = document.getElementById('misEnviosList');
+            const q = query(collection(db, "envios"), where("usuarioId", "==", userId));
 
             onSnapshot(q, (snapshot) => {
-                contador.innerText = snapshot.size;
-
+                document.getElementById('countEnvios').innerText = snapshot.size;
+                
                 if (snapshot.empty) {
-                    galeria.innerHTML = `
-                        <div class="bg-white p-10 rounded-3xl border border-dashed border-slate-200 text-center text-slate-400 text-sm">
-                            Aún no has publicado ningún paquete.
+                    listContainer.innerHTML = `
+                        <div class="bg-white border-2 border-dashed border-slate-200 rounded-[2rem] p-10 text-center">
+                            <p class="text-slate-400 text-sm font-bold">Aún no has publicado nada.</p>
                         </div>`;
                     return;
                 }
 
-                galeria.innerHTML = '';
-                snapshot.forEach((docSnap) => {
+                listContainer.innerHTML = '';
+                snapshot.forEach(docSnap => {
                     const data = docSnap.data();
-                    const id = docSnap.id;
-                    const esEntregado = data.estado === "Entregado";
-
-                    galeria.innerHTML += `
-                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex gap-4 items-center animate-in fade-in duration-500">
-                            <img src="${data.foto || 'https://via.placeholder.com/150'}" class="w-16 h-16 rounded-2xl object-cover shadow-inner">
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-bold text-sm text-slate-800 truncate">${data.nombre}</h4>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase ${esEntregado ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}">
-                                        ${data.estado || 'Abierto'}
-                                    </span>
-                                    <span class="text-xs font-extrabold text-slate-900">$${data.valor || '0'}</span>
-                                </div>
+                    listContainer.innerHTML += `
+                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
+                            <img src="${data.foto}" class="w-16 h-16 rounded-2xl object-cover shadow-md">
+                            <div class="flex-1">
+                                <h4 class="font-black text-slate-800 text-sm uppercase tracking-tight">${data.nombre}</h4>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${data.peso}kg • $${data.valor}</p>
                             </div>
-                            ${!esEntregado ? `
-                                <button onclick="marcarComoRecibido('${id}', '${data.nombre}')" class="bg-slate-900 text-white text-[10px] px-4 py-2 rounded-xl font-bold hover:bg-green-600 transition">
-                                    Recibido
-                                </button>
-                            ` : '<span class="text-xl">✅</span>'}
+                            <div class="bg-blue-50 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">
+                                ${data.estado || 'Abierto'}
+                            </div>
                         </div>
                     `;
                 });
-            }, (error) => {
-                console.error("Error al cargar paquetes:", error);
-                galeria.innerHTML = `<p class="text-red-500 text-center text-xs">Error de conexión con la base de datos.</p>`;
             });
         }
 
-        // 3. Función para Confirmar la Recepción
-        window.marcarComoRecibido = async (id, nombre) => {
-            if(confirm(`¿Confirmas que has recibido el paquete "${nombre}" correctamente?`)) {
-                try {
-                    const docRef = doc(db, "envios", id);
-                    await updateDoc(docRef, { 
-                        estado: "Entregado",
-                        fechaCierre: serverTimestamp() 
-                    });
-                    
-                    // Efecto visual de celebración
-                    confetti({
-                        particleCount: 150,
-                        spread: 70,
-                        origin: { y: 0.8 },
-                        colors: ['#2563eb', '#10b981', '#ffffff']
-                    });
-                } catch (e) {
-                    alert("No se pudo actualizar el estado: " + e.message);
-                }
-            }
-        };
-
-        // 4. Cerrar Sesión
-        window.cerrarSesion = () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            }).catch((error) => {
-                alert("Error al salir: " + error.message);
-            });
+        window.logout = () => {
+            signOut(auth).then(() => window.location.href = "index.html");
         };
     </script>
 </body>
