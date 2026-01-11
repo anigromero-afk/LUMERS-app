@@ -3,63 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil | Lumers</title>
+    <title>Perfil | Lumers Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .profile-card { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #f8fafc;
+        }
+        .profile-header {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 0 0 3rem 3rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 2rem;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+        }
+        .glass-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .bottom-nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen pb-32">
+<body class="pb-32">
 
-    <header class="profile-card pt-16 pb-24 px-6 rounded-b-[3rem] shadow-2xl shadow-blue-200">
-        <div class="max-w-md mx-auto text-center">
-            <div class="relative inline-block">
-                <img id="userPhoto" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-3xl border-4 border-white/30 mx-auto mb-4 shadow-xl object-cover">
-                <div class="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 border-4 border-blue-600 rounded-full"></div>
+    <header class="profile-header pt-20 pb-16 px-8 text-center text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10">
+            <div class="w-28 h-28 mx-auto rounded-[2.5rem] border-4 border-blue-500/30 p-1 mb-6">
+                <img id="profilePic" src="https://via.placeholder.com/150" class="w-full h-full object-cover rounded-[2.2rem] shadow-2xl">
             </div>
-            <h1 id="userName" class="text-2xl font-black text-white tracking-tight">Cargando...</h1>
-            <p id="userEmail" class="text-blue-100 text-sm opacity-80 mb-6 font-medium">--</p>
+            <h1 id="userName" class="text-3xl font-black tracking-tighter mb-1">Cargando...</h1>
+            <p id="userEmail" class="text-slate-400 text-sm font-medium mb-8">usuario@lumers.com</p>
             
-            <button onclick="logout()" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-2 rounded-full text-xs font-bold hover:bg-white/20 transition">
-                Cerrar Sesión
-            </button>
+            <div class="flex justify-center gap-3">
+                <div class="glass-item px-5 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest">
+                    ⭐ 4.9 Verificado
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="max-w-md mx-auto px-6 -mt-10">
-        <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 flex justify-around border border-slate-100">
-            <div class="text-center">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Envíos Totales</p>
-                <p id="countEnvios" class="text-2xl font-black text-slate-800">0</p>
+    <main class="max-w-md mx-auto px-6 -mt-10 relative z-20">
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="stat-card p-6 text-center">
+                <span class="block text-2xl mb-1">📦</span>
+                <span class="block text-xl font-black text-slate-800">12</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Envíos</span>
             </div>
-            <div class="w-[1px] bg-slate-100"></div>
-            <div class="text-center">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Reputación</p>
-                <p class="text-2xl font-black text-green-500">100%</p>
+            <div class="stat-card p-6 text-center">
+                <span class="block text-2xl mb-1">🛣️</span>
+                <span class="block text-xl font-black text-slate-800">05</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Viajes</span>
             </div>
         </div>
-    </div>
 
-    <main class="max-w-md mx-auto px-6 mt-10">
-        <h2 class="text-xl font-black text-slate-800 mb-6">📦 Mis Publicaciones</h2>
-        <div id="misEnviosList" class="space-y-4">
-            <p class="text-center text-slate-400 py-10 text-sm">Buscando tus paquetes...</p>
+        <div class="space-y-3">
+            <button class="w-full bg-white p-5 rounded-[1.5rem] flex items-center justify-between border border-slate-100 shadow-sm active:scale-95 transition-all">
+                <div class="flex items-center gap-4">
+                    <span class="text-xl">💳</span>
+                    <span class="font-bold text-slate-700">Métodos de Pago</span>
+                </div>
+                <span class="text-slate-300 text-xs">➔</span>
+            </button>
+
+            <button class="w-full bg-white p-5 rounded-[1.5rem] flex items-center justify-between border border-slate-100 shadow-sm active:scale-95 transition-all">
+                <div class="flex items-center gap-4">
+                    <span class="text-xl">🛡️</span>
+                    <span class="font-bold text-slate-700">Seguridad</span>
+                </div>
+                <span class="text-slate-300 text-xs">➔</span>
+            </button>
+
+            <button id="btnLogout" class="w-full bg-rose-50 p-5 rounded-[1.5rem] flex items-center justify-center gap-3 border border-rose-100 mt-8 active:scale-95 transition-all">
+                <span class="text-rose-500 font-black text-sm uppercase tracking-widest">Cerrar Sesión</span>
+            </button>
         </div>
     </main>
 
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl flex gap-10 z-50 items-center border border-white/10">
-        <a href="index.html" class="text-xl opacity-50 hover:opacity-100">🏠</a>
-        <a href="Subasta.html" class="text-xl opacity-50 hover:opacity-100">🌍</a>
-        <a href="crear-envio.html" class="bg-blue-600 p-3 rounded-full -mt-2 shadow-lg shadow-blue-500/20">➕</a>
-        <a href="perfil.html" class="text-xl text-blue-400">👤</a>
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bottom-nav px-8 py-4 flex justify-between items-center shadow-2xl">
+        <a href="index.html" class="text-white opacity-40 hover:opacity-100">🏠</a>
+        <a href="Subasta.html" class="text-white opacity-40 hover:opacity-100">🌍</a>
+        <a href="crear-envio.html" class="bg-blue-600 p-4 rounded-2xl shadow-lg shadow-blue-500/40 -translate-y-2">
+            <span class="text-white font-bold text-2xl">+</span>
+        </a>
+        <a href="perfil.html" class="text-white text-xl">👤</a>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
@@ -72,76 +117,22 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                document.getElementById('userName').innerText = user.displayName;
+                document.getElementById('userName').innerText = user.displayName.toUpperCase();
                 document.getElementById('userEmail').innerText = user.email;
-                document.getElementById('userPhoto').src = user.photoURL;
-                cargarMisEnvios(user.uid);
+                if(user.photoURL) document.getElementById('profilePic').src = user.photoURL;
             } else {
                 window.location.href = "index.html";
             }
         });
 
-        function cargarMisEnvios(userId) {
-            const listContainer = document.getElementById('misEnviosList');
-            const q = query(collection(db, "envios"), where("usuarioId", "==", userId));
-
-            onSnapshot(q, (snapshot) => {
-                document.getElementById('countEnvios').innerText = snapshot.size;
-                if (snapshot.empty) {
-                    listContainer.innerHTML = `<p class="text-center text-slate-400 py-10">No has publicado nada aún.</p>`;
-                    return;
-                }
-
-                listContainer.innerHTML = '';
-                snapshot.forEach(docSnap => {
-                    const data = docSnap.data();
-                    const id = docSnap.id;
-                    const esAbierto = data.estado === "Abierto";
-
-                    listContainer.innerHTML += `
-                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm space-y-4">
-                            <div class="flex items-center gap-4">
-                                <img src="${data.foto}" class="w-14 h-14 rounded-2xl object-cover">
-                                <div class="flex-1">
-                                    <h4 class="font-black text-slate-800 text-sm uppercase">${data.nombre}</h4>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">$${data.valor} • ${data.estado}</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-2">
-                                ${esAbierto ? `
-                                    <button onclick="marcarEntregado('${id}')" class="flex-1 bg-green-50 text-green-600 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-green-100 transition">Marcar Entregado</button>
-                                ` : ''}
-                                <button onclick="eliminarEnvio('${id}')" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-red-100 transition">Eliminar</button>
-                            </div>
-                        </div>
-                    `;
-                });
-            });
-        }
-
-        // Función para cambiar estado a entregado
-        window.marcarEntregado = async (id) => {
-            if(confirm("¿Confirmas que el paquete ya fue entregado?")){
-                const docRef = doc(db, "envios", id);
-                await updateDoc(docRef, { estado: "Entregado" });
-            }
-        };
-
-        // Función para borrar definitivamente
-        window.eliminarEnvio = async (id) => {
-            if(confirm("¿Estás seguro de que quieres eliminar esta publicación?")){
-                const docRef = doc(db, "envios", id);
-                await deleteDoc(docRef);
-            }
-        };
-
-        window.logout = () => {
-            signOut(auth).then(() => window.location.href = "index.html");
+        document.getElementById('btnLogout').onclick = async () => {
+            await signOut(auth);
+            window.location.href = "index.html";
         };
     </script>
 </body>
 </html>
+
