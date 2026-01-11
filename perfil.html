@@ -31,22 +31,19 @@
     <div class="max-w-md mx-auto px-6 -mt-10">
         <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 flex justify-around border border-slate-100">
             <div class="text-center">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mis Envíos</p>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Envíos Totales</p>
                 <p id="countEnvios" class="text-2xl font-black text-slate-800">0</p>
             </div>
             <div class="w-[1px] bg-slate-100"></div>
             <div class="text-center">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</p>
-                <p class="text-2xl font-black text-green-500">Activo</p>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Reputación</p>
+                <p class="text-2xl font-black text-green-500">100%</p>
             </div>
         </div>
     </div>
 
     <main class="max-w-md mx-auto px-6 mt-10">
-        <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
-            📦 Gestión de envíos
-        </h2>
-        
+        <h2 class="text-xl font-black text-slate-800 mb-6">📦 Mis Publicaciones</h2>
         <div id="misEnviosList" class="space-y-4">
             <p class="text-center text-slate-400 py-10 text-sm">Buscando tus paquetes...</p>
         </div>
@@ -62,7 +59,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
@@ -94,33 +91,53 @@
 
             onSnapshot(q, (snapshot) => {
                 document.getElementById('countEnvios').innerText = snapshot.size;
-                
                 if (snapshot.empty) {
-                    listContainer.innerHTML = `
-                        <div class="bg-white border-2 border-dashed border-slate-200 rounded-[2rem] p-10 text-center">
-                            <p class="text-slate-400 text-sm font-bold">Aún no has publicado nada.</p>
-                        </div>`;
+                    listContainer.innerHTML = `<p class="text-center text-slate-400 py-10">No has publicado nada aún.</p>`;
                     return;
                 }
 
                 listContainer.innerHTML = '';
                 snapshot.forEach(docSnap => {
                     const data = docSnap.data();
+                    const id = docSnap.id;
+                    const esAbierto = data.estado === "Abierto";
+
                     listContainer.innerHTML += `
-                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
-                            <img src="${data.foto}" class="w-16 h-16 rounded-2xl object-cover shadow-md">
-                            <div class="flex-1">
-                                <h4 class="font-black text-slate-800 text-sm uppercase tracking-tight">${data.nombre}</h4>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${data.peso}kg • $${data.valor}</p>
+                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+                            <div class="flex items-center gap-4">
+                                <img src="${data.foto}" class="w-14 h-14 rounded-2xl object-cover">
+                                <div class="flex-1">
+                                    <h4 class="font-black text-slate-800 text-sm uppercase">${data.nombre}</h4>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">$${data.valor} • ${data.estado}</p>
+                                </div>
                             </div>
-                            <div class="bg-blue-50 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">
-                                ${data.estado || 'Abierto'}
+                            <div class="flex gap-2">
+                                ${esAbierto ? `
+                                    <button onclick="marcarEntregado('${id}')" class="flex-1 bg-green-50 text-green-600 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-green-100 transition">Marcar Entregado</button>
+                                ` : ''}
+                                <button onclick="eliminarEnvio('${id}')" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-red-100 transition">Eliminar</button>
                             </div>
                         </div>
                     `;
                 });
             });
         }
+
+        // Función para cambiar estado a entregado
+        window.marcarEntregado = async (id) => {
+            if(confirm("¿Confirmas que el paquete ya fue entregado?")){
+                const docRef = doc(db, "envios", id);
+                await updateDoc(docRef, { estado: "Entregado" });
+            }
+        };
+
+        // Función para borrar definitivamente
+        window.eliminarEnvio = async (id) => {
+            if(confirm("¿Estás seguro de que quieres eliminar esta publicación?")){
+                const docRef = doc(db, "envios", id);
+                await deleteDoc(docRef);
+            }
+        };
 
         window.logout = () => {
             signOut(auth).then(() => window.location.href = "index.html");
