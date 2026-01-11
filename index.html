@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumers | Premium Delivery</title>
+    <title>Lumers | Ingreso Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: radial-gradient(circle at top right, #f8fafc, #e2e8f0); }
         .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
         .btn-premium { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-premium:active { transform: scale(0.95); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center items-center px-6">
     
     <main class="max-w-md w-full text-center">
         <div class="mb-10">
-            <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] mx-auto flex items-center justify-center shadow-2xl text-5xl">📦</div>
+            <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] mx-auto flex items-center justify-center shadow-2xl text-5xl animate-bounce">📦</div>
         </div>
 
         <div class="space-y-4 mb-12">
@@ -25,11 +26,11 @@
         </div>
 
         <div class="glass-card rounded-[3rem] p-8 space-y-6">
-            <button id="btnLogin" class="btn-premium w-full py-5 rounded-2xl flex items-center justify-center gap-4 text-white font-bold shadow-xl">
+            <button id="btnLogin" class="btn-premium w-full py-5 rounded-2xl flex items-center justify-center gap-4 text-white font-bold shadow-xl shadow-slate-900/20">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" class="w-6 h-6 bg-white rounded-full p-1">
                 Ingresar con Google
             </button>
-            <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Seguridad Verificada por Firebase</p>
+            <div id="status" class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Esperando autenticación...</div>
         </div>
     </main>
 
@@ -37,7 +38,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Tu configuración de Firebase
+        // CONFIGURACIÓN OFICIAL LUMERS-D1D36
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
             authDomain: "lumers-d1d36.firebaseapp.com",
@@ -51,60 +52,33 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // 1. Escuchar si el usuario ya está autenticado
+        // 1. Manejar el regreso de la redirección
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result?.user) {
+                    document.getElementById('status').innerText = "Acceso concedido...";
+                    window.location.href = "subasta.html";
+                }
+            })
+            .catch((error) => {
+                console.error("Error en redirección:", error.message);
+                if (error.code !== 'auth/redirect-cancelled-by-user') {
+                    document.getElementById('status').innerText = "Error: Verifica dominios autorizados";
+                }
+            });
+
+        // 2. Verificar estado persistente
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Redirigir a subasta.html (asegúrate que el nombre sea minúscula en GitHub)
                 window.location.href = "subasta.html";
             }
         });
 
-        // 2. Ejecutar redirección al hacer clic
+        // 3. Botón de ingreso con limpieza de caché de sesión
         document.getElementById('btnLogin').onclick = () => {
+            document.getElementById('status').innerText = "Redirigiendo a Google...";
             signInWithRedirect(auth, provider);
         };
-
-        // 3. Manejar el resultado de la redirección al volver
-        getRedirectResult(auth).catch((error) => {
-            console.error("Error al volver de Google:", error.message);
-        });
-    </script><script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
-        authDomain: "lumers-d1d36.firebaseapp.com",
-        projectId: "lumers-d1d36",
-        storageBucket: "lumers-d1d36.firebasestorage.app",
-        messagingSenderId: "798769127070",
-        appId: "1:798769127070:web:6b591851e4c5c62758258f"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    // 1. Verificar si ya volvió de la redirección y entró con éxito
-    getRedirectResult(auth).then((result) => {
-        if (result?.user) {
-            window.location.href = "subasta.html";
-        }
-    }).catch((error) => {
-        console.error("Error al volver de Google:", error.code);
-        alert("Error de ingreso: " + error.message);
-    });
-
-    // 2. Si el usuario ya estaba logueado de antes, mandarlo directo
-    onAuthStateChanged(auth, (user) => {
-        if (user) window.location.href = "subasta.html";
-    });
-
-    // 3. El botón ahora limpia la sesión antes de intentar entrar para evitar bloqueos
-    document.getElementById('btnLogin').onclick = () => {
-        signInWithRedirect(auth, provider);
-    };
-</script>
-
+    </script>
 </body>
 </html>
