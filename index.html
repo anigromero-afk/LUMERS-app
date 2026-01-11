@@ -10,7 +10,6 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: radial-gradient(circle at top right, #f8fafc, #e2e8f0); }
         .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
         .btn-premium { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-premium:active { transform: scale(0.96); }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(12deg); } 50% { transform: translateY(-10px) rotate(15deg); } }
         .floating-icon { animation: float 4s ease-in-out infinite; }
     </style>
@@ -25,11 +24,11 @@
             <p class="text-slate-500 text-lg font-medium leading-relaxed">Envíos colaborativos con seguridad premium.</p>
         </div>
         <div class="glass-card rounded-[3rem] p-8 space-y-6">
-            <button id="btnLogin" class="btn-premium w-full py-5 rounded-2xl flex items-center justify-center gap-4 text-white font-bold shadow-xl">
+            <button id="btnLogin" class="btn-premium w-full py-5 rounded-2xl flex items-center justify-center gap-4 text-white font-bold shadow-xl shadow-slate-900/20">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" class="w-6 h-6 bg-white rounded-full p-1">
                 Ingresar con Google
             </button>
-            <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Powered by Firebase Security</p>
+            <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Seguridad verificada por Firebase</p>
         </div>
     </main>
 
@@ -37,6 +36,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // Configuración obtenida de tu consola Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
             authDomain: "lumers-d1d36.firebaseapp.com",
@@ -51,10 +51,14 @@
         const provider = new GoogleAuthProvider();
 
         onAuthStateChanged(auth, (user) => { if (user) window.location.href = "Subasta.html"; });
-        document.getElementById('btnLogin').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { alert("Error: " + e.message); } };
+
+        document.getElementById('btnLogin').onclick = async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                alert("Error al ingresar: " + error.message);
+            }
+        };
     </script>
 </body>
 </html>
-
-
-
