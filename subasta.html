@@ -30,7 +30,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let todasLasSubastas = []; // Para guardar los datos y filtrar localmente
+        let todasLassubastas = []; // Para guardar los datos y filtrar localmente
 
         // FUNCIÓN PARA ENVIAR WHATSAPP (Ajusta el número si tienes uno fijo o úsalo dinámico)
         window.enviarPropuesta = (producto, ruta) => {
@@ -42,7 +42,7 @@
         // FILTRADO EN TIEMPO REAL
         document.getElementById('inputBusqueda').oninput = (e) => {
             const termino = e.target.value.toLowerCase();
-            const filtradas = todasLasSubastas.filter(s => 
+            const filtradas = todasLassubastas.filter(s => 
                 s.producto.toLowerCase().includes(termino) || 
                 s.ruta.toLowerCase().includes(termino)
             );
@@ -52,12 +52,12 @@
         function cargarSubastas() {
             const q = query(collection(db, "subastas"), orderBy("fecha", "desc"));
             onSnapshot(q, (snapshot) => {
-                todasLasSubastas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderizarSubastas(todasLasSubastas);
+                todasLassubastas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderizarsubastas(todasLassubastas);
             });
         }
 
-        function renderizarSubastas(lista) {
+        function renderizarsubastas(lista) {
             const contenedor = document.getElementById('listaSubastas');
             contenedor.innerHTML = "";
             lista.forEach((d) => {
