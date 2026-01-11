@@ -1,20 +1,57 @@
-<main class="max-w-2xl mx-auto p-6">
-        <header class="mb-8">
-            <h1 class="text-3xl font-extrabold text-slate-900">subastas activas</h1>
-            <p class="text-slate-500">Encuentra envíos cerca de tu ruta.</p>
-        </header>
-        <div class="mb-8">
-            <input type="text" id="inputBusqueda" placeholder="Buscar por ruta o producto..." 
-            class="w-full p-5 bg-white rounded-[2rem] border-none shadow-sm focus:ring-2 focus:ring-blue-500 font-medium">
-        </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumers | subastas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; }
+        .header-glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .card-subasta { background: white; border: 1px solid #f1f5f9; transition: all 0.2s; }
+        .card-subasta:active { transform: scale(0.98); }
+    </style>
+</head>
+<body class="pb-24">
+    <nav class="header-glass sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <h2 class="text-2xl font-black italic tracking-tighter text-slate-900">LUMERS</h2>
+        <div id="userInfo" class="flex items-center gap-3 bg-slate-100 px-4 py-2 rounded-2xl text-xs font-bold">Cargando...</div>
+    </nav>
 
+    <main class="max-w-2xl mx-auto p-6">
+        <div class="mb-8">
+            <h1 class="text-3xl font-extrabold text-slate-900">Subastas activas</h1>
+            <input type="text" id="inputBusqueda" placeholder="Buscar por ruta o producto..." class="w-full mt-4 p-5 bg-white rounded-[2rem] border-none shadow-sm focus:ring-2 focus:ring-blue-500 font-medium">
+        </div>
         <div id="listasubastas" class="grid gap-6"></div>
     </main>
 
+    <div id="modalForm" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-end justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-[3rem] p-8">
+            <h3 class="text-2xl font-extrabold mb-6">Nuevo Envío</h3>
+            <div class="space-y-4">
+                <input type="text" id="inputRuta" placeholder="Ej: BsAs -> Rosario" class="w-full p-4 bg-slate-100 rounded-2xl border-none">
+                <input type="text" id="inputProducto" placeholder="¿Qué envías?" class="w-full p-4 bg-slate-100 rounded-2xl border-none">
+                <div class="flex gap-4">
+                    <input type="number" id="inputPrecio" placeholder="Precio $" class="w-1/2 p-4 bg-slate-100 rounded-2xl border-none">
+                    <input type="number" id="inputPeso" placeholder="Peso kg" class="w-1/2 p-4 bg-slate-100 rounded-2xl border-none">
+                </div>
+                <button id="btnGuardar" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold">Publicar ahora</button>
+                <button id="btnCloseForm" class="w-full text-slate-400 font-bold py-2 text-sm">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-slate-900 rounded-[2.5rem] p-4 flex justify-around items-center shadow-2xl z-50">
+        <button class="text-white text-xl">🏠</button>
+        <button id="btnOpenForm" class="bg-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">+</button>
+        <button id="btnLogout" class="text-white opacity-50 text-xl">🚪</button>
+    </div>
+
     <script type="module">
-        // ... (Mismo inicio de Firebase y Configuración) ...
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -30,79 +67,66 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let todasLassubastas = []; // Para guardar los datos y filtrar localmente
+        let todasLassubastas = [];
 
-        // FUNCIÓN PARA ENVIAR WHATSAPP (Ajusta el número si tienes uno fijo o úsalo dinámico)
-        window.enviarPropuesta = (producto, ruta) => {
-            const tel = "5491122334455"; // Aquí puedes poner tu número o el del dueño
-            const mensaje = encodeURIComponent(`Hola! Vi tu publicación en LUMERS: "${producto}" para la ruta "${ruta}". Me interesa llevarlo.`);
-            window.open(`https://wa.me/${tel}?text=${mensaje}`, '_blank');
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('userInfo').innerHTML = `<img src="${user.photoURL}" class="w-6 h-6 rounded-full"> ${user.displayName.split(' ')[0]}`;
+                cargarsubastas();
+            } else {
+                window.location.replace("index.html");
+            }
+        });
+
+        // WhatsApp
+        window.enviarPropuesta = (prod, ruta) => {
+            const msj = encodeURIComponent(`Hola! Me interesa llevar tu envío de LUMERS: ${prod} (${ruta})`);
+            window.open(`https://wa.me/5491122334455?text=${msj}`);
         };
 
-        // FILTRADO EN TIEMPO REAL
-        document.getElementById('inputBusqueda').oninput = (e) => {
-            const termino = e.target.value.toLowerCase();
-            const filtradas = todasLassubastas.filter(s => 
-                s.producto.toLowerCase().includes(termino) || 
-                s.ruta.toLowerCase().includes(termino)
-            );
-            renderizarSubastas(filtradas);
-        };
-
-        function cargarSubastas() {
+        function cargarsubastas() {
             const q = query(collection(db, "subastas"), orderBy("fecha", "desc"));
-            onSnapshot(q, (snapshot) => {
-                todasLassubastas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderizarsubastas(todasLassubastas);
+            onSnapshot(q, (sn) => {
+                todasLassubastas = sn.docs.map(d => ({id: d.id, ...d.data()}));
+                render(todasLassubastas);
             });
         }
 
-        function renderizarsubastas(lista) {
-            const contenedor = document.getElementById('listaSubastas');
-            contenedor.innerHTML = "";
-            lista.forEach((d) => {
-                contenedor.innerHTML += `
-                    <div class="card-subasta p-6 rounded-[2.5rem] shadow-sm flex flex-col gap-4 bg-white mb-2 border border-slate-50">
-                        <div class="flex justify-between items-start">
-                            <span class="badge-ruta px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-50 text-blue-600">📍 ${d.ruta}</span>
+        function render(lista) {
+            const c = document.getElementById('listasubastas');
+            c.innerHTML = "";
+            lista.forEach(d => {
+                c.innerHTML += `
+                    <div class="card-subasta p-6 rounded-[2.5rem] shadow-sm bg-white">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest">📍 ${d.ruta}</span>
                             <span class="text-xl font-extrabold text-slate-900">$${d.precio}</span>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-800">${d.producto}</h3>
-                            <p class="text-sm text-slate-500">${d.peso} kg • Publicado por ${d.usuario || 'Lumers User'}</p>
-                        </div>
-                        <button onclick="enviarPropuesta('${d.producto}', '${d.ruta}')" 
-                        class="w-full bg-slate-900 text-white py-4 rounded-2xl font-extrabold text-sm hover:bg-blue-600 transition-colors">
-                            Enviar propuesta vía WhatsApp
-                        </button>
+                        <h3 class="text-lg font-bold text-slate-800">${d.producto}</h3>
+                        <p class="text-xs text-slate-400 mb-4">${d.peso} kg • Publicado por ${d.usuario || 'Usuario'}</p>
+                        <button onclick="enviarPropuesta('${d.producto}', '${d.ruta}')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-xs">Propuesta WhatsApp</button>
                     </div>`;
             });
         }
 
-        // ... (Resto de funciones de Auth y Modal igual que antes) ...
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('userInfo').innerHTML = `<img src="${user.photoURL}" class="w-6 h-6 rounded-full"><span class="text-xs font-bold text-slate-700">${user.displayName.split(' ')[0]}</span>`;
-                cargarSubastas();
-            } else { window.location.assign("index.html"); }
-        });
-        
-        const modal = document.getElementById('modalForm');
-        document.getElementById('btnOpenForm').onclick = () => modal.classList.remove('hidden');
-        document.getElementById('btnCloseForm').onclick = () => modal.classList.add('hidden');
+        // Filtro
+        document.getElementById('inputBusqueda').oninput = (e) => {
+            const t = e.target.value.toLowerCase();
+            render(todasLasSubastas.filter(s => s.producto.toLowerCase().includes(t) || s.ruta.toLowerCase().includes(t)));
+        };
+
+        // Modal Logic
+        const m = document.getElementById('modalForm');
+        document.getElementById('btnOpenForm').onclick = () => m.classList.remove('hidden');
+        document.getElementById('btnCloseForm').onclick = () => m.classList.add('hidden');
+        document.getElementById('btnLogout').onclick = () => signOut(auth);
         document.getElementById('btnGuardar').onclick = async () => {
-            const ruta = document.getElementById('inputRuta').value;
-            const producto = document.getElementById('inputProducto').value;
-            const precio = document.getElementById('inputPrecio').value;
-            const peso = document.getElementById('inputPeso').value;
-            if(ruta && producto && precio) {
-                await addDoc(collection(db, "subastas"), {
-                    ruta, producto, precio: Number(precio), peso: Number(peso),
-                    fecha: serverTimestamp(),
-                    usuario: auth.currentUser.displayName
-                });
-                modal.classList.add('hidden');
+            const r = document.getElementById('inputRuta').value, p = document.getElementById('inputProducto').value, pr = document.getElementById('inputPrecio').value, pe = document.getElementById('inputPeso').value;
+            if(r && p && pr) {
+                await addDoc(collection(db, "subastas"), { ruta:r, producto:p, precio:Number(pr), peso:Number(pe), fecha:serverTimestamp(), usuario:auth.currentUser.displayName });
+                m.classList.add('hidden');
             }
         };
     </script>
 </body>
+</html>
