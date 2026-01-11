@@ -3,32 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat de Negociación | Lumers</title>
+    <title>Chat Lumers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .chat-container { height: calc(100vh - 180px); }
+        .bg-chat { background-color: #f1f5f9; background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px); background-size: 10px 10px; }
+        .bubble-me { border-bottom-right-radius: 4px; }
+        .bubble-them { border-bottom-left-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen">
+<body class="bg-chat min-h-screen flex flex-col">
 
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4 flex items-center gap-4">
-        <a href="Subasta.html" class="text-slate-400">⬅️</a>
-        <div>
-            <h1 id="chatTitulo" class="text-lg font-extrabold text-slate-800 uppercase tracking-tight text-sm">Cargando Chat...</h1>
-            <p class="text-[10px] text-green-500 font-bold uppercase">En línea ahora</p>
+    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center gap-4 sticky top-0 z-50">
+        <a href="Subasta.html" class="w-10 h-10 flex items-center justify-center bg-slate-100 rounded-full hover:bg-slate-200 transition">⬅️</a>
+        <div class="flex-1">
+            <h1 id="chatPaquete" class="text-sm font-black text-slate-800 uppercase tracking-tight">Cargando chat...</h1>
+            <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest">Negociación Directa</p>
         </div>
     </nav>
 
-    <div id="mensajesChat" class="chat-container overflow-y-auto px-6 py-6 flex flex-col gap-4">
+    <div id="mensajesContainer" class="flex-1 p-6 space-y-4 overflow-y-auto pb-32">
         </div>
 
-    <div class="fixed bottom-0 w-full bg-white border-t border-slate-200 p-4 pb-8">
-        <form id="formMensaje" class="max-w-md mx-auto flex gap-2">
-            <input type="text" id="inputMensaje" placeholder="Escribe tu oferta..." class="flex-1 bg-slate-100 border-none rounded-2xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-            <button type="submit" class="bg-blue-600 text-white p-3 rounded-2xl hover:bg-blue-700 transition">
-                🚀
+    <div class="fixed bottom-0 w-full bg-white p-4 border-t border-slate-200">
+        <form id="formChat" class="max-w-2xl mx-auto flex gap-2">
+            <input type="text" id="inputMensaje" placeholder="Escribe un mensaje..." 
+                   class="flex-1 bg-slate-100 border-none rounded-2xl px-5 py-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none font-medium">
+            <button type="submit" class="bg-blue-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 hover:scale-105 active:scale-95 transition">
+                <span class="text-xl">🚀</span>
             </button>
         </form>
     </div>
@@ -36,7 +39,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
@@ -51,58 +54,57 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Obtener el ID del paquete desde la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const envioId = urlParams.get('id');
+        const params = new URLSearchParams(window.location.search);
+        const envioId = params.get('id');
 
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
+        onAuthStateChanged(auth, (user) => {
+            if (user && envioId) {
+                cargarInfoPaquete();
+                escucharMensajes(user.uid);
+            } else if (!user) {
                 window.location.href = "index.html";
-                return;
-            }
-            if (envioId) {
-                obtenerInfoPaquete();
-                escucharMensajes(user);
             }
         });
 
-        async function obtenerInfoPaquete() {
+        async function cargarInfoPaquete() {
             const docRef = doc(db, "envios", envioId);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                document.getElementById('chatTitulo').innerText = docSnap.data().nombre;
+            const snap = await getDoc(docRef);
+            if(snap.exists()) {
+                document.getElementById('chatPaquete').innerText = snap.data().nombre;
             }
         }
 
-        function escucharMensajes(user) {
-            const q = query(
-                collection(db, "mensajes"),
-                where("envioId", "==", envioId),
-                orderBy("fecha", "asc")
-            );
-
+        function escucharMensajes(miUid) {
+            const q = query(collection(db, "mensajes"), where("envioId", "==", envioId), orderBy("fecha", "asc"));
+            
             onSnapshot(q, (snapshot) => {
-                const contenedor = document.getElementById('mensajesChat');
-                contenedor.innerHTML = '';
+                const container = document.getElementById('mensajesContainer');
+                container.innerHTML = '';
                 
-                snapshot.forEach((doc) => {
-                    const msg = doc.data();
-                    const esMio = msg.usuarioId === user.uid;
-                    
-                    contenedor.innerHTML += `
+                snapshot.forEach(docSnap => {
+                    const msg = docSnap.data();
+                    const esMio = msg.usuarioId === miUid;
+
+                    container.innerHTML += `
                         <div class="flex ${esMio ? 'justify-end' : 'justify-start'}">
-                            <div class="max-w-[80%] px-4 py-2 rounded-2xl text-sm font-medium shadow-sm ${esMio ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-white text-slate-800 rounded-tl-none'}">
-                                ${msg.texto}
-                                <p class="text-[8px] opacity-60 mt-1 text-right">${new Date(msg.fecha?.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                            <div class="max-w-[85%]">
+                                <p class="text-[9px] font-bold text-slate-400 mb-1 px-2 uppercase ${esMio ? 'text-right' : 'text-left'}">
+                                    ${esMio ? 'Tú' : msg.usuarioNombre}
+                                </p>
+                                <div class="px-4 py-2.5 rounded-2xl text-sm font-semibold shadow-sm 
+                                    ${esMio ? 'bg-blue-600 text-white bubble-me' : 'bg-white text-slate-700 bubble-them border border-slate-100'}">
+                                    ${msg.texto}
+                                </div>
                             </div>
                         </div>
                     `;
                 });
-                contenedor.scrollTop = contenedor.scrollHeight;
+                window.scrollTo(0, document.body.scrollHeight);
+                container.scrollTop = container.scrollHeight;
             });
         }
 
-        document.getElementById('formMensaje').addEventListener('submit', async (e) => {
+        document.getElementById('formChat').onsubmit = async (e) => {
             e.preventDefault();
             const input = document.getElementById('inputMensaje');
             const texto = input.value.trim();
@@ -112,12 +114,13 @@
                     envioId: envioId,
                     texto: texto,
                     usuarioId: auth.currentUser.uid,
-                    nombreUsuario: auth.currentUser.displayName,
+                    usuarioNombre: auth.currentUser.displayName,
                     fecha: serverTimestamp()
                 });
                 input.value = '';
+                container.scrollTop = container.scrollHeight;
             }
-        });
+        };
     </script>
 </body>
 </html>
