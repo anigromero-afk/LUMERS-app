@@ -14,19 +14,18 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
     <div class="glass-card p-10 shadow-2xl max-w-sm w-full">
         <div class="w-20 h-20 bg-blue-600 rounded-3xl mx-auto mb-6 flex items-center justify-center text-4xl shadow-lg">📦</div>
-        <h1 class="text-4xl font-black text-slate-900 mb-2 italic">LUMERS</h1>
+        <h1 class="text-4xl font-black text-slate-900 mb-2 italic tracking-tighter">LUMERS</h1>
         <p class="text-slate-500 mb-10 text-sm font-medium">Envíos colaborativos con seguridad premium</p>
         
         <button id="btnLogin" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 active:scale-95 transition-transform shadow-xl">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" class="w-5 h-5 bg-white rounded-full p-0.5">
             Ingresar con Google
         </button>
-        <p class="mt-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest">Seguridad verificada por Firebase</p>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
@@ -41,19 +40,22 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
+        // Esto ayuda a que en celulares no falle el popup
         onAuthStateChanged(auth, (user) => {
-            if (user) window.location.href = "Subasta.html";
+            if (user) window.location.href = "subasta.html";
         });
 
-        document.getElementById('btnLogin').onclick = async () => {
-            try {
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                if (error.code !== 'auth/cancelled-popup-request') {
-                    alert("Error: " + error.message);
-                }
-            }
+        document.getElementById('btnLogin').onclick = () => {
+            signInWithRedirect(auth, provider);
         };
+
+        // Manejar el resultado del redireccionamiento
+        getRedirectResult(auth).catch((error) => {
+            if (error.code !== 'auth/redirect-cancelled-by-user') {
+                alert("Error: " + error.message);
+            }
+        });
     </script>
 </body>
 </html>
+
