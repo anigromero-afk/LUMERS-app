@@ -58,7 +58,7 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log("Sesión activa detectada");
-                window.location.href = "subasta.html";
+                window.location.href = "subastas.html";
             }
         });
 
@@ -71,7 +71,7 @@
                 await signInWithPopup(auth, provider);
                 // Si llegamos aquí, el login fue exitoso.
                 statusLabel.innerText = "Acceso concedido...";
-                window.location.href = "subasta.html";
+                window.location.href = "subastas.html";
             } catch (error) {
                 console.error("Error de login:", error);
                 statusLabel.innerText = "Error: Intenta de nuevo";
