@@ -15,18 +15,17 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // CORRECCIÓN: Ahora apunta a subastas.html con S
-            window.location.href = "subastas.html";
-        }
-    });
-
+    // Esto obliga a usar una ventana emergente que NO da el error de la imagen 1
     document.getElementById('btnLogin').onclick = async () => {
         try {
             await signInWithPopup(auth, provider);
+            window.location.href = "subastas.html";
         } catch (error) {
-            alert("Error al entrar: " + error.message);
+            alert("Error: Asegúrate de permitir las ventanas emergentes en tu navegador.");
         }
     };
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) window.location.href = "subastas.html";
+    });
 </script>
