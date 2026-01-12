@@ -15,20 +15,18 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // Si ya detecta al usuario, lo manda a subasta.html sin preguntar
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            console.log("Sesión detectada");
-            window.location.href = "subasta.html";
+            // CORRECCIÓN: Ahora apunta a subastas.html con S
+            window.location.href = "subastas.html";
         }
     });
 
     document.getElementById('btnLogin').onclick = async () => {
         try {
             await signInWithPopup(auth, provider);
-            // No hace falta poner nada aquí, onAuthStateChanged hará el trabajo
         } catch (error) {
-            alert("Error: " + error.message);
+            alert("Error al entrar: " + error.message);
         }
     };
 </script>
