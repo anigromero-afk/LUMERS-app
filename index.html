@@ -1,54 +1,34 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMERS | Inicio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { font-family: sans-serif; background: #f1f5f9; }
-        .btn-google { background: #1e293b; color: white; transition: 0.3s; }
-    </style>
-</head>
-<body class="min-h-screen flex items-center justify-center p-6 text-center">
-    <div class="max-w-sm w-full bg-white p-10 rounded-[3rem] shadow-xl">
-        <div class="text-6xl mb-6">📦</div>
-        <h1 class="text-4xl font-black mb-2 italic">LUMERS</h1>
-        <p class="text-slate-500 mb-10">Tu red de envíos colaborativos</p>
-        
-        <button id="btnLogin" class="btn-google w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" class="w-5 h-5 bg-white rounded-full p-0.5">
-            Entrar con Google
-        </button>
-        <p id="status" class="mt-4 text-[10px] text-slate-400 uppercase font-bold tracking-widest"></p>
-    </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
+        authDomain: "lumers-d1d36.firebaseapp.com",
+        projectId: "lumers-d1d36",
+        storageBucket: "lumers-d1d36.firebasestorage.app",
+        messagingSenderId: "798769127070",
+        appId: "1:798769127070:web:6b591851e4c5c62758258f"
+    };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
-            authDomain: "lumers-d1d36.firebaseapp.com",
-            projectId: "lumers-d1d36",
-            storageBucket: "lumers-d1d36.firebasestorage.app",
-            messagingSenderId: "798769127070",
-            appId: "1:798769127070:web:6b591851e4c5c62758258f"
-        };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+    // Si ya detecta al usuario, lo manda a subasta.html sin preguntar
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("Sesión detectada");
+            window.location.href = "subasta.html";
+        }
+    });
 
-        // Si ya está logueado, saltar a la app
-        onAuthStateChanged(auth, (user) => {
-            if (user) window.location.replace("subasta.html");
-        });
-
-        document.getElementById('btnLogin').onclick = () => {
-            document.getElementById('status').innerText = "Cargando...";
-            signInWithRedirect(auth, provider);
-        };
-    </script>
-</body>
-</html>
+    document.getElementById('btnLogin').onclick = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+            // No hace falta poner nada aquí, onAuthStateChanged hará el trabajo
+        } catch (error) {
+            alert("Error: " + error.message);
+        }
+    };
+</script>
