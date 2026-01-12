@@ -1,31 +1,32 @@
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
-        authDomain: "lumers-d1d36.firebaseapp.com",
-        projectId: "lumers-d1d36",
-        storageBucket: "lumers-d1d36.firebasestorage.app",
-        messagingSenderId: "798769127070",
-        appId: "1:798769127070:web:6b591851e4c5c62758258f"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    // Esto obliga a usar una ventana emergente que NO da el error de la imagen 1
-    document.getElementById('btnLogin').onclick = async () => {
-        try {
-            await signInWithPopup(auth, provider);
-            window.location.href = "subastas.html";
-        } catch (error) {
-            alert("Error: Asegúrate de permitir las ventanas emergentes en tu navegador.");
-        }
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) window.location.href = "subastas.html";
-    });
-</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMERS | Inicio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 h-screen flex items-center justify-center p-6 text-center text-white">
+    <div class="bg-white text-slate-900 p-10 rounded-[3rem] w-full max-w-sm shadow-2xl">
+        <h1 class="text-4xl font-black italic mb-2">LUMERS</h1>
+        <p class="text-slate-500 mb-8 text-sm font-bold tracking-widest">ENTRAR PARA VER ENVÍOS</p>
+        <button id="btnGoogle" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 active:scale-95 transition-all">
+            Entrar con Google
+        </button>
+        <p id="msg" class="mt-4 text-xs text-slate-400 font-medium"></p>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        const firebaseConfig = { apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw", authDomain: "lumers-d1d36.firebaseapp.com", projectId: "lumers-d1d36", storageBucket: "lumers-d1d36.firebasestorage.app", messagingSenderId: "798769127070", appId: "1:798769127070:web:6b591851e4c5c62758258f" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        onAuthStateChanged(auth, (u) => { if(u) window.location.href="app.html"; });
+        document.getElementById('btnGoogle').onclick = async () => {
+            document.getElementById('msg').innerText = "Abriendo Google...";
+            try { await signInWithPopup(auth, provider); } catch(e) { alert("Habilita los pop-ups para entrar"); }
+        };
+    </script>
+</body>
+</html>
