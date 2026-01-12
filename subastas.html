@@ -1,52 +1,158 @@
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMERS | Envíos Activos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .card-premium { background: white; border-radius: 2rem; border: 1px solid #f1f5f9; transition: transform 0.2s; }
+        .card-premium:active { transform: scale(0.98); }
+        .btn-plus { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); shadow-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4); }
+    </style>
+</head>
+<body class="pb-24">
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
-        authDomain: "lumers-d1d36.firebaseapp.com",
-        projectId: "lumers-d1d36",
-        storageBucket: "lumers-d1d36.firebasestorage.app",
-        messagingSenderId: "798769127070",
-        appId: "1:798769127070:web:6b591851e4c5c62758258f"
-    };
+    <nav class="p-6 bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100 flex justify-between items-center">
+        <h1 class="text-2xl font-black tracking-tighter italic text-slate-900">LUMERS</h1>
+        <div id="user" class="text-[10px] font-extrabold bg-slate-100 px-3 py-1.5 rounded-full text-slate-600 uppercase">Cargando...</div>
+    </nav>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    <div class="p-6">
+        <input type="text" id="buscador" placeholder="🔍 Buscar destino o paquete..." 
+               class="w-full p-5 rounded-2xl border-none shadow-sm bg-white text-sm focus:ring-2 focus:ring-blue-500">
+    </div>
 
-    // SEGURIDAD REFORZADA
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log("Bienvenido:", user.displayName);
-            document.getElementById('user').innerText = user.displayName;
-            cargarSubastas(); // Solo carga si hay usuario
-        } else {
-            console.log("No hay usuario, esperando 3 segundos...");
-            // Esperamos 3 segundos antes de echarte, por si la conexión está lenta
-            setTimeout(() => {
-                if (!auth.currentUser) {
-                    window.location.href = "index.html";
-                }
-            }, 3000);
-        }
-    });
+    <main id="lista" class="px-6 space-y-4">
+        <div class="text-center py-20 text-slate-400">
+            <p class="animate-pulse">Buscando envíos...</p>
+        </div>
+    </main>
 
-    function cargarSubastas() {
-        // Aquí va tu código de onSnapshot que ya tenías
-        onSnapshot(collection(db, "subastas"), (snap) => {
-            const lista = document.getElementById('lista');
-            lista.innerHTML = "";
-            snap.forEach(doc => {
-                const data = doc.data();
-                lista.innerHTML += `<div class="bg-white p-4 rounded-xl shadow mb-2">
-                    <p class="font-bold">${data.producto}</p>
-                    <p class="text-sm">${data.ruta}</p>
-                </div>`;
-            });
+    <button id="btnAbrir" class="fixed bottom-8 right-6 w-16 h-16 btn-plus text-white rounded-full text-3xl shadow-2xl z-50 flex items-center justify-center font-bold">+</button>
+
+    <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[60] flex items-end">
+        <div class="bg-white w-full rounded-t-[3rem] p-8 shadow-2xl">
+            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
+            <h3 class="text-2xl font-extrabold text-slate-900 mb-6">Nuevo Envío</h3>
+            
+            <div class="space-y-4">
+                <input id="fRuta" type="text" placeholder="📍 Ruta (Ej: Rosario - CABA)" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500">
+                <input id="fProd" type="text" placeholder="📦 ¿Qué necesitas enviar?" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500">
+                <input id="fPrecio" type="number" placeholder="💰 Precio ofrecido $" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500">
+                
+                <button id="btnGuardar" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg mt-4 shadow-xl">Publicar ahora</button>
+                <button id="btnCerrar" class="w-full text-slate-400 font-bold py-2">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
+            authDomain: "lumers-d1d36.firebaseapp.com",
+            projectId: "lumers-d1d36",
+            storageBucket: "lumers-d1d36.firebasestorage.app",
+            messagingSenderId: "798769127070",
+            appId: "1:798769127070:web:6b591851e4c5c62758258f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let envios = [];
+
+        // --- SEGURIDAD Y LOGIN ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('user').innerText = user.displayName;
+                escucharDatos();
+            } else {
+                // Si no hay usuario, vuelve al index con el nombre corregido
+                window.location.replace("index.html");
+            }
         });
-    }
-</script>
 
-    
+        // --- CARGAR DATOS EN TIEMPO REAL ---
+        function escucharDatos() {
+            const q = query(collection(db, "subastas"), orderBy("fecha", "desc"));
+            onSnapshot(q, (snapshot) => {
+                envios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderizar(envios);
+            });
+        }
+
+        function renderizar(lista) {
+            const contenedor = document.getElementById('lista');
+            if (lista.length === 0) {
+                contenedor.innerHTML = '<p class="text-center text-slate-400 mt-10">No hay envíos activos. ¡Sé el primero!</p>';
+                return;
+            }
+            contenedor.innerHTML = "";
+            lista.forEach(item => {
+                contenedor.innerHTML += `
+                    <div class="card-premium p-6 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-1 rounded-md uppercase tracking-widest">📍 ${item.ruta}</span>
+                            <span class="text-lg font-extrabold text-slate-900">$${item.precio}</span>
+                        </div>
+                        <h3 class="text-slate-800 font-bold text-lg mb-4">${item.producto}</h3>
+                        <a href="https://wa.me/5493364205566?text=Hola!+Me+interesa+tu+envio+de+${item.producto}+en+Lumers" 
+                           class="block w-full text-center bg-slate-900 text-white py-4 rounded-xl font-bold text-sm">
+                           Contactar Dueño
+                        </a>
+                    </div>
+                `;
+            });
+        }
+
+        // --- BUSCADOR ---
+        document.getElementById('buscador').oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtrados = envios.filter(en => 
+                en.ruta.toLowerCase().includes(term) || 
+                en.producto.toLowerCase().includes(term)
+            );
+            renderizar(filtrados);
+        };
+
+        // --- FORMULARIO Y MODAL ---
+        const modal = document.getElementById('modal');
+        document.getElementById('btnAbrir').onclick = () => modal.classList.remove('hidden');
+        document.getElementById('btnCerrar').onclick = () => modal.classList.add('hidden');
+
+        document.getElementById('btnGuardar').onclick = async () => {
+            const ruta = document.getElementById('fRuta').value;
+            const producto = document.getElementById('fProd').value;
+            const precio = document.getElementById('fPrecio').value;
+
+            if (ruta && producto && precio) {
+                try {
+                    await addDoc(collection(db, "subastas"), {
+                        ruta: ruta,
+                        producto: producto,
+                        precio: Number(precio),
+                        fecha: serverTimestamp(),
+                        usuario: auth.currentUser.displayName
+                    });
+                    modal.classList.add('hidden');
+                    // Limpiar campos
+                    document.getElementById('fRuta').value = "";
+                    document.getElementById('fProd').value = "";
+                    document.getElementById('fPrecio').value = "";
+                } catch (e) {
+                    alert("Error al guardar: " + e.message);
+                }
+            } else {
+                alert("Por favor completa todos los campos");
+            }
+        };
+    </script>
+</body>
+</html>
