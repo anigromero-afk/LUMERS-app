@@ -1,43 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMERS | Panel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 min-h-screen pb-24">
-    <header class="bg-white p-6 shadow-sm flex justify-between items-center">
-        <h1 class="text-2xl font-black italic text-slate-900">LUMERS</h1>
-        <button id="btnSalir" class="text-xs font-bold text-red-500">SALIR</button>
-    </header>
 
-    <main class="p-6">
-        <div id="listaViajes" class="space-y-4">
-            <p class="text-center text-slate-400 py-10">Cargando envíos...</p>
-        </div>
-    </main>
-
-    <div id="modalEnvio" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center p-6 z-50">
-        <div class="bg-white w-full max-w-sm rounded-[2rem] p-8 shadow-2xl">
-            <h3 class="text-xl font-black mb-4">Nuevo Envío</h3>
-            <input id="origen" type="text" placeholder="Origen" class="w-full bg-slate-100 p-4 rounded-xl mb-3 outline-none">
-            <input id="destino" type="text" placeholder="Destino" class="w-full bg-slate-100 p-4 rounded-xl mb-3 outline-none">
-            <input id="precio" type="number" placeholder="Precio $" class="w-full bg-slate-100 p-4 rounded-xl mb-6 outline-none">
-            <div class="flex gap-2">
-                <button id="btnCerrar" class="flex-1 py-4 text-slate-400">Cancelar</button>
-                <button id="btnPublicar" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold">PUBLICAR</button>
-            </div>
-        </div>
-    </div>
-
-    <button id="btnNuevo" class="fixed bottom-8 right-8 bg-blue-600 text-white w-16 h-16 rounded-full text-4xl shadow-xl shadow-blue-200">+</button>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+<
         const firebaseConfig = {
             apiKey: "AIzaSyD6Uw5qK8epzRw2cZ_JHyxHXZUjuy3eC3U",
             authDomain: "lumers-d4fb3.firebaseapp.com",
