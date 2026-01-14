@@ -18,11 +18,9 @@
     </div>
 
     <script type="module">
-        // Importamos las herramientas de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Tu configuración nueva
         const firebaseConfig = {
             apiKey: "AIzaSyD6Uw5qK8epzRw2cZ_JHyxHXZUjuy3eC3U",
             authDomain: "lumers-d4fb3.firebaseapp.com",
@@ -32,28 +30,31 @@
             appId: "1:105585536196:web:3461252d1dabfd3283ad91"
         };
 
-        // Inicializamos
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // TRUCO PARA EL RULO: Revisar si el usuario ya viene de loguearse
-        getRedirectResult(auth)
-            .then((result) => {
-                if (result?.user) {
-                    // Si entró bien, lo mandamos a la app
+        // Si ya está logueado de antes, que pase directo
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = "app.html";
+            }
+        });
+
+        // Al tocar el botón
+        document.getElementById('btnGoogle').onclick = async () => {
+            document.getElementById('msg').innerText = "ABRIENDO GOOGLE...";
+            
+            try {
+                const result = await signInWithPopup(auth, provider);
+                if (result.user) {
                     window.location.href = "app.html";
                 }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                document.getElementById('msg').innerText = "ERROR AL CONECTAR";
-            });
-
-        // Al tocar el botón, vamos a Google
-        document.getElementById('btnGoogle').onclick = () => {
-            document.getElementById('msg').innerText = "CONECTANDO...";
-            signInWithRedirect(auth, provider);
+            } catch (error) {
+                console.error(error);
+                // Si el navegador bloquea la ventanita, avisamos
+                document.getElementById('msg').innerText = "ERROR: PERMITA VENTANAS EMERGENTES";
+            }
         };
     </script>
 </body>
