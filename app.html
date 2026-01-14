@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUMERS - Gestión de Cargas</title>
+    <title>LUMERS - Subastas en Vivo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,10 +19,8 @@
 
     <div id="guard" class="fixed inset-0 bg-dark z-[100] flex items-center justify-center">
         <div class="text-center">
-            <h1 class="text-4xl font-black italic mb-4 tracking-tighter animate-pulse">LUMERS</h1>
-            <div class="w-8 h-1 bg-blue-600 mx-auto rounded-full overflow-hidden">
-                <div class="w-full h-full bg-white animate-[translate_1.5s_infinite]"></div>
-            </div>
+            <h1 class="text-4xl font-black italic mb-4 tracking-tighter animate-pulse text-blue-500">LUMERS</h1>
+            <p class="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Sincronizando Subastas...</p>
         </div>
     </div>
 
@@ -33,56 +31,47 @@
         </header>
 
         <div class="px-4 mt-6">
-            <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
-                <div class="relative z-10">
-                    <h2 class="text-xs font-black uppercase tracking-[0.3em] mb-2 opacity-80">Panel de Control</h2>
-                    <h3 class="text-3xl font-black italic leading-none">HOLA, <span id="display-name" class="text-blue-200">...</span></h3>
-                </div>
-                <i class="fa-solid fa-bolt-lightning absolute -right-4 -bottom-4 text-8xl opacity-20 rotate-12"></i>
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden text-center">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] mb-2 text-blue-200">Mercado en Tiempo Real</h2>
+                <h3 class="text-2xl font-black italic leading-none">SUBASTA ABIERTA</h3>
+                <i class="fa-solid fa-gavel absolute -right-4 -bottom-4 text-8xl opacity-10 rotate-12"></i>
             </div>
         </div>
 
-        <main class="max-w-xl mx-auto px-4 mt-8 space-y-4" id="lista-viajes">
-            </main>
+        <main class="max-w-xl mx-auto px-4 mt-8 space-y-6" id="lista-viajes"></main>
 
-        <button onclick="abrirModal()" class="fixed bottom-24 right-6 bg-white text-slate-900 w-16 h-16 rounded-[2rem] shadow-[0_0_30px_rgba(255,255,255,0.2)] flex items-center justify-center text-2xl z-50 hover:scale-110 active:scale-90 transition-all">
+        <button onclick="abrirModal()" class="fixed bottom-24 right-6 bg-blue-600 text-white w-16 h-16 rounded-[2rem] shadow-2xl flex items-center justify-center text-2xl z-50">
             <i class="fa-solid fa-plus"></i>
         </button>
 
-        <footer class="fixed bottom-0 w-full bg-dark/90 backdrop-blur-xl border-t border-white/10 p-5 flex justify-around z-40">
-            <button onclick="location.reload()" class="text-white"><i class="fa-solid fa-house-chimney-window text-xl"></i></button>
-            <button onclick="cerrarSesion()" class="text-white/30 hover:text-red-400 transition-colors"><i class="fa-solid fa-power-off text-xl"></i></button>
+        <footer class="fixed bottom-0 w-full bg-dark/90 backdrop-blur-xl border-t border-white/10 p-5 flex justify-around z-40 text-white/50">
+            <button onclick="location.reload()" class="text-blue-500"><i class="fa-solid fa-house-chimney-window text-xl"></i></button>
+            <button onclick="cerrarSesion()"><i class="fa-solid fa-power-off text-xl"></i></button>
         </footer>
     </div>
 
     <div id="modal-publicar" class="fixed inset-0 z-[60] hidden bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="w-full max-w-md space-y-6">
-            <h2 class="text-3xl font-black italic text-center text-white mb-8 tracking-tighter">NUEVA CARGA</h2>
-            
-            <div class="space-y-3">
-                <input type="text" id="v_origen" placeholder="📍 ORIGEN" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 focus:border-blue-500 outline-none transition-all">
-                <input type="text" id="v_destino" placeholder="🏁 DESTINO" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 focus:border-blue-500 outline-none transition-all">
-                
-                <select id="v_tipo" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none text-white">
-                    <option value="Bicicleta" class="bg-slate-900">🚲 Bicicleta / Monopatín</option>
-                    <option value="Moto" class="bg-slate-900">🏍️ Moto</option>
-                    <option value="Auto" class="bg-slate-900">🚗 Auto</option>
-                    <option value="Camioneta" class="bg-slate-900">🛻 Camioneta</option>
-                    <option value="Camión" class="bg-slate-900">🚚 Camión</option>
-                </select>
-
-                <input type="number" id="v_precio" placeholder="💰 PRECIO OFRECIDO ($)" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
-                <input type="number" id="v_telefono" placeholder="📱 WHATSAPP (549...)" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
-            </div>
-            
-            <button onclick="publicarViaje()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-blue-500/20 active:bg-blue-700">PUBLICAR AHORA</button>
-            <button onclick="cerrarModal()" class="w-full text-white/30 font-black text-xs uppercase tracking-[0.2em]">CERRAR</button>
+        <div class="w-full max-w-md space-y-4">
+            <h2 class="text-2xl font-black italic text-center mb-6">INICIAR SUBASTA</h2>
+            <input type="text" id="v_origen" placeholder="📍 ORIGEN" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <input type="text" id="v_destino" placeholder="🏁 DESTINO" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <select id="v_tipo" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none text-white">
+                <option value="Bicicleta" class="bg-slate-900">🚲 Bicicleta / Monopatín</option>
+                <option value="Moto" class="bg-slate-900">🏍️ Moto</option>
+                <option value="Auto" class="bg-slate-900">🚗 Auto</option>
+                <option value="Camioneta" class="bg-slate-900">🛻 Camioneta</option>
+                <option value="Camión" class="bg-slate-900">🚚 Camión</option>
+            </select>
+            <input type="number" id="v_precio" placeholder="💰 PRECIO BASE ($)" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <input type="number" id="v_telefono" placeholder="📱 TU WHATSAPP" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <button onclick="publicarViaje()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black uppercase tracking-widest">LANZAR AL MERCADO</button>
+            <button onclick="cerrarModal()" class="w-full text-white/30 font-black text-[10px]">CANCELAR</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -103,7 +92,6 @@
             const loader = document.getElementById('guard');
             if (user) {
                 usuarioActual = user;
-                document.getElementById('display-name').innerText = user.displayName.split(" ")[0].toUpperCase();
                 document.getElementById('user-info').innerHTML = `<img src="${user.photoURL}" class="w-9 h-9 rounded-2xl border border-white/20">`;
                 escucharViajes();
                 setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 500); }, 1000);
@@ -120,32 +108,71 @@
                 lista.innerHTML = "";
                 snapshot.forEach((doc) => {
                     const v = doc.data();
-                    const msg = encodeURIComponent(`Hola! Me interesa la carga de ${v.origen} a ${v.destino}.`);
-                    let icono = v.tipo === "Bicicleta" ? "fa-bicycle" : (v.tipo === "Moto" ? "fa-motorcycle" : (v.tipo === "Auto" ? "fa-car" : "fa-truck"));
-                    
+                    const id = doc.id;
+                    let icono = v.tipo === "Bicicleta" ? "fa-bicycle" : (v.tipo === "Moto" ? "fa-motorcycle" : "fa-car");
+
                     lista.innerHTML += `
-                        <div class="card-glass rounded-[2.5rem] p-6 animate-in mb-4">
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="bg-white/10 text-white text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest flex items-center gap-2">
+                        <div class="card-glass rounded-[2.5rem] p-6 animate-in overflow-hidden relative">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="bg-blue-600/20 text-blue-400 text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest flex items-center gap-2">
                                     <i class="fa-solid ${icono}"></i> ${v.tipo}
                                 </span>
-                                <p class="text-3xl font-black italic tracking-tighter text-blue-400">$${v.precioBase}</p>
+                                <div class="text-right">
+                                    <p class="text-[9px] font-black text-white/30 uppercase">Base</p>
+                                    <p class="text-2xl font-black italic text-white leading-none">$${v.precioBase}</p>
+                                </div>
                             </div>
-                            <h3 class="text-xl font-black text-white leading-tight mb-6 uppercase italic">${v.origen} <span class="text-blue-500">→</span> ${v.destino}</h3>
-                            <a href="https://wa.me/${v.whatsapp}?text=${msg}" target="_blank" class="w-full bg-white text-slate-900 p-4 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 active:scale-95 transition-all">
-                                <i class="fa-brands fa-whatsapp text-xl"></i> CONTACTAR
+                            <h3 class="text-xl font-black text-white leading-tight mb-4 italic uppercase tracking-tighter">${v.origen} → ${v.destino}</h3>
+                            
+                            <div id="ofertas-${id}" class="bg-black/20 rounded-2xl p-4 mb-4 space-y-2 border border-white/5">
+                                <p class="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2">Últimas Ofertas</p>
+                                <div id="lista-ofertas-${id}" class="space-y-1 text-xs font-bold text-white/60">
+                                    </div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <input type="number" id="input-${id}" placeholder="Ofertar $" class="w-1/2 p-4 bg-white/5 rounded-xl font-bold border border-white/10 outline-none text-sm">
+                                <button onclick="ofertar('${id}')" class="w-1/2 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl text-xs uppercase transition-all">Enviar Oferta</button>
+                            </div>
+
+                            <a href="https://wa.me/${v.whatsapp}" target="_blank" class="mt-4 w-full bg-white text-slate-900 p-4 rounded-xl font-black text-[10px] uppercase flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> Contactar al dueño
                             </a>
                         </div>
                     `;
+                    escucharOfertas(id);
                 });
             });
         }
+
+        async function escucharOfertas(viajeId) {
+            const q = query(collection(db, `viajes/${viajeId}/ofertas`), orderBy("fecha", "desc"), limit(3));
+            onSnapshot(q, (snap) => {
+                const div = document.getElementById(`lista-ofertas-${viajeId}`);
+                div.innerHTML = snap.empty ? "Sin ofertas aún..." : "";
+                snap.forEach(o => {
+                    const data = o.data();
+                    div.innerHTML += `<div class="flex justify-between border-b border-white/5 pb-1"><span>${data.nombre}</span><span class="text-blue-400">$${data.monto}</span></div>`;
+                });
+            });
+        }
+
+        window.ofertar = async (viajeId) => {
+            const monto = document.getElementById(`input-${viajeId}`).value;
+            if(!monto) return alert("Poné un monto.");
+            await addDoc(collection(db, `viajes/${viajeId}/ofertas`), {
+                monto: monto,
+                nombre: usuarioActual.displayName.split(" ")[0],
+                fecha: Date.now()
+            });
+            document.getElementById(`input-${viajeId}`).value = "";
+        };
 
         window.publicarViaje = async () => {
             const o = document.getElementById('v_origen').value, d = document.getElementById('v_destino').value, 
                   p = document.getElementById('v_precio').value, t = document.getElementById('v_telefono').value,
                   tipo = document.getElementById('v_tipo').value;
-            if(!o || !d || !p || !t) return alert("Completá todo.");
+            if(!o || !d || !p || !t) return alert("Faltan datos.");
             await addDoc(collection(db, "viajes"), { origen: o, destino: d, precioBase: p, whatsapp: t, tipo: tipo, uid: usuarioActual.uid, creado: Date.now() });
             cerrarModal();
         };
