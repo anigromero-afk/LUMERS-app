@@ -1,7 +1,7 @@
 {
   "name": "LUMERS Logística y Subastas",
   "short_name": "LUMERS",
-  "description": "Plataforma de subastas de transporte y logística en tiempo real para transportistas verificados.",
+  "description": "Aplicación oficial de LUMERS para la gestión de subastas de transporte y logística en tiempo real.",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0f172a",
