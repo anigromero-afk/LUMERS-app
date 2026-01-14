@@ -3,21 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMERS | Acceso</title>
+    <title>LUMERS | Subasta de Cargas</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; }
+        .bg-gradient-dark { background: radial-gradient(circle at top, #1e293b 0%, #020617 100%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .step-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+    </style>
 </head>
-<body class="bg-slate-900 min-h-screen flex items-center justify-center p-6 text-white font-sans">
-    <div class="w-full max-w-sm text-center">
-        <h1 class="text-6xl font-black italic mb-2 tracking-tighter">LUMERS</h1>
-        <p class="text-blue-400 text-[10px] font-black uppercase tracking-[0.3em] mb-12">Logística Segura</p>
+<body class="bg-gradient-dark min-h-screen text-white flex flex-col items-center">
+
+    <header class="w-full max-w-lg px-6 pt-16 pb-8 text-center">
+        <h1 class="text-7xl font-black italic tracking-tighter text-blue-500 mb-2">LUMERS</h1>
+        <p class="text-xs font-black uppercase tracking-[0.4em] text-blue-200/60 mb-8">Subasta de Cargas en Vivo</p>
         
-        <div class="bg-white/5 backdrop-blur-xl p-8 rounded-[3rem] border border-white/10 shadow-2xl">
-            <button id="btnLogin" class="w-full bg-white text-slate-900 py-5 rounded-2xl font-black text-sm uppercase flex items-center justify-center gap-3 shadow-xl active:scale-95 transition-all">
+        <div class="glass rounded-[3rem] p-8 mb-10 shadow-2xl">
+            <h2 class="text-xl font-bold mb-4 leading-tight">La app donde vos elegís cuánto pagar y cuánto ganar.</h2>
+            
+            <button id="btnLogin" class="w-full bg-white text-slate-900 py-5 rounded-2xl font-black text-sm uppercase flex items-center justify-center gap-3 shadow-xl hover:bg-blue-50 transition-all active:scale-95">
                 <img src="https://www.google.com/favicon.ico" class="w-4"> Entrar con Google
             </button>
-            <p id="status" class="text-slate-500 text-[9px] mt-6 uppercase font-bold tracking-widest italic">Esperando ingreso...</p>
+            <p id="status" class="text-[9px] text-white/30 uppercase mt-4 tracking-widest font-bold">Acceso seguro para fleteros y clientes</p>
         </div>
-    </div>
+    </header>
+
+    <main class="w-full max-w-lg px-6 pb-20">
+        <h3 class="text-center text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-8">¿Cómo funciona el sistema?</h3>
+        
+        <div class="space-y-4">
+            <div class="glass step-card p-6 rounded-[2rem] flex items-center gap-5">
+                <div class="w-12 h-12 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-400 text-xl shadow-inner">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <div>
+                    <h4 class="font-black italic text-sm uppercase">1. Publicá tu envío</h4>
+                    <p class="text-xs text-white/50">Cualquier persona puede subir un pedido de envío con un precio base.</p>
+                </div>
+            </div>
+
+            <div class="glass step-card p-6 rounded-[2rem] flex items-center gap-5 border-l-4 border-blue-500">
+                <div class="w-12 h-12 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-400 text-xl">
+                    <i class="fa-solid fa-gavel"></i>
+                </div>
+                <div>
+                    <h4 class="font-black italic text-sm uppercase">2. Subasta en Vivo</h4>
+                    <p class="text-xs text-white/50">Los fleteros compiten ofertando el mejor precio en tiempo real.</p>
+                </div>
+            </div>
+
+            <div class="glass step-card p-6 rounded-[2rem] flex items-center gap-5">
+                <div class="w-12 h-12 bg-yellow-500/20 rounded-2xl flex items-center justify-center text-yellow-500 text-xl">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <div>
+                    <h4 class="font-black italic text-sm uppercase text-yellow-500">3. Activá tu pase</h4>
+                    <p class="text-xs text-white/50">Para ver datos del cliente, contactás a Ani y activás tu pase diario.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center opacity-30 text-[9px] font-bold uppercase tracking-widest leading-relaxed">
+            Bicicletas • Monopatines • Motos <br> Autos • Camionetas • Camiones
+        </div>
+    </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -36,19 +86,21 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // Solo redirige si el usuario hace clic o si ya está confirmado
+        // Si ya está logueado, lo mandamos a la app directo
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                document.getElementById('status').innerText = "Cargando panel...";
-                window.location.replace("app.html"); // Replace es mejor que href para evitar volver atrás
+                document.getElementById('status').innerText = "Sincronizando subastas...";
+                window.location.replace("app.html");
             }
         });
 
         document.getElementById('btnLogin').onclick = async () => {
+            document.getElementById('status').innerText = "Abriendo Google...";
             try {
                 await signInWithPopup(auth, provider);
             } catch (error) {
-                alert("Error: " + error.message);
+                alert("Error al ingresar: " + error.message);
+                document.getElementById('status').innerText = "Error de conexión";
             }
         };
     </script>
