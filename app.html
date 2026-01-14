@@ -3,65 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMERS | App</title>
+    <title>LUMERS | Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 pb-20">
-    <nav class="p-6 bg-white border-b flex justify-between items-center sticky top-0 z-50">
-        <h2 class="text-xl font-black italic">LUMERS</h2>
-        <span id="uNombre" class="text-[10px] font-bold bg-slate-100 px-3 py-1 rounded-full uppercase italic">...</span>
-    </nav>
-    <main id="lista" class="p-6 space-y-4 max-w-lg mx-auto">
-        <p class="text-center text-slate-400 mt-10">Cargando envíos activos...</p>
+<body class="bg-slate-50 min-h-screen pb-24">
+    <header class="bg-white p-6 shadow-sm flex justify-between items-center">
+        <h1 class="text-2xl font-black italic text-slate-900">LUMERS</h1>
+        <button id="btnSalir" class="text-xs font-bold text-red-500">SALIR</button>
+    </header>
+
+    <main class="p-6">
+        <div id="listaViajes" class="space-y-4">
+            <p class="text-center text-slate-400 py-10">Cargando envíos...</p>
+        </div>
     </main>
-    <button id="btnSumar" class="fixed bottom-6 right-6 w-16 h-16 bg-blue-600 text-white rounded-full shadow-2xl text-4xl font-bold">+</button>
-    <div id="modal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center p-6 backdrop-blur-sm">
-        <div class="bg-white w-full rounded-[2rem] p-8 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4 italic text-center text-slate-800 tracking-tighter">NUEVO ENVÍO</h3>
-            <input id="fRuta" type="text" placeholder="📍 Ruta (Ej: Rosario a CABA)" class="w-full p-4 bg-slate-50 rounded-xl mb-3 border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
-            <input id="fProd" type="text" placeholder="📦 ¿Qué envías?" class="w-full p-4 bg-slate-50 rounded-xl mb-3 border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
-            <input id="fPrecio" type="number" placeholder="💰 Precio ofrecido $" class="w-full p-4 bg-slate-50 rounded-xl mb-6 border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
-            <button id="btnGuardar" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-black transition-colors">PUBLICAR</button>
-            <button onclick="document.getElementById('modal').classList.add('hidden')" class="w-full py-3 text-slate-400 text-sm font-bold">CANCELAR</button>
+
+    <div id="modalEnvio" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center p-6 z-50">
+        <div class="bg-white w-full max-w-sm rounded-[2rem] p-8 shadow-2xl">
+            <h3 class="text-xl font-black mb-4">Nuevo Envío</h3>
+            <input id="origen" type="text" placeholder="Origen" class="w-full bg-slate-100 p-4 rounded-xl mb-3 outline-none">
+            <input id="destino" type="text" placeholder="Destino" class="w-full bg-slate-100 p-4 rounded-xl mb-3 outline-none">
+            <input id="precio" type="number" placeholder="Precio $" class="w-full bg-slate-100 p-4 rounded-xl mb-6 outline-none">
+            <div class="flex gap-2">
+                <button id="btnCerrar" class="flex-1 py-4 text-slate-400">Cancelar</button>
+                <button id="btnPublicar" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold">PUBLICAR</button>
+            </div>
         </div>
     </div>
+
+    <button id="btnNuevo" class="fixed bottom-8 right-8 bg-blue-600 text-white w-16 h-16 rounded-full text-4xl shadow-xl shadow-blue-200">+</button>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        const firebaseConfig = { apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw", authDomain: "lumers-d1d36.firebaseapp.com", projectId: "lumers-d1d36", storageBucket: "lumers-d1d36.firebasestorage.app", messagingSenderId: "798769127070", appId: "1:798769127070:web:6b591851e4c5c62758258f" };
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6Uw5qK8epzRw2cZ_JHyxHXZUjuy3eC3U",
+            authDomain: "lumers-d4fb3.firebaseapp.com",
+            projectId: "lumers-d4fb3",
+            storageBucket: "lumers-d4fb3.firebasestorage.app",
+            messagingSenderId: "105585536196",
+            appId: "1:105585536196:web:3461252d1dabfd3283ad91"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        onAuthStateChanged(auth, (user) => {
-            if (!user) window.location.href = "index.html";
-            else {
-                document.getElementById('uNombre').innerText = user.displayName;
-                onSnapshot(query(collection(db, "subastas"), orderBy("fecha", "desc")), (snap) => {
-                    const lista = document.getElementById('lista');
-                    lista.innerHTML = "";
-                    if(snap.empty) { lista.innerHTML = '<p class="text-center text-slate-400 mt-10 italic text-sm">No hay envíos. ¡Sé el primero!</p>'; }
-                    snap.forEach(doc => {
-                        const d = doc.data();
-                        lista.innerHTML += `<div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-                            <p class="text-[10px] font-black text-blue-600 mb-1 uppercase tracking-widest">📍 ${d.ruta}</p>
-                            <h4 class="font-bold text-lg text-slate-800">${d.producto}</h4>
-                            <p class="text-xl font-black mt-2 text-slate-900">$${d.precio}</p>
-                            <a href="https://wa.me/5493364205566?text=Hola!+Me+interesa+tu+envio+de+${d.producto}+en+Lumers" class="block w-full mt-4 bg-slate-900 text-white text-center py-4 rounded-xl font-bold text-xs uppercase tracking-tighter">Contactar Dueño</a>
-                        </div>`;
-                    });
+
+        onAuthStateChanged(auth, (user) => { if (!user) window.location.href = "index.html"; });
+
+        const modal = document.getElementById('modalEnvio');
+        document.getElementById('btnNuevo').onclick = () => modal.classList.replace('hidden', 'flex');
+        document.getElementById('btnCerrar').onclick = () => modal.classList.replace('flex', 'hidden');
+
+        document.getElementById('btnPublicar').onclick = async () => {
+            const origen = document.getElementById('origen').value;
+            const destino = document.getElementById('destino').value;
+            const precio = document.getElementById('precio').value;
+            if(!origen || !destino || !precio) return alert("Completa todo");
+
+            try {
+                await addDoc(collection(db, "viajes"), {
+                    origen, destino, precio,
+                    usuario: auth.currentUser.displayName,
+                    fecha: Date.now()
                 });
-            }
-        });
-        document.getElementById('btnSumar').onclick = () => document.getElementById('modal').classList.remove('hidden');
-        document.getElementById('btnGuardar').onclick = async () => {
-            const r = document.getElementById('fRuta').value, p = document.getElementById('fProd').value, pr = document.getElementById('fPrecio').value;
-            if(r && p && pr) {
-                await addDoc(collection(db, "subastas"), { ruta: r, producto: p, precio: Number(pr), fecha: serverTimestamp() });
-                document.getElementById('modal').classList.add('hidden');
-                document.getElementById('fRuta').value = ""; document.getElementById('fProd').value = ""; document.getElementById('fPrecio').value = "";
-            }
+                modal.classList.replace('flex', 'hidden');
+            } catch (e) { alert("Error al guardar"); }
         };
+
+        const q = query(collection(db, "viajes"), orderBy("fecha", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const lista = document.getElementById('listaViajes');
+            lista.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const v = doc.data();
+                lista.innerHTML += `<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-sm font-bold text-slate-800">${v.origen} ➔ ${v.destino}</p>
+                    <p class="font-bold text-green-600">$${v.precio}</p>
+                    <p class="text-[10px] text-slate-400 uppercase font-black mt-2">${v.usuario}</p>
+                </div>`;
+            });
+        });
+
+        document.getElementById('btnSalir').onclick = () => signOut(auth);
     </script>
 </body>
 </html>
