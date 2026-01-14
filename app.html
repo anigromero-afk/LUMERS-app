@@ -3,69 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUMERS - Subastas en Vivo</title>
+    <title>LUMERS - Business</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .bg-dark { background-color: #0f172a; }
-        .card-glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        .animate-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: white; }
+        .card-premium { background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); }
+        .btn-gold { background: linear-gradient(90deg, #ca8a04 0%, #facc15 100%); color: black; font-weight: 900; }
         #app-content { display: none; }
+        .animate-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-dark min-h-screen pb-32 text-white">
+<body class="min-h-screen pb-32">
 
-    <div id="guard" class="fixed inset-0 bg-dark z-[100] flex items-center justify-center">
-        <div class="text-center">
-            <h1 class="text-4xl font-black italic mb-4 tracking-tighter animate-pulse text-blue-500">LUMERS</h1>
-            <p class="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Sincronizando Subastas...</p>
+    <div id="guard" class="fixed inset-0 bg-slate-950 z-[100] flex items-center justify-center text-center">
+        <div>
+            <h1 class="text-5xl font-black italic tracking-tighter text-blue-500 mb-2">LUMERS</h1>
+            <div class="h-1 w-20 bg-blue-600 mx-auto rounded-full overflow-hidden">
+                <div class="w-full h-full bg-white animate-[translateX_1s_infinite]"></div>
+            </div>
         </div>
     </div>
 
     <div id="app-content">
-        <header class="sticky top-0 z-40 bg-dark/80 backdrop-blur-md border-b border-white/10 p-4 flex justify-between items-center">
-            <h1 class="text-2xl font-black text-white italic tracking-tighter">LUMERS</h1>
-            <div id="user-info" class="flex items-center gap-2"></div>
+        <header class="p-4 border-b border-white/10 flex justify-between items-center sticky top-0 bg-slate-950/80 backdrop-blur-md z-50">
+            <h1 class="text-2xl font-black italic text-white">LUMERS</h1>
+            <div id="user-info"></div>
         </header>
 
-        <div class="px-4 mt-6">
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden text-center">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] mb-2 text-blue-200">Mercado en Tiempo Real</h2>
-                <h3 class="text-2xl font-black italic leading-none">SUBASTA ABIERTA</h3>
-                <i class="fa-solid fa-gavel absolute -right-4 -bottom-4 text-8xl opacity-10 rotate-12"></i>
+        <div class="p-4">
+            <div class="card-premium rounded-[2.5rem] p-6 border-yellow-500/30 relative overflow-hidden shadow-[0_0_50px_rgba(202,138,4,0.1)]">
+                <div class="relative z-10 flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] font-black text-yellow-500 uppercase tracking-widest mb-1">Tu Cuenta Lumers</p>
+                        <h2 class="text-xl font-black italic text-white uppercase" id="status-text">PASE INACTIVO</h2>
+                    </div>
+                    <button onclick="solicitarPase()" class="btn-gold px-6 py-3 rounded-2xl text-[10px] uppercase shadow-lg shadow-yellow-500/20 active:scale-95 transition-all">Activar Ahora</button>
+                </div>
+                <i class="fa-solid fa-crown absolute -right-2 -bottom-2 text-6xl opacity-10 rotate-12 text-yellow-500"></i>
             </div>
         </div>
 
-        <main class="max-w-xl mx-auto px-4 mt-8 space-y-6" id="lista-viajes"></main>
+        <main class="px-4 space-y-6 max-w-xl mx-auto mt-4" id="lista-viajes"></main>
 
-        <button onclick="abrirModal()" class="fixed bottom-24 right-6 bg-blue-600 text-white w-16 h-16 rounded-[2rem] shadow-2xl flex items-center justify-center text-2xl z-50">
-            <i class="fa-solid fa-plus"></i>
+        <button onclick="abrirModal()" class="fixed bottom-24 right-6 bg-white text-black w-16 h-16 rounded-[2rem] shadow-2xl flex items-center justify-center text-2xl z-50">
+            <i class="fa-solid fa-plus text-blue-600"></i>
         </button>
 
-        <footer class="fixed bottom-0 w-full bg-dark/90 backdrop-blur-xl border-t border-white/10 p-5 flex justify-around z-40 text-white/50">
-            <button onclick="location.reload()" class="text-blue-500"><i class="fa-solid fa-house-chimney-window text-xl"></i></button>
+        <footer class="fixed bottom-0 w-full bg-slate-950/90 border-t border-white/10 p-5 flex justify-around text-white/40">
+            <button onclick="location.reload()" class="text-blue-500"><i class="fa-solid fa-house-chimney text-xl"></i></button>
             <button onclick="cerrarSesion()"><i class="fa-solid fa-power-off text-xl"></i></button>
         </footer>
     </div>
 
-    <div id="modal-publicar" class="fixed inset-0 z-[60] hidden bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="modal-publicar" class="fixed inset-0 z-[60] hidden bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
         <div class="w-full max-w-md space-y-4">
-            <h2 class="text-2xl font-black italic text-center mb-6">INICIAR SUBASTA</h2>
-            <input type="text" id="v_origen" placeholder="📍 ORIGEN" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
-            <input type="text" id="v_destino" placeholder="🏁 DESTINO" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
-            <select id="v_tipo" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none text-white">
-                <option value="Bicicleta" class="bg-slate-900">🚲 Bicicleta / Monopatín</option>
-                <option value="Moto" class="bg-slate-900">🏍️ Moto</option>
-                <option value="Auto" class="bg-slate-900">🚗 Auto</option>
-                <option value="Camioneta" class="bg-slate-900">🛻 Camioneta</option>
-                <option value="Camión" class="bg-slate-900">🚚 Camión</option>
+            <h2 class="text-3xl font-black italic text-center mb-8 uppercase">Publicar Carga</h2>
+            <input type="text" id="v_origen" placeholder="📍 ORIGEN" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <input type="text" id="v_destino" placeholder="🏁 DESTINO" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <select id="v_tipo" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 text-white outline-none">
+                <option value="Bicicleta">🚲 Bicicleta / Monopatín</option>
+                <option value="Moto">🏍️ Moto</option>
+                <option value="Auto">🚗 Auto</option>
+                <option value="Camioneta">🛻 Camioneta</option>
+                <option value="Camión">🚚 Camión</option>
             </select>
-            <input type="number" id="v_precio" placeholder="💰 PRECIO BASE ($)" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
-            <input type="number" id="v_telefono" placeholder="📱 TU WHATSAPP" class="w-full p-4 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
-            <button onclick="publicarViaje()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black uppercase tracking-widest">LANZAR AL MERCADO</button>
-            <button onclick="cerrarModal()" class="w-full text-white/30 font-black text-[10px]">CANCELAR</button>
+            <input type="number" id="v_precio" placeholder="💰 PRECIO BASE ($)" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <input type="number" id="v_telefono" placeholder="📱 TU WHATSAPP CLIENTE" class="w-full p-5 bg-white/5 rounded-2xl font-bold border border-white/10 outline-none">
+            <button onclick="publicarViaje()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black uppercase tracking-widest shadow-xl">SUBIR A SUBASTA</button>
+            <button onclick="cerrarModal()" class="w-full text-white/30 font-black text-xs uppercase text-center mt-2">CERRAR</button>
         </div>
     </div>
 
@@ -88,14 +95,18 @@
         const auth = getAuth(app);
         let usuarioActual = null;
 
+        // TU WHATSAPP CONFIGURADO
+        const MI_WHATSAPP = "5493364652349"; 
+
         onAuthStateChanged(auth, (user) => {
-            const loader = document.getElementById('guard');
             if (user) {
                 usuarioActual = user;
                 document.getElementById('user-info').innerHTML = `<img src="${user.photoURL}" class="w-9 h-9 rounded-2xl border border-white/20">`;
                 escucharViajes();
-                setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 500); }, 1000);
-                document.getElementById('app-content').style.display = 'block';
+                setTimeout(() => { 
+                    document.getElementById('guard').style.display = 'none';
+                    document.getElementById('app-content').style.display = 'block';
+                }, 1000);
             } else {
                 setTimeout(() => { if (!auth.currentUser) window.location.replace("index.html"); }, 2000);
             }
@@ -112,32 +123,25 @@
                     let icono = v.tipo === "Bicicleta" ? "fa-bicycle" : (v.tipo === "Moto" ? "fa-motorcycle" : "fa-car");
 
                     lista.innerHTML += `
-                        <div class="card-glass rounded-[2.5rem] p-6 animate-in overflow-hidden relative">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="bg-blue-600/20 text-blue-400 text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest flex items-center gap-2">
-                                    <i class="fa-solid ${icono}"></i> ${v.tipo}
-                                </span>
-                                <div class="text-right">
-                                    <p class="text-[9px] font-black text-white/30 uppercase">Base</p>
-                                    <p class="text-2xl font-black italic text-white leading-none">$${v.precioBase}</p>
+                        <div class="card-premium rounded-[2.5rem] p-6 animate-in border-white/5">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-blue-600/20 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest"><i class="fa-solid ${icono}"></i> ${v.tipo}</span>
+                                <p class="text-3xl font-black italic text-white tracking-tighter">$${v.precioBase}</p>
+                            </div>
+                            <h3 class="text-xl font-black uppercase italic mb-4 leading-none">${v.origen} <br> <span class="text-blue-500 text-sm">→</span> ${v.destino}</h3>
+                            
+                            <div class="bg-black/30 rounded-2xl p-4 mb-4 border border-white/5">
+                                <p class="text-[9px] text-blue-500 font-black uppercase mb-3 tracking-widest">Pujas del mercado</p>
+                                <div id="lista-ofertas-${id}" class="space-y-1 font-bold text-white/50 italic text-xs"></div>
+                                <div class="flex gap-2 mt-4">
+                                    <input type="number" id="input-${id}" placeholder="Ofertar $" class="w-full bg-white/5 p-3 rounded-xl outline-none border border-white/10 text-white text-xs font-bold">
+                                    <button onclick="ofertar('${id}')" class="bg-blue-600 px-4 rounded-xl font-black text-xs">OK</button>
                                 </div>
                             </div>
-                            <h3 class="text-xl font-black text-white leading-tight mb-4 italic uppercase tracking-tighter">${v.origen} → ${v.destino}</h3>
-                            
-                            <div id="ofertas-${id}" class="bg-black/20 rounded-2xl p-4 mb-4 space-y-2 border border-white/5">
-                                <p class="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2">Últimas Ofertas</p>
-                                <div id="lista-ofertas-${id}" class="space-y-1 text-xs font-bold text-white/60">
-                                    </div>
-                            </div>
 
-                            <div class="flex gap-2">
-                                <input type="number" id="input-${id}" placeholder="Ofertar $" class="w-1/2 p-4 bg-white/5 rounded-xl font-bold border border-white/10 outline-none text-sm">
-                                <button onclick="ofertar('${id}')" class="w-1/2 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl text-xs uppercase transition-all">Enviar Oferta</button>
-                            </div>
-
-                            <a href="https://wa.me/${v.whatsapp}" target="_blank" class="mt-4 w-full bg-white text-slate-900 p-4 rounded-xl font-black text-[10px] uppercase flex items-center justify-center gap-2">
-                                <i class="fa-brands fa-whatsapp text-lg"></i> Contactar al dueño
-                            </a>
+                            <button onclick="solicitarPase()" class="w-full bg-white text-black p-4 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-2 active:scale-95 transition-all">
+                                <i class="fa-solid fa-lock text-blue-600"></i> Ver contacto
+                            </button>
                         </div>
                     `;
                     escucharOfertas(id);
@@ -146,24 +150,28 @@
         }
 
         async function escucharOfertas(viajeId) {
-            const q = query(collection(db, `viajes/${viajeId}/ofertas`), orderBy("fecha", "desc"), limit(3));
+            const q = query(collection(db, `viajes/${viajeId}/ofertas`), orderBy("fecha", "desc"), limit(2));
             onSnapshot(q, (snap) => {
                 const div = document.getElementById(`lista-ofertas-${viajeId}`);
                 div.innerHTML = snap.empty ? "Sin ofertas aún..." : "";
                 snap.forEach(o => {
-                    const data = o.data();
-                    div.innerHTML += `<div class="flex justify-between border-b border-white/5 pb-1"><span>${data.nombre}</span><span class="text-blue-400">$${data.monto}</span></div>`;
+                    div.innerHTML += `<div class="flex justify-between border-b border-white/5 pb-1"><span>${o.data().nombre}</span><span class="text-blue-400">$${o.data().monto}</span></div>`;
                 });
             });
         }
 
+        window.solicitarPase = () => {
+            const msg = encodeURIComponent("Hola Ani! Quiero activar mi PASE DIARIO en LUMERS para empezar a trabajar.");
+            if(confirm("Esta es una app Premium. Para ver contactos necesitás el PASE DIARIO. ¿Hablar con Ani por WhatsApp?")){
+                window.location.href = `https://wa.me/${MI_WHATSAPP}?text=${msg}`;
+            }
+        };
+
         window.ofertar = async (viajeId) => {
             const monto = document.getElementById(`input-${viajeId}`).value;
-            if(!monto) return alert("Poné un monto.");
+            if(!monto) return;
             await addDoc(collection(db, `viajes/${viajeId}/ofertas`), {
-                monto: monto,
-                nombre: usuarioActual.displayName.split(" ")[0],
-                fecha: Date.now()
+                monto: monto, nombre: usuarioActual.displayName.split(" ")[0], fecha: Date.now()
             });
             document.getElementById(`input-${viajeId}`).value = "";
         };
