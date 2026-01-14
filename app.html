@@ -5,35 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUMERS | Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 min-h-screen pb-24">
-    <header class="bg-white p-6 shadow-sm flex justify-between items-center">
-        <h1 class="text-2xl font-black italic text-slate-900">LUMERS</h1>
-        <button id="btnSalir" class="text-xs font-bold text-red-500 uppercase">Salir</button>
+<body class="bg-slate-50 min-h-screen pb-24 font-sans">
+    <header class="bg-white p-6 shadow-sm flex justify-between items-center sticky top-0 z-40">
+        <h1 class="text-2xl font-black italic text-slate-900 tracking-tighter">LUMERS</h1>
+        <button id="btnSalir" class="text-[10px] font-black text-red-500 uppercase tracking-widest border border-red-100 px-3 py-1 rounded-lg">Salir</button>
     </header>
 
     <main class="p-6">
-        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Envíos Disponibles</h2>
+        <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Envíos Disponibles</h2>
         <div id="listaViajes" class="space-y-4">
-            <p class="text-center text-slate-400 py-10">Cargando envíos...</p>
+            <p class="text-center text-slate-400 py-10 font-bold uppercase text-[10px]">Cargando envíos...</p>
         </div>
     </main>
 
-    <div id="modalEnvio" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center p-6 z-50">
-        <div class="bg-white w-full max-w-sm rounded-[2rem] p-8 shadow-2xl">
-            <h3 class="text-xl font-black mb-4 text-slate-900">Nuevo Envío</h3>
-            <input id="origen" type="text" placeholder="Origen" class="w-full bg-slate-100 p-4 rounded-xl mb-3 outline-none text-slate-900">
-            <input id="destino" type="text" placeholder="Destino" class="w-full bg-slate-100 p-4 rounded-xl mb-3 outline-none text-slate-900">
-            <input id="precio" type="number" placeholder="Precio $" class="w-full bg-slate-100 p-4 rounded-xl mb-6 outline-none text-slate-900">
-            
-            <div class="flex gap-2">
+    <div id="modalEnvio" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-6 z-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl">
+            <h3 class="text-2xl font-black mb-6 text-slate-900 italic">Datos del Envío</h3>
+            <div class="space-y-3">
+                <input id="origen" type="text" placeholder="¿Desde dónde?" class="w-full bg-slate-100 p-4 rounded-2xl outline-none text-slate-900 font-bold">
+                <input id="destino" type="text" placeholder="¿Hacia dónde?" class="w-full bg-slate-100 p-4 rounded-2xl outline-none text-slate-900 font-bold">
+                <input id="precio" type="number" placeholder="Precio Ofrecido $" class="w-full bg-slate-100 p-4 rounded-2xl outline-none text-slate-900 font-bold">
+                <input id="whatsapp" type="number" placeholder="Tu WhatsApp (Ej: 3364001122)" class="w-full bg-green-50 p-4 rounded-2xl outline-none text-green-700 font-bold border border-green-100">
+            </div>
+            <div class="flex gap-2 mt-8">
                 <button id="btnCerrar" class="flex-1 py-4 font-bold text-slate-400">Cancelar</button>
-                <button id="btnPublicar" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold">PUBLICAR</button>
+                <button id="btnPublicar" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black shadow-lg uppercase tracking-tight">Publicar</button>
             </div>
         </div>
     </div>
 
-    <button id="btnNuevo" class="fixed bottom-8 right-8 bg-blue-600 text-white w-16 h-16 rounded-full text-4xl shadow-xl shadow-blue-200 active:scale-90 transition-all">+</button>
+    <button id="btnNuevo" class="fixed bottom-8 right-8 bg-slate-900 text-white w-16 h-16 rounded-full text-4xl shadow-2xl z-40 flex items-center justify-center">
+        <i class="fa-solid fa-plus"></i>
+    </button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -53,26 +58,23 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Seguridad: Si se cierra sesión, vuelve al login
-        onAuthStateChanged(auth, (user) => {
-            if (!user) window.location.href = "index.html";
-        });
+        onAuthStateChanged(auth, (user) => { if (!user) window.location.href = "index.html"; });
 
         const modal = document.getElementById('modalEnvio');
         document.getElementById('btnNuevo').onclick = () => modal.classList.replace('hidden', 'flex');
         document.getElementById('btnCerrar').onclick = () => modal.classList.replace('flex', 'hidden');
 
-        // Guardar viaje en Firestore
         document.getElementById('btnPublicar').onclick = async () => {
             const origen = document.getElementById('origen').value;
             const destino = document.getElementById('destino').value;
             const precio = document.getElementById('precio').value;
+            const whatsapp = document.getElementById('whatsapp').value;
 
-            if(!origen || !destino || !precio) return alert("Completa los datos");
+            if(!origen || !destino || !precio || !whatsapp) return alert("Completá todos los campos, incluido el WhatsApp");
 
             try {
                 await addDoc(collection(db, "viajes"), {
-                    origen, destino, precio,
+                    origen, destino, precio, whatsapp,
                     usuario: auth.currentUser.displayName || "Usuario",
                     fecha: Date.now()
                 });
@@ -80,32 +82,38 @@
                 document.getElementById('origen').value = "";
                 document.getElementById('destino').value = "";
                 document.getElementById('precio').value = "";
-            } catch (e) { 
-                alert("Error: " + e.message); 
-            }
+                document.getElementById('whatsapp').value = "";
+            } catch (e) { alert("Error: " + e.message); }
         };
 
-        // Mostrar lista de viajes en tiempo real
         const q = query(collection(db, "viajes"), orderBy("fecha", "desc"));
         onSnapshot(q, (snapshot) => {
             const lista = document.getElementById('listaViajes');
             lista.innerHTML = "";
-            
             if (snapshot.empty) {
-                lista.innerHTML = '<p class="text-center text-slate-400 py-10 font-bold uppercase text-[10px]">No hay envíos activos</p>';
+                lista.innerHTML = '<p class="text-center text-slate-400 py-20 font-bold uppercase text-[10px] tracking-widest">No hay envíos activos</p>';
                 return;
             }
-
             snapshot.forEach((doc) => {
                 const v = doc.data();
+                const mensajeWha = `Hola! Vi tu envío en LUMERS: de ${v.origen} a ${v.destino} por $${v.precio}. Me interesa.`;
+                const urlWha = `https://wa.me/${v.whatsapp}?text=${encodeURIComponent(mensajeWha)}`;
+                
                 lista.innerHTML += `
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-[9px] font-black bg-green-100 text-green-600 px-2 py-1 rounded uppercase tracking-tighter italic">LUMERS EXPRESS</span>
-                            <span class="font-black text-slate-900 italic text-xl">$${v.precio}</span>
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[9px] font-black bg-blue-50 text-blue-500 px-3 py-1.5 rounded-full uppercase italic">Lumers Express</span>
+                            <span class="font-black text-slate-900 text-2xl">$${v.precio}</span>
                         </div>
-                        <p class="text-lg font-black text-slate-800 uppercase italic">${v.origen} <span class="text-blue-600">➔</span> ${v.destino}</p>
-                        <p class="text-[9px] text-slate-400 font-bold uppercase mt-2 tracking-widest border-t pt-2 border-slate-50">${v.usuario}</p>
+                        <div class="mb-5">
+                            <p class="text-xl font-black text-slate-800 uppercase italic">${v.origen} ➔ ${v.destino}</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-50 pt-4">
+                            <p class="text-[10px] font-black text-slate-700">${v.usuario}</p>
+                            <a href="${urlWha}" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-2xl font-black text-[10px] uppercase shadow-lg flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp"></i> Lo llevo
+                            </a>
+                        </div>
                     </div>
                 `;
             });
