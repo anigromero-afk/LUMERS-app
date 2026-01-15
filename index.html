@@ -28,8 +28,6 @@
         .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); }
         .btn-blue { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
         .hidden { display: none !important; }
-        .drop-card { animation: fadeInUp 0.5s ease-out forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-main">
@@ -38,13 +36,13 @@
         <div class="logo-organic scale-75 opacity-50"><i class="fa-solid fa-paper-plane text-4xl text-white"></i></div>
     </div>
 
-    <div id="view-login" class="hidden min-h-screen flex flex-col items-center p-8 pt-16">
+    <div id="view-login" class="hidden min-h-screen flex flex-col items-center p-8 pt-12 pb-16">
         <div class="logo-organic mb-8">
             <i class="fa-solid fa-paper-plane text-4xl text-white"></i>
         </div>
         
         <div class="text-center mb-10">
-            <h1 class="text-6xl font-black italic tracking-tighter text-blue-500 uppercase">LUMERS</h1>
+            <h1 class="text-6xl font-black italic tracking-tighter text-blue-500 uppercase leading-none">LUMERS</h1>
             <p class="text-[13px] font-bold text-white/90 mt-4 leading-relaxed italic px-4">
                 No es solo un envío, es nuestro envío.
             </p>
@@ -55,17 +53,17 @@
 
         <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 mb-10 space-y-6">
             <div class="flex items-start gap-4">
-                <i class="fa-solid fa-users text-blue-400 mt-1"></i>
+                <i class="fa-solid fa-gavel text-blue-400 mt-1"></i>
                 <div>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Comunidad Digital</h4>
-                    <p class="text-[11px] text-white/60 leading-relaxed">Lumers conecta personas que necesitan enviar algo con personas que tienen un vehículo y ganas de moverlo.</p>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Subasta de Precios</h4>
+                    <p class="text-[11px] text-white/60 leading-relaxed">Como <b>Raider Pro</b>, podés ver el precio base de cada envío y ofertar tu propio valor. ¡La comunidad elige la mejor propuesta!</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
-                <i class="fa-solid fa-bolt text-blue-400 mt-1"></i>
+                <i class="fa-solid fa-handshake text-blue-400 mt-1"></i>
                 <div>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Sistema de Drops</h4>
-                    <p class="text-[11px] text-white/60 leading-relaxed">Publicá tu envío gratis. Los Raiders de la red verán tu "Drop" y se pondrán en contacto para realizar la entrega.</p>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Entrega Directa</h4>
+                    <p class="text-[11px] text-white/60 leading-relaxed">Sin intermediarios. Una vez que ganás el Drop, coordinás por WhatsApp directamente con el dueño del paquete.</p>
                 </div>
             </div>
         </div>
@@ -76,7 +74,7 @@
 
         <footer class="mt-16 text-center opacity-30">
             <p class="text-[8px] font-black uppercase tracking-[0.3em]">LUMERS © 2026 | Todos los derechos reservados</p>
-            <p class="text-[7px] font-bold uppercase mt-1">Registrado en NIC Argentina</p>
+            <p class="text-[7px] font-bold uppercase mt-1">Marca Registrada en NIC Argentina</p>
         </footer>
     </div>
 
@@ -87,10 +85,11 @@
         </header>
 
         <main class="p-6 pb-32 space-y-6">
-            <div class="glass p-7 rounded-[2.5rem] border-l-4 border-blue-500">
-                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1 italic">Membresía Raider</p>
-                <h2 class="text-xl font-black italic mb-4 leading-tight uppercase">Acceso Total a la Red</h2>
-                <button onclick="verPase()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Activar Pase 5 USD</button>
+            <div class="glass p-7 rounded-[2.5rem] border-l-4 border-blue-500 bg-blue-500/5">
+                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1 italic">Membresía Raider Pro</p>
+                <h2 class="text-xl font-black italic mb-2 leading-tight uppercase">Ganá más en las Subastas</h2>
+                <p class="text-[11px] text-white/50 mb-4">Accedé a los contactos de WhatsApp y ofertá tu precio en cada Drop de la red.</p>
+                <button onclick="verPase()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Activar por 5 USD</button>
             </div>
 
             <div id="lista-drops" class="space-y-4"></div>
@@ -103,13 +102,14 @@
 
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
-            <h2 class="text-3xl font-black italic text-center text-blue-500 mb-6 uppercase">Lanzar Drop</h2>
-            <input type="text" id="in-ori" placeholder="📍 Retiro" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="text" id="in-des" placeholder="🏁 Entrega" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="number" id="in-pre" placeholder="💰 Precio $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="number" id="in-tel" placeholder="📱 WhatsApp" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest mt-4">Publicar Drop</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase tracking-widest">Cerrar</button>
+            <h2 class="text-3xl font-black italic text-center text-blue-500 mb-6 uppercase leading-none">Lanzar Drop</h2>
+            <p class="text-[10px] text-center text-white/40 uppercase font-bold tracking-widest mb-4">Iniciá la subasta de tu envío</p>
+            <input type="text" id="in-ori" placeholder="📍 Retiro (Ej: Centro)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="text" id="in-des" placeholder="🏁 Entrega (Ej: Barrio Norte)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="number" id="in-pre" placeholder="💰 Precio Sugerido $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="number" id="in-tel" placeholder="📱 WhatsApp de contacto" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest mt-4">Iniciar Subasta</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase tracking-widest">Volver</button>
         </div>
     </div>
 
@@ -146,14 +146,14 @@
 
         window.logout = () => signOut(auth);
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
-        window.verPase = () => window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀";
+        window.verPase = () => window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀 y participar en las subastas.";
 
         document.getElementById('btnLogin').onclick = () => signInWithPopup(auth, provider);
 
         window.crearDrop = async () => {
             const ori = document.getElementById('in-ori').value, des = document.getElementById('in-des').value,
                   pre = document.getElementById('in-pre').value, tel = document.getElementById('in-tel').value;
-            if(!ori || !des || !pre || !tel) return alert("Completá todos los campos");
+            if(!ori || !des || !pre || !tel) return alert("Completá todos los campos para iniciar el Drop");
             await addDoc(collection(db, "viajes"), { origen: ori, destino: des, precio: pre, whatsapp: tel, creado: Date.now() });
             toggleModal(false);
         };
@@ -162,19 +162,21 @@
             const q = query(collection(db, "viajes"), orderBy("creado", "desc"));
             onSnapshot(q, (snap) => {
                 const lista = document.getElementById('lista-drops');
-                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-xs py-20 italic font-bold">Sin envíos pendientes...</p>' : '';
+                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-xs py-20 italic font-bold uppercase tracking-widest">Sin subastas activas...</p>' : '';
                 snap.forEach((doc) => {
                     const d = doc.data();
                     lista.innerHTML += `
-                        <div class="glass p-6 rounded-[2.5rem] drop-card">
+                        <div class="glass p-6 rounded-[2.5rem] border border-white/5 shadow-xl">
                             <div class="flex justify-between items-center mb-5">
-                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-blue-500/20 italic">Drop Activo</span>
+                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-blue-500/20 italic tracking-widest">Subasta Activa</span>
                                 <p class="text-2xl font-black italic">$${d.precio}</p>
                             </div>
                             <h3 class="text-lg font-black italic uppercase leading-tight mb-6">
-                                ${d.origen} <i class="fa-solid fa-arrow-right-long text-blue-500 mx-2"></i> ${d.destino}
+                                ${d.origen} <i class="fa-solid fa-bolt text-blue-500 mx-2 text-xs"></i> ${d.destino}
                             </h3>
-                            <button onclick="verPase()" class="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-black text-[9px] uppercase tracking-widest text-white/80">Ver contacto</button>
+                            <button onclick="verPase()" class="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-black text-[9px] uppercase tracking-[0.2em] text-white/80">
+                                Ofertar en subasta
+                            </button>
                         </div>
                     `;
                 });
