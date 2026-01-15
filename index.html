@@ -27,33 +27,32 @@
         <div class="logo-organic mb-8"><i class="fa-solid fa-paper-plane text-4xl text-white"></i></div>
         
         <h1 class="text-6xl font-black italic tracking-tighter text-blue-500 uppercase leading-none">LUMERS</h1>
-        <p class="text-[13px] font-bold text-white/90 mt-4 leading-relaxed italic px-4">No es solo un envío, es nuestro envío.</p>
         <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mt-3 italic">Una entrega a la vez</p>
 
-        <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 my-10 space-y-6 text-left">
+        <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 my-8 space-y-6 text-left">
             <div class="flex items-start gap-4">
-                <i class="fa-solid fa-heart text-blue-400 mt-1"></i>
+                <i class="fa-solid fa-earth-americas text-blue-400 mt-1"></i>
                 <div>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Cadena de Favores</h4>
-                    <p class="text-[11px] text-white/60 leading-relaxed italic">Lumers nace para ayudarnos. No somos una app fría, somos personas y empresas de la ciudad moviendo el mundo de otros. <b>Hoy por vos, mañana por mí.</b></p>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Visión Mundial</h4>
+                    <p class="text-[10px] text-white/60 leading-relaxed italic">Lumers no es solo una app, es una cadena de favores profesional. Tu aporte como <b>Raider Pro</b> permite que esta plataforma siga creciendo, mejorando su tecnología y llegue a cada rincón del planeta.</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
                 <i class="fa-solid fa-handshake text-blue-400 mt-1"></i>
                 <div>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Precio Justo (Subasta)</h4>
-                    <p class="text-[11px] text-white/60 leading-relaxed">Sin comisiones abusivas. Publicás lo que necesitás enviar y los Raiders de la comunidad ofertan su valor. El trato es directo y humano.</p>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Ayuda Mutua</h4>
+                    <p class="text-[10px] text-white/60 leading-relaxed">Conectamos necesidades reales. Personas y empresas publican, los Raiders ofertan. Es una red de valor donde todos ganamos y aportamos para que el sistema evolucione.</p>
                 </div>
             </div>
         </div>
 
         <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-4 shadow-2xl">
-            <i class="fa-brands fa-google text-lg"></i> Entrar a la Comunidad
+            <i class="fa-brands fa-google text-lg"></i> Unirme al Proyecto
         </button>
 
-        <footer class="mt-16 opacity-30">
-            <p class="text-[8px] font-black uppercase tracking-[0.3em]">LUMERS © 2026 | Cadena de Favores Digital</p>
-            <p class="text-[7px] font-bold uppercase mt-1">Registrado en NIC Argentina</p>
+        <footer class="mt-12 opacity-30">
+            <p class="text-[8px] font-black uppercase tracking-[0.3em]">LUMERS © 2026 | De San Nicolás al Mundo</p>
+            <p class="text-[7px] font-bold uppercase mt-1">Marca Registrada | NIC Argentina</p>
         </footer>
     </div>
 
@@ -65,10 +64,10 @@
 
         <main class="p-6 pb-32 space-y-6">
             <div class="glass p-7 rounded-[2.5rem] border-l-4 border-blue-500">
-                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1 italic">Hacete Pro</p>
-                <h2 class="text-xl font-black italic mb-2 leading-tight uppercase">Sumate a la Cadena</h2>
-                <p class="text-[11px] text-white/50 mb-4">Accedé a los contactos de la red para concretar entregas y participar de las subastas.</p>
-                <button onclick="verPase()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Activar Pase Raider</button>
+                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1 italic">Membresía Raider Pro</p>
+                <h2 class="text-xl font-black italic mb-2 leading-tight uppercase">Impulsá la Comunidad</h2>
+                <p class="text-[11px] text-white/50 mb-4 leading-relaxed">Tu suscripción financia el desarrollo de Lumers para convertirnos en la red de entregas más grande del mundo.</p>
+                <button onclick="verPase()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Suscripción Pro (5 USD)</button>
             </div>
 
             <div id="lista-drops" class="space-y-4"></div>
@@ -82,13 +81,13 @@
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4 text-center">
             <h2 class="text-3xl font-black italic text-blue-500 mb-2 uppercase leading-none">Lanzar Drop</h2>
-            <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-4 italic">Alguien de la comunidad lo llevará por vos</p>
+            <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-4 italic">Publicá tu envío en la red global</p>
             <input type="text" id="in-ori" placeholder="📍 Lugar de Retiro" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             <input type="text" id="in-des" placeholder="🏁 Lugar de Entrega" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="number" id="in-pre" placeholder="💰 ¿Cuánto podés pagar? $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="number" id="in-pre" placeholder="💰 Precio Sugerido $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             <input type="number" id="in-tel" placeholder="📱 Tu WhatsApp" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest mt-4">Iniciar Cadena</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase tracking-widest">Cancelar</button>
+            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest mt-4">Iniciar Envío</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase tracking-widest">Cerrar</button>
         </div>
     </div>
 
@@ -128,45 +127,44 @@
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Clave de Administrador:");
-                if(pass === "lumers2026") { isAdmin = true; alert("Modo Admin Activado"); cargarDrops(); }
+                const pass = prompt("Clave:");
+                if(pass === "lumers2026") { isAdmin = true; alert("Modo Admin"); cargarDrops(); }
                 clickCount = 0;
             }
         };
 
         window.logout = () => signOut(auth);
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
-        window.verPase = () => window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀 y sumarme a la cadena de favores.";
+        window.verPase = () => window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀 y apoyar el crecimiento de la red.";
 
         document.getElementById('btnLogin').onclick = () => signInWithPopup(auth, provider);
 
         window.crearDrop = async () => {
             const ori = document.getElementById('in-ori').value, des = document.getElementById('in-des').value, pre = document.getElementById('in-pre').value, tel = document.getElementById('in-tel').value;
-            if(!ori || !des || !pre || !tel) return alert("Faltan datos");
+            if(!ori || !des || !pre || !tel) return alert("Completá todos los campos");
             await addDoc(collection(db, "viajes"), { origen: ori, destino: des, precio: pre, whatsapp: tel, creado: Date.now() });
             toggleModal(false);
         };
 
         window.borrarDrop = async (id) => {
-            if(confirm("¿Eliminar este Drop definitivamente?")) await deleteDoc(doc(db, "viajes", id));
+            if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "viajes", id));
         };
 
         function cargarDrops() {
             const q = query(collection(db, "viajes"), orderBy("creado", "desc"));
             onSnapshot(q, (snap) => {
                 const lista = document.getElementById('lista-drops');
-                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-xs py-20 italic">Buscando personas que ayudar...</p>' : '';
+                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-xs py-20 italic">Buscando envíos activos...</p>' : '';
                 snap.forEach((documento) => {
-                    const d = documento.data();
-                    const id = documento.id;
+                    const d = documento.data(), id = documento.id;
                     lista.innerHTML += `
                         <div class="glass p-6 rounded-[2.5rem] relative">
                             ${isAdmin ? `<button onclick="borrarDrop('${id}')" class="absolute top-6 right-6 text-red-500/50"><i class="fa-solid fa-trash"></i></button>` : ''}
                             <div class="flex justify-between items-center mb-5">
-                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase italic border border-blue-500/20">Ayuda en Camino</span>
+                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-blue-500/20 italic">Drop Activo</span>
                                 <p class="text-2xl font-black italic">$${d.precio}</p>
                             </div>
-                            <h3 class="text-lg font-black italic uppercase mb-6">${d.origen} <i class="fa-solid fa-bolt text-blue-500 mx-2 text-xs"></i> ${d.destino}</h3>
+                            <h3 class="text-lg font-black italic uppercase mb-6">${d.origen} <i class="fa-solid fa-arrow-right-long text-blue-500 mx-2 text-xs"></i> ${d.destino}</h3>
                             <button onclick="verPase()" class="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-black text-[9px] uppercase tracking-widest text-white/80">Ofertá tu ayuda</button>
                         </div>
                     `;
