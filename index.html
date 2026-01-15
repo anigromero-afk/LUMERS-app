@@ -14,6 +14,7 @@
         @keyframes morph { 0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%; } }
         .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); }
         .btn-blue { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
+        .shield-box { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -30,36 +31,31 @@
         <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mt-3 italic">Una entrega a la vez</p>
 
         <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 my-8 space-y-5 text-left">
+            <div class="shield-box p-4 rounded-2xl mb-2">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fa-solid fa-shield-halved text-blue-400"></i>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-blue-400">Escudo de Seguridad</h4>
+                </div>
+                <p class="text-[9px] text-white/70 leading-relaxed">
+                    Retenemos el pago del envío en nuestra plataforma. El dinero se libera al Raider únicamente cuando el destinatario confirma la recepción del paquete.
+                </p>
+            </div>
+
             <div class="flex items-start gap-4">
                 <i class="fa-solid fa-earth-americas text-blue-400 mt-1"></i>
                 <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-blue-400">Conexión Global</h4>
-                    <p class="text-[9px] text-white/60 leading-relaxed italic">LUMERS conecta personas y empresas para repartos en Argentina o el exterior. <b>Somos el nexo, no el transporte.</b></p>
-                </div>
-            </div>
-            <div class="flex items-start gap-4">
-                <i class="fa-solid fa-shield-halved text-blue-400 mt-1"></i>
-                <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-blue-400">Seguridad Comunitaria</h4>
-                    <p class="text-[9px] text-white/60 leading-relaxed italic">Trabajamos para que el Raider reciba su pago recién al confirmar la entrega en destino. <b>LUMERS no se hace responsable por los paquetes; cada usuario es responsable del trato directo.</b></p>
-                </div>
-            </div>
-            <div class="flex items-start gap-4">
-                <i class="fa-solid fa-dollar-sign text-blue-400 mt-1"></i>
-                <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-blue-400">Sustento (5 USD)</h4>
-                    <p class="text-[9px] text-white/60 leading-relaxed italic">Tu suscripción mensual permite mejorar la app y expandir esta red de San Nicolás al mundo entero.</p>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-blue-400">Argentina y Exterior</h4>
+                    <p class="text-[9px] text-white/60 leading-relaxed italic">Conectamos personas y empresas para repartos globales. <b>Lumers es el nexo digital; no somos responsables por el contenido físico.</b></p>
                 </div>
             </div>
         </div>
 
         <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-4 shadow-2xl">
-            <i class="fa-brands fa-google text-lg"></i> Iniciar sesión
+            <i class="fa-brands fa-google text-lg"></i> Iniciar Comunidad
         </button>
 
-        <footer class="mt-8 opacity-30">
-            <p class="text-[8px] font-black uppercase tracking-[0.3em]">LUMERS © 2026 | San Nicolás, Argentina</p>
-            <p class="text-[7px] font-bold uppercase mt-1 italic">LUMERS no asume responsabilidad por la logística física ni el contenido de los envíos.</p>
+        <footer class="mt-8 opacity-30 px-6">
+            <p class="text-[7px] font-bold uppercase italic leading-tight">LUMERS no asume responsabilidad legal por la logística física o pérdida de paquetes. Cada usuario opera bajo su propia responsabilidad en trato directo.</p>
         </footer>
     </div>
 
@@ -72,8 +68,8 @@
         <main class="p-6 pb-32 space-y-6">
             <div class="glass p-7 rounded-[2.5rem] border-l-4 border-blue-500 bg-blue-500/5">
                 <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1 italic">Membresía Raider Pro</p>
-                <h2 class="text-xl font-black italic mb-2 leading-tight uppercase">Expandir la Red</h2>
-                <p class="text-[11px] text-white/50 mb-4 leading-relaxed">Suscribite por <b>5 USD mensuales</b> para acceder a los contactos y ayudar a que Lumers llegue a nivel mundial.</p>
+                <h2 class="text-xl font-black italic mb-2 uppercase">Llegar al Mundo</h2>
+                <p class="text-[11px] text-white/50 mb-4">Suscripción de <b>5 USD mensuales</b> para financiar la tecnología y expansión de la red global de San Nicolás.</p>
                 <button onclick="verPase()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Activar 5 USD / Mes</button>
             </div>
 
@@ -88,11 +84,16 @@
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4 text-center">
             <h2 class="text-3xl font-black italic text-blue-500 mb-2 uppercase">Lanzar Drop</h2>
-            <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-4 italic italic">Acordá el envío con un Raider</p>
+            
+            <div class="shield-box p-3 rounded-xl mb-4">
+                <p class="text-[8px] text-blue-300 font-bold uppercase tracking-tighter">🛡️ Pago Protegido: El dinero se retiene hasta que el paquete llegue a destino.</p>
+            </div>
+
             <input type="text" id="in-ori" placeholder="📍 Lugar de Retiro" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             <input type="text" id="in-des" placeholder="🏁 Lugar de Entrega" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             <input type="number" id="in-pre" placeholder="💰 ¿Cuánto pagás? $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             <input type="number" id="in-tel" placeholder="📱 WhatsApp de contacto" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            
             <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest mt-4">Iniciar Cadena</button>
             <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase tracking-widest">Cerrar</button>
         </div>
@@ -134,7 +135,7 @@
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Clave de Administrador:");
+                const pass = prompt("Acceso Administrador:");
                 if(pass === "lumers2026") { isAdmin = true; alert("Modo Admin Activado"); cargarDrops(); }
                 clickCount = 0;
             }
@@ -144,10 +145,10 @@
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
 
         window.verPase = () => {
-            const confirmar = confirm("Suscripción Plan Pro: 5 USD/Mes. LUMERS no se responsabiliza por los paquetes físicos, solo conecta a los usuarios. ¿Aceptar?");
+            const confirmar = confirm("MEMBRESÍA PRO (5 USD/MES)\n\nAcepto que LUMERS es un nexo digital y no se responsabiliza por los envíos físicos. El sistema retiene el pago hasta la entrega. ¿Deseas continuar?");
             if(confirmar) {
                 // MAÑANA PEGÁ TU LINK DE MERCADO PAGO AQUÍ:
-                window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro por 5 USD mensuales.";
+                window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀 y apoyar la red global.";
             }
         };
 
@@ -155,7 +156,7 @@
 
         window.crearDrop = async () => {
             const ori = document.getElementById('in-ori').value, des = document.getElementById('in-des').value, pre = document.getElementById('in-pre').value, tel = document.getElementById('in-tel').value;
-            if(!ori || !des || !pre || !tel) return alert("Faltan datos");
+            if(!ori || !des || !pre || !tel) return alert("Faltan datos obligatorios");
             await addDoc(collection(db, "viajes"), { origen: ori, destino: des, precio: pre, whatsapp: tel, creado: Date.now() });
             toggleModal(false);
         };
@@ -175,7 +176,7 @@
                         <div class="glass p-6 rounded-[2.5rem] relative">
                             ${isAdmin ? `<button onclick="borrarDrop('${id}')" class="absolute top-6 right-6 text-red-500/50"><i class="fa-solid fa-trash"></i></button>` : ''}
                             <div class="flex justify-between items-center mb-5">
-                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-blue-500/20 italic">Drop Activo</span>
+                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-blue-500/20 italic">Drop Protegido 🛡️</span>
                                 <p class="text-2xl font-black italic">$${d.precio}</p>
                             </div>
                             <h3 class="text-lg font-black italic uppercase mb-6">${d.origen} <i class="fa-solid fa-arrow-right-long text-blue-500 mx-2 text-xs"></i> ${d.destino}</h3>
