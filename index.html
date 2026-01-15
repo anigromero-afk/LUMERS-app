@@ -10,23 +10,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #020617; color: white; margin: 0; overflow-x: hidden; }
         .bg-main { background: radial-gradient(circle at top, #1e293b 0%, #020617 100%); min-height: 100vh; }
-        
-        .logo-organic {
-            width: 120px; height: 120px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
-            animation: morph 10s ease-in-out infinite;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-        @keyframes morph {
-            0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
-            50% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%; }
-        }
-
+        .logo-organic { width: 120px; height: 120px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(59, 130, 246, 0.4); animation: morph 10s ease-in-out infinite; border: 2px solid rgba(255,255,255,0.1); }
+        @keyframes morph { 0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%; } }
         .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); }
-        .btn-blue { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
+        .btn-blue { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -37,64 +24,34 @@
     </div>
 
     <div id="view-login" class="hidden min-h-screen flex flex-col items-center p-8 pt-12 pb-16">
-        <div class="logo-organic mb-8">
-            <i class="fa-solid fa-paper-plane text-4xl text-white"></i>
-        </div>
-        
+        <div class="logo-organic mb-8"><i class="fa-solid fa-paper-plane text-4xl text-white"></i></div>
         <div class="text-center mb-10">
             <h1 class="text-6xl font-black italic tracking-tighter text-blue-500 uppercase leading-none">LUMERS</h1>
-            <p class="text-[13px] font-bold text-white/90 mt-4 leading-relaxed italic px-4">
-                No es solo un envío, es nuestro envío.
-            </p>
-            <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mt-3 italic">
-                Una entrega a la vez
-            </p>
+            <p class="text-[13px] font-bold text-white/90 mt-4 leading-relaxed italic px-4">No es solo un envío, es nuestro envío.</p>
+            <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mt-3 italic">Una entrega a la vez</p>
         </div>
-
-        <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 mb-10 space-y-6">
+        <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 mb-10 space-y-6 text-[11px]">
             <div class="flex items-start gap-4">
                 <i class="fa-solid fa-gavel text-blue-400 mt-1"></i>
-                <div>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Subasta de Precios</h4>
-                    <p class="text-[11px] text-white/60 leading-relaxed">Como <b>Raider Pro</b>, podés ver el precio base de cada envío y ofertar tu propio valor. ¡La comunidad elige la mejor propuesta!</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-4">
-                <i class="fa-solid fa-handshake text-blue-400 mt-1"></i>
-                <div>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-blue-400">Entrega Directa</h4>
-                    <p class="text-[11px] text-white/60 leading-relaxed">Sin intermediarios. Una vez que ganás el Drop, coordinás por WhatsApp directamente con el dueño del paquete.</p>
-                </div>
+                <div><h4 class="font-black uppercase tracking-widest text-blue-400">Subasta de Precios</h4><p class="text-white/60">Ofertá tu propio valor. ¡La comunidad elige la mejor propuesta!</p></div>
             </div>
         </div>
-
         <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-4 shadow-2xl">
             <i class="fa-brands fa-google text-lg"></i> Iniciar Comunidad
         </button>
-
         <footer class="mt-16 text-center opacity-30">
-            <p class="text-[8px] font-black uppercase tracking-[0.3em]">LUMERS © 2026 | Todos los derechos reservados</p>
-            <p class="text-[7px] font-bold uppercase mt-1">Marca Registrada en NIC Argentina</p>
+            <p class="text-[8px] font-black uppercase tracking-[0.3em]">LUMERS © 2026 | NIC Argentina</p>
         </footer>
     </div>
 
     <div id="view-app" class="hidden min-h-screen flex flex-col">
         <header class="p-6 glass flex justify-between items-center sticky top-0 z-50">
-            <h1 class="text-2xl font-black italic text-blue-500 uppercase">LUMERS</h1>
+            <h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer">LUMERS</h1>
             <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase tracking-widest">Salir</button>
         </header>
-
         <main class="p-6 pb-32 space-y-6">
-            <div class="glass p-7 rounded-[2.5rem] border-l-4 border-blue-500 bg-blue-500/5">
-                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1 italic">Membresía Raider Pro</p>
-                <h2 class="text-xl font-black italic mb-2 leading-tight uppercase">Ganá más en las Subastas</h2>
-                <p class="text-[11px] text-white/50 mb-4">Accedé a los contactos de WhatsApp y ofertá tu precio en cada Drop de la red.</p>
-                <button onclick="verPase()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Activar por 5 USD</button>
-            </div>
-
             <div id="lista-drops" class="space-y-4"></div>
         </main>
-
         <button onclick="toggleModal(true)" class="fixed bottom-10 right-8 btn-blue w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl z-50">
             <i class="fa-solid fa-plus text-white"></i>
         </button>
@@ -102,12 +59,11 @@
 
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
-            <h2 class="text-3xl font-black italic text-center text-blue-500 mb-6 uppercase leading-none">Lanzar Drop</h2>
-            <p class="text-[10px] text-center text-white/40 uppercase font-bold tracking-widest mb-4">Iniciá la subasta de tu envío</p>
-            <input type="text" id="in-ori" placeholder="📍 Retiro (Ej: Centro)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="text" id="in-des" placeholder="🏁 Entrega (Ej: Barrio Norte)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="number" id="in-pre" placeholder="💰 Precio Sugerido $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-            <input type="number" id="in-tel" placeholder="📱 WhatsApp de contacto" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <h2 class="text-3xl font-black italic text-center text-blue-500 mb-6 uppercase">Lanzar Drop</h2>
+            <input type="text" id="in-ori" placeholder="📍 Retiro" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="text" id="in-des" placeholder="🏁 Entrega" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="number" id="in-pre" placeholder="💰 Precio $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+            <input type="number" id="in-tel" placeholder="📱 WhatsApp" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest mt-4">Iniciar Subasta</button>
             <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase tracking-widest">Volver</button>
         </div>
@@ -116,7 +72,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
@@ -132,6 +88,9 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
+        let isAdmin = false;
+        let clickCount = 0;
+
         onAuthStateChanged(auth, (user) => {
             setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 800);
             if (user) {
@@ -144,39 +103,55 @@
             }
         });
 
+        window.adminHack = () => {
+            clickCount++;
+            if(clickCount >= 5) {
+                const pass = prompt("Clave de Administrador:");
+                if(pass === "lumers2026") {
+                    isAdmin = true;
+                    alert("Modo Admin Activado");
+                    cargarDrops();
+                }
+                clickCount = 0;
+            }
+        };
+
         window.logout = () => signOut(auth);
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
-        window.verPase = () => window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀 y participar en las subastas.";
+        window.verPase = () => window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi Pase Pro de Lumers 🚀";
 
         document.getElementById('btnLogin').onclick = () => signInWithPopup(auth, provider);
 
         window.crearDrop = async () => {
-            const ori = document.getElementById('in-ori').value, des = document.getElementById('in-des').value,
-                  pre = document.getElementById('in-pre').value, tel = document.getElementById('in-tel').value;
-            if(!ori || !des || !pre || !tel) return alert("Completá todos los campos para iniciar el Drop");
+            const ori = document.getElementById('in-ori').value, des = document.getElementById('in-des').value, pre = document.getElementById('in-pre').value, tel = document.getElementById('in-tel').value;
+            if(!ori || !des || !pre || !tel) return alert("Faltan datos");
             await addDoc(collection(db, "viajes"), { origen: ori, destino: des, precio: pre, whatsapp: tel, creado: Date.now() });
             toggleModal(false);
+        };
+
+        window.borrarDrop = async (id) => {
+            if(confirm("¿Eliminar este Drop definitivamente?")) {
+                await deleteDoc(doc(db, "viajes", id));
+            }
         };
 
         function cargarDrops() {
             const q = query(collection(db, "viajes"), orderBy("creado", "desc"));
             onSnapshot(q, (snap) => {
                 const lista = document.getElementById('lista-drops');
-                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-xs py-20 italic font-bold uppercase tracking-widest">Sin subastas activas...</p>' : '';
-                snap.forEach((doc) => {
-                    const d = doc.data();
+                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-xs py-20 italic">Sin subastas...</p>' : '';
+                snap.forEach((documento) => {
+                    const d = documento.data();
+                    const id = documento.id;
                     lista.innerHTML += `
-                        <div class="glass p-6 rounded-[2.5rem] border border-white/5 shadow-xl">
+                        <div class="glass p-6 rounded-[2.5rem] relative">
+                            ${isAdmin ? `<button onclick="borrarDrop('${id}')" class="absolute top-6 right-6 text-red-500/50"><i class="fa-solid fa-trash"></i></button>` : ''}
                             <div class="flex justify-between items-center mb-5">
-                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-blue-500/20 italic tracking-widest">Subasta Activa</span>
+                                <span class="bg-blue-500/10 text-blue-400 text-[8px] font-black px-3 py-1.5 rounded-full uppercase italic tracking-widest border border-blue-500/20">Subasta Activa</span>
                                 <p class="text-2xl font-black italic">$${d.precio}</p>
                             </div>
-                            <h3 class="text-lg font-black italic uppercase leading-tight mb-6">
-                                ${d.origen} <i class="fa-solid fa-bolt text-blue-500 mx-2 text-xs"></i> ${d.destino}
-                            </h3>
-                            <button onclick="verPase()" class="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-black text-[9px] uppercase tracking-[0.2em] text-white/80">
-                                Ofertar en subasta
-                            </button>
+                            <h3 class="text-lg font-black italic uppercase leading-tight mb-6">${d.origen} <i class="fa-solid fa-bolt text-blue-500 mx-2 text-xs"></i> ${d.destino}</h3>
+                            <button onclick="verPase()" class="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-black text-[9px] uppercase tracking-widest text-white/80">Ofertar en subasta</button>
                         </div>
                     `;
                 });
