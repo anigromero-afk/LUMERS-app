@@ -3,78 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUMERS | Conexión Logística Global</title>
+    <title>LUMERS | Una entrega a la vez</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #020617; color: white; margin: 0; overflow-x: hidden; }
         .bg-main { background: radial-gradient(circle at top, #1e293b 0%, #020617 100%); min-height: 100vh; }
-        .logo-organic { width: 100px; height: 100px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(59, 130, 246, 0.3); animation: morph 8s ease-in-out infinite; }
-        @keyframes morph { 0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } }
+        .logo-organic { width: 110px; height: 110px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(59, 130, 246, 0.4); animation: morph 10s ease-in-out infinite; border: 2px solid rgba(255,255,255,0.1); }
+        @keyframes morph { 0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%; } }
         .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); }
-        .btn-blue { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s; }
-        .btn-blue:active { transform: scale(0.95); }
+        .btn-blue { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); }
         .hidden { display: none !important; }
     </style>
 </head>
 <body class="bg-main">
 
     <div id="loader" class="fixed inset-0 z-[200] bg-[#020617] flex items-center justify-center">
-        <div class="logo-organic scale-75"><i class="fa-solid fa-box-open text-3xl text-white"></i></div>
+        <div class="logo-organic scale-75"><i class="fa-solid fa-paper-plane text-4xl text-white"></i></div>
     </div>
 
     <div id="view-login" class="hidden min-h-screen flex flex-col items-center p-8 text-center">
-        <div class="logo-organic mt-12 mb-8"><i class="fa-solid fa-handshake text-3xl text-white"></i></div>
-        <h1 class="text-5xl font-black italic tracking-tighter text-blue-500 uppercase leading-none">LUMERS</h1>
-        <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mt-2 italic">Puente Logístico Internacional</p>
+        <div class="logo-organic mt-10 mb-8"><i class="fa-solid fa-paper-plane text-4xl text-white"></i></div>
+        
+        <h1 class="text-6xl font-black italic tracking-tighter text-blue-500 uppercase leading-none">LUMERS</h1>
+        <p class="text-[11px] font-black text-blue-400 uppercase tracking-[0.4em] mt-3 italic">Una entrega a la vez</p>
 
         <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 my-8 space-y-6 text-left">
-            <div>
-                <h4 class="text-[11px] font-black uppercase text-blue-400 flex items-center gap-2 italic">
-                    <i class="fa-solid fa-users"></i> Para Todos
-                </h4>
-                <p class="text-[10px] text-white/60 leading-relaxed mt-1">Empresas que necesitan enviar stock o personas que envían un regalo. Cualquier usuario puede pedir o llevar un paquete.</p>
-            </div>
+            <p class="text-[13px] text-white/80 leading-relaxed italic text-center">
+                "Creando una red global de confianza, donde cada paquete cuenta una historia."
+            </p>
 
-            <div>
-                <h4 class="text-[11px] font-black uppercase text-blue-400 flex items-center gap-2 italic">
-                    <i class="fa-solid fa-gavel"></i> Puja de Precios
-                </h4>
-                <p class="text-[10px] text-white/60 leading-relaxed mt-1">El solicitante propone un pago y los Raiders pujan para ganar el envío. Transparencia total en los costos.</p>
-            </div>
-
-            <div class="bg-blue-500/10 p-4 rounded-2xl border border-blue-500/20">
-                <h4 class="text-[11px] font-black uppercase text-blue-300 flex items-center gap-2 italic">
-                    <i class="fa-solid fa-shield-check"></i> Pago Protegido
-                </h4>
-                <p class="text-[10px] text-blue-100/70 leading-relaxed mt-1">
-                    Lumers retiene el pago y se lo entrega al Raider al llegar a destino. **Comisión de conexión: 10% del total.**
-                </p>
+            <div class="space-y-4 pt-2 border-t border-white/5">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-heart text-blue-400 mt-1"></i>
+                    <p class="text-[10px] text-white/60 leading-relaxed"><b>Para todos:</b> Empresas o personas enviando ayuda, trabajo o afecto. Aquí todos pueden pedir o llevar.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-hand-holding-dollar text-blue-400 mt-1"></i>
+                    <p class="text-[10px] text-white/60 leading-relaxed"><b>Puja Justa:</b> Elegí el precio que mejor te siente. El 10% de comisión nos ayuda a mantener esta red segura.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-shield-heart text-blue-400 mt-1"></i>
+                    <p class="text-[10px] text-white/60 leading-relaxed"><b>Seguridad LUMERS:</b> Retenemos el pago hasta que el paquete llegue a destino.</p>
+                </div>
             </div>
         </div>
 
         <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-4 shadow-2xl">
-            <i class="fa-brands fa-google text-lg"></i> Acceder al Portal
+            <i class="fa-solid fa-circle-user text-lg"></i> Unirme a la Comunidad
         </button>
     </div>
 
     <div id="view-app" class="hidden min-h-screen flex flex-col">
         <header class="p-6 glass flex justify-between items-center sticky top-0 z-50">
-            <h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer">LUMERS</h1>
-            <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase italic">Cerrar Sesión</button>
+            <div>
+                <h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer leading-none">LUMERS</h1>
+                <p class="text-[7px] font-bold text-blue-400 uppercase tracking-widest italic mt-1">Una entrega a la vez</p>
+            </div>
+            <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase italic">Salir</button>
         </header>
 
         <main class="p-6 pb-32 space-y-6">
-            <div class="glass p-6 rounded-[2rem] border-l-4 border-blue-500 bg-blue-500/5">
-                <h3 class="text-[10px] font-black text-blue-400 uppercase mb-1">Activar Perfil Raider</h3>
-                <p class="text-[10px] text-white/60 mb-4 leading-tight">Acceso a subastas ilimitadas por **5 USD mensuales**. Gana dinero llevando paquetes con el respaldo de Lumers.</p>
-                <button onclick="verPase()" class="w-full bg-white text-black py-3 rounded-xl font-black text-[9px] uppercase italic">Activar Suscripción</button>
-            </div>
-
-            <div class="flex items-center justify-between px-2">
-                <h2 class="text-[10px] font-black uppercase tracking-widest text-white/40 italic">Subastas de Envío en Vivo</h2>
-                <span class="text-[8px] bg-green-500/20 text-green-400 px-2 py-1 rounded-full animate-pulse">Online</span>
+            <div class="glass p-6 rounded-[2.5rem] border-l-4 border-blue-500 bg-blue-500/5">
+                <h3 class="text-[11px] font-black text-blue-400 uppercase mb-1 italic">Convertite en Raider Pro</h3>
+                <p class="text-[10px] text-white/60 mb-4 leading-tight italic">Acceso a subastas por <b>5 USD mensuales</b>. Comisión del <b>10%</b> por cada entrega exitosa.</p>
+                <button onclick="verPase()" class="w-full bg-white text-black py-3 rounded-xl font-black text-[9px] uppercase italic tracking-widest">Activar Mi Pase</button>
             </div>
 
             <div id="lista-drops" class="space-y-4"></div>
@@ -86,22 +80,20 @@
     </div>
 
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
-        <div class="w-full max-w-sm glass p-8 rounded-[2.5rem] space-y-4">
-            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center italic">Solicitar Envío</h2>
+        <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
+            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center italic">¿Qué querés enviar?</h2>
             
             <div class="space-y-3">
-                <input type="text" id="in-ori" placeholder="📍 Lugar de Retiro (Empresa/Local/Casa)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5 focus:border-blue-500/50">
-                <input type="text" id="in-des" placeholder="🏁 Destino de Entrega" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5 focus:border-blue-500/50">
-                <input type="number" id="in-pre" placeholder="💰 ¿Cuánto ofrecés pagar? $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5 focus:border-blue-500/50">
-                <input type="number" id="in-tel" placeholder="📱 WhatsApp de Contacto" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5 focus:border-blue-500/50">
+                <input type="text" id="in-ori" placeholder="📍 ¿Dónde retiramos?" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="text" id="in-des" placeholder="🏁 ¿A dónde llega?" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="number" id="in-pre" placeholder="💰 ¿Cuánto ofrecés por el viaje? $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="number" id="in-tel" placeholder="📱 Tu WhatsApp de contacto" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             </div>
             
-            <div class="bg-blue-500/10 p-4 rounded-xl text-center border border-blue-500/20">
-                <p class="text-[8px] text-blue-300 font-black uppercase italic leading-tight">Lumers percibe el 10% de comisión del Raider al concretar la entrega.</p>
-            </div>
+            <p class="text-[8px] text-blue-300 text-center font-bold uppercase italic px-4">LUMERS protege tu envío. Se descontará un 10% de comisión al Raider al completar la entrega.</p>
 
-            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest italic">Publicar Subasta</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase text-center italic w-full block">Cancelar</button>
+            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest italic mt-2">Lanzar Drop</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase italic text-center">Volver atrás</button>
         </div>
     </div>
 
@@ -141,8 +133,8 @@
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Clave de Administrador:");
-                if(pass === "lumers2026") { isAdmin = true; alert("Modo Gestión Activado"); cargarDrops(); }
+                const pass = prompt("Acceso Gestión:");
+                if(pass === "lumers2026") { isAdmin = true; alert("Gestión LUMERS Activada"); cargarDrops(); }
                 clickCount = 0;
             }
         };
@@ -151,9 +143,9 @@
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
 
         window.verPase = () => {
-            const ok = confirm("Suscripción Raider Pro: 5 USD/Mes. Acepto que Lumers percibe el 10% de comisión por cada envío concretado. ¿Aceptar?");
+            const ok = confirm("PASE RAIDER PRO\n\n¿Aceptás la comisión del 10% por conexión y seguridad? El pago se libera al llegar a destino.");
             if(ok) {
-                window.location.href = "https://wa.me/3364652349?text=Hola! Quiero mi suscripción para empezar a pujar en Lumers.";
+                window.location.href = "https://wa.me/3364652349?text=Hola! Quiero activar mi Pase Pro en Lumers.";
             }
         };
 
@@ -161,49 +153,49 @@
 
         window.crearDrop = async () => {
             const ori = document.getElementById('in-ori').value, des = document.getElementById('in-des').value, pre = document.getElementById('in-pre').value, tel = document.getElementById('in-tel').value;
-            if(!ori || !des || !pre || !tel) return alert("Faltan datos obligatorios");
+            if(!ori || !des || !pre || !tel) return alert("Faltan datos");
             await addDoc(collection(db, "viajes"), { origen: ori, destino: des, precio: parseFloat(pre), whatsapp: tel, creado: Date.now() });
             toggleModal(false);
         };
 
         window.borrarDrop = async (id) => {
-            if(confirm("¿Eliminar subasta?")) await deleteDoc(doc(db, "viajes", id));
+            if(confirm("¿Eliminar envío?")) await deleteDoc(doc(db, "viajes", id));
         };
 
         function cargarDrops() {
             const q = query(collection(db, "viajes"), orderBy("creado", "desc"));
             onSnapshot(q, (snap) => {
                 const lista = document.getElementById('lista-drops');
-                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-[10px] py-20 italic">No hay pedidos pendientes...</p>' : '';
+                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-[10px] py-20 italic">Esperando nuevas historias para llevar...</p>' : '';
                 snap.forEach((documento) => {
                     const d = documento.data(), id = documento.id;
                     const comision = (d.precio * 0.10).toFixed(0);
                     const ganancia = (d.precio * 0.90).toFixed(0);
                     lista.innerHTML += `
-                        <div class="glass p-6 rounded-[2.5rem] relative border-b-2 border-blue-500/20">
+                        <div class="glass p-7 rounded-[2.5rem] relative border-b-2 border-blue-500/20">
                             ${isAdmin ? `<button onclick="borrarDrop('${id}')" class="absolute top-4 right-4 text-red-500/20"><i class="fa-solid fa-trash"></i></button>` : ''}
                             <div class="flex justify-between items-start mb-5">
                                 <div class="space-y-1">
-                                    <p class="text-[9px] font-black text-blue-500 uppercase italic">📍 Punto de Retiro</p>
-                                    <p class="text-sm font-bold uppercase tracking-tight">${d.origen}</p>
+                                    <p class="text-[9px] font-black text-blue-500 uppercase italic">📍 Retiro</p>
+                                    <p class="text-[13px] font-bold uppercase">${d.origen}</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-[9px] font-black text-white/40 uppercase italic tracking-tighter">Oferta Inicial</p>
-                                    <p class="text-2xl font-black italic text-blue-400">$${d.precio}</p>
+                                    <p class="text-[10px] font-black text-blue-400 italic leading-none">$${d.precio}</p>
+                                    <p class="text-[6px] font-bold text-white/30 uppercase mt-1">Valor Total</p>
                                 </div>
                             </div>
                             <div class="space-y-1 mb-6">
-                                <p class="text-[9px] font-black text-blue-500 uppercase italic">🏁 Punto de Entrega</p>
-                                <p class="text-sm font-bold uppercase tracking-tight">${d.destino}</p>
+                                <p class="text-[9px] font-black text-blue-500 uppercase italic">🏁 Entrega</p>
+                                <p class="text-[13px] font-bold uppercase">${d.destino}</p>
                             </div>
-                            <div class="flex gap-2 mb-6">
-                                <div class="flex-1 bg-white/5 p-3 rounded-xl border border-white/5">
-                                    <p class="text-[7px] font-black text-white/40 uppercase mb-1 italic">Tu Pago Neto</p>
-                                    <p class="text-sm font-black text-green-400">$${ganancia}</p>
+                            <div class="flex gap-3 mb-6">
+                                <div class="flex-1 bg-white/5 p-3 rounded-2xl border border-white/5">
+                                    <p class="text-[7px] font-black text-white/40 uppercase mb-1 italic">Ganancia Raider</p>
+                                    <p class="text-[11px] font-black text-green-400">$${ganancia}</p>
                                 </div>
-                                <div class="flex-1 bg-blue-500/5 p-3 rounded-xl border border-blue-500/10">
-                                    <p class="text-[7px] font-black text-blue-400/50 uppercase mb-1 italic text-right italic text-right">Lumers (10%)</p>
-                                    <p class="text-sm font-black text-blue-400 text-right italic">$${comision}</p>
+                                <div class="flex-1 bg-blue-500/5 p-3 rounded-2xl border border-blue-500/10 text-right">
+                                    <p class="text-[7px] font-black text-blue-400/50 uppercase mb-1 italic text-right">Lumers (10%)</p>
+                                    <p class="text-[11px] font-black text-blue-400 italic text-right">$${comision}</p>
                                 </div>
                             </div>
                             <button onclick="verPase()" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[9px] uppercase tracking-widest text-blue-400 italic">Pujar por este Envío</button>
