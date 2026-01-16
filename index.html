@@ -29,19 +29,19 @@
         <p class="text-[11px] font-black text-blue-400 uppercase tracking-[0.4em] mt-3 italic">Una entrega a la vez</p>
 
         <div class="w-full max-w-sm glass rounded-[2.5rem] p-7 my-8 space-y-6 text-left">
-            <p class="text-[13px] text-white/80 leading-relaxed italic text-center">"La red de envíos más transparente. Sin costos fijos, solo pagás cuando enviás o ganás dinero."</p>
+            <p class="text-[13px] text-white/80 leading-relaxed italic text-center">"Conectamos tus envíos con personas de confianza. Seguridad total, de principio a fin."</p>
             <div class="space-y-4 pt-2 border-t border-white/5">
                 <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-shield-check text-blue-400 mt-1"></i>
-                    <p class="text-[10px] text-white/60 leading-relaxed italic"><b>Pago Protegido:</b> Lumers retiene el pago y solo lo libera al Raider cuando el paquete llega a destino.</p>
+                    <i class="fa-solid fa-shield-halved text-blue-400 mt-1"></i>
+                    <p class="text-[10px] text-white/60 leading-relaxed italic"><b>Garantía Lumers:</b> Retenemos el pago del envío y solo lo liberamos al transportista cuando confirmás la entrega.</p>
                 </div>
                 <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-percent text-blue-400 mt-1"></i>
-                    <p class="text-[10px] text-white/60 leading-relaxed italic"><b>Comisión por servicio:</b> Se aplica un 15% sobre el envío para cubrir costos de plataforma y gestión segura.</p>
+                    <i class="fa-solid fa-handshake text-blue-400 mt-1"></i>
+                    <p class="text-[10px] text-white/60 leading-relaxed italic"><b>Sistema Transparente:</b> Sin cuotas fijas. El servicio incluye una comisión del 15% por gestión y seguridad.</p>
                 </div>
             </div>
         </div>
-        <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl">Acceder a la Comunidad</button>
+        <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl">Entrar a la Comunidad</button>
     </div>
 
     <div id="view-app" class="hidden min-h-screen flex flex-col">
@@ -64,16 +64,16 @@
 
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
-            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center italic">Nuevo Envío</h2>
+            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center italic">¿Qué enviamos hoy?</h2>
             <div class="space-y-3">
-                <input type="text" id="in-ori" placeholder="📍 Retiro" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-                <input type="text" id="in-des" placeholder="🏁 Destino" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-                <input type="number" id="in-pre" placeholder="💰 Pago Total $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="text" id="in-ori" placeholder="📍 Lugar de retiro" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="text" id="in-des" placeholder="🏁 Lugar de entrega" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="number" id="in-pre" placeholder="💰 Pago total ofrecido $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
                 <input type="number" id="in-tel" placeholder="📱 WhatsApp de contacto" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             </div>
-            <p class="text-[8px] text-blue-300 text-center font-bold uppercase italic px-4">El pago se retiene y se libera tras la entrega exitosa.</p>
-            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest italic mt-2">Publicar Subasta</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase italic text-center">Cancelar</button>
+            <p class="text-[8px] text-blue-300 text-center font-bold uppercase italic px-4">Lumers protege tu dinero. Se libera al transportista una vez confirmada la llegada.</p>
+            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest italic mt-2">Publicar Pedido</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase italic text-center">Volver</button>
         </div>
     </div>
 
@@ -110,15 +110,15 @@
             }
         });
 
-        window.ofertar = (tel) => {
-            window.location.href = `https://wa.me/3364652349?text=Hola! Quiero ofertar para el envío. Entiendo que Lumers retiene el pago hasta la entrega.`;
+        window.ofertar = () => {
+            window.location.href = `https://wa.me/3364652349?text=Hola! Me interesa realizar un envío que vi en la App Lumers.`;
         };
 
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Acceso Gestión:");
-                if(pass === "lumers2026") { isAdmin = true; alert("Admin OK"); cargarDrops(); }
+                const pass = prompt("Gestión:");
+                if(pass === "lumers2026") { isAdmin = true; alert("Admin Activado"); cargarDrops(); }
                 clickCount = 0;
             }
         };
@@ -135,43 +135,43 @@
         };
 
         window.borrarDrop = async (id) => {
-            if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "viajes", id));
+            if(confirm("¿Borrar?")) await deleteDoc(doc(db, "viajes", id));
         };
 
         function cargarDrops() {
             const q = query(collection(db, "viajes"), orderBy("creado", "desc"));
             onSnapshot(q, (snap) => {
                 const lista = document.getElementById('lista-drops');
-                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-[10px] py-20 italic">Buscando envíos...</p>' : '';
+                lista.innerHTML = snap.empty ? '<p class="text-center opacity-20 text-[10px] py-20 italic">No hay envíos disponibles ahora...</p>' : '';
                 snap.forEach((documento) => {
                     const d = documento.data(), id = documento.id;
-                    const comisionTotal = (d.precio * 0.15).toFixed(0); // 15% TOTAL (Cubre 6.68% de MP + tu ganancia)
-                    const netoRaider = (d.precio * 0.85).toFixed(0); 
+                    const fee = (d.precio * 0.15).toFixed(0); 
+                    const neto = (d.precio * 0.85).toFixed(0); 
                     lista.innerHTML += `
                         <div class="glass p-7 rounded-[2.5rem] relative border-b-2 border-blue-500/20">
                             ${isAdmin ? `<button onclick="borrarDrop('${id}')" class="absolute top-4 right-4 text-red-500/20"><i class="fa-solid fa-trash"></i></button>` : ''}
                             <div class="flex justify-between items-start mb-5">
                                 <div class="space-y-1">
-                                    <p class="text-[9px] font-black text-blue-500 uppercase italic text-right">📍 Retiro</p>
+                                    <p class="text-[9px] font-black text-blue-500 uppercase italic">📍 Origen</p>
                                     <p class="text-[13px] font-bold uppercase">${d.origen}</p>
                                 </div>
                                 <div class="text-right">
                                     <p class="text-[11px] font-black text-blue-400 italic leading-none">$${d.precio}</p>
-                                    <p class="text-[6px] font-bold text-white/30 uppercase mt-1">Presupuesto</p>
+                                    <p class="text-[6px] font-bold text-white/30 uppercase mt-1">Total</p>
                                 </div>
                             </div>
                             <div class="space-y-1 mb-6">
-                                <p class="text-[9px] font-black text-blue-500 uppercase italic">🏁 Entrega</p>
+                                <p class="text-[9px] font-black text-blue-500 uppercase italic">🏁 Destino</p>
                                 <p class="text-[13px] font-bold uppercase">${d.destino}</p>
                             </div>
                             <div class="flex gap-3 mb-6">
                                 <div class="flex-1 bg-white/5 p-3 rounded-2xl border border-white/5">
-                                    <p class="text-[7px] font-black text-white/40 uppercase mb-1 italic">Para el Raider</p>
-                                    <p class="text-[11px] font-black text-green-400">$${netoRaider}</p>
+                                    <p class="text-[7px] font-black text-white/40 uppercase mb-1 italic">Neto para vos</p>
+                                    <p class="text-[11px] font-black text-green-400">$${neto}</p>
                                 </div>
                                 <div class="flex-1 bg-blue-500/5 p-3 rounded-2xl border border-blue-500/10 text-right">
-                                    <p class="text-[7px] font-black text-blue-400/50 uppercase mb-1 italic">Fee Lumers (15%)</p>
-                                    <p class="text-[11px] font-black text-blue-400 italic text-right">$${comisionTotal}</p>
+                                    <p class="text-[7px] font-black text-blue-400/50 uppercase mb-1 italic">Gestión (15%)</p>
+                                    <p class="text-[11px] font-black text-blue-400 italic">$${fee}</p>
                                 </div>
                             </div>
                             <button onclick="ofertar()" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[9px] uppercase tracking-widest text-blue-400 italic">Postularme / Pujar</button>
