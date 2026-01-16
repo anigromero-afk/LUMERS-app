@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUMERS | Envíos y Retiros</title>
+    <title>LUMERS | Logística Global de Confianza</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -20,26 +20,27 @@
 <body class="bg-main">
 
     <div id="view-login" class="hidden min-h-screen flex flex-col items-center p-6 text-center">
-        <div class="logo-organic mt-6 mb-4"><i class="fa-solid fa-boxes-packing text-3xl text-white"></i></div>
+        <div class="logo-organic mt-6 mb-4"><i class="fa-solid fa-earth-americas text-3xl text-white"></i></div>
         <h1 class="text-5xl font-black italic text-blue-500 uppercase leading-none tracking-tighter">LUMERS</h1>
-        <p class="text-[9px] font-black text-blue-400 uppercase tracking-[0.4em] mt-2 italic">Una entrega a la vez</p>
+        <p class="text-[9px] font-black text-blue-400 uppercase tracking-[0.4em] mt-2 italic">Sin fronteras, una entrega a la vez</p>
 
         <div class="w-full max-w-sm glass rounded-[2rem] p-6 my-6 text-left">
-            <h2 class="text-[12px] font-black italic text-white uppercase mb-4 border-b border-white/10 pb-2">¿Cómo funciona Lumers?</h2>
+            <h2 class="text-[12px] font-black italic text-white uppercase mb-4 border-b border-white/10 pb-2 italic text-center">Garantía Global de Confianza</h2>
             <div class="space-y-4 text-[11px] italic text-white/80">
-                <p><i class="fa-solid fa-bullhorn text-blue-400 mr-2"></i><b>Publicás:</b> "¿Quién me busca un paquete en Rosario y me lo trae? Pago $5000".</p>
-                <p><i class="fa-solid fa-gavel text-blue-400 mr-2"></i><b>Puja:</b> Los Raiders pujan para ver quién se queda con el viaje.</p>
-                <p><i class="fa-solid fa-shield-halved text-blue-400 mr-2"></i><b>Seguridad:</b> Pagás a Lumers. Retenemos el dinero hasta que recibís lo que pediste.</p>
+                <p><i class="fa-solid fa-globe text-blue-400 mr-2"></i><b>Sin Límites:</b> Cualquier origen, cualquier destino. El mundo es tu ruta.</p>
+                <p><i class="fa-solid fa-hand-holding-dollar text-blue-400 mr-2"></i><b>Puja Libre:</b> El precio lo acordás vos con el transportista. Sin tarifas fijas internacionales.</p>
+                <p><i class="fa-solid fa-shield-check text-blue-400 mr-2"></i><b>Seguridad Total:</b> Lumers retiene el pago en garantía. Solo se libera cuando el paquete llega a destino, en cualquier parte del mundo.</p>
             </div>
         </div>
 
-        <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl">EMPEZAR AHORA</button>
+        <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl">INGRESAR AL MERCADO GLOBAL</button>
     </div>
 
     <div id="view-app" class="hidden min-h-screen flex flex-col">
         <header class="p-6 glass flex justify-between items-center sticky top-0 z-50">
             <div>
                 <h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer leading-none">LUMERS</h1>
+                <p class="text-[7px] font-bold text-blue-400 uppercase tracking-widest italic mt-1">Global Logistics</p>
             </div>
             <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase italic">Salir</button>
         </header>
@@ -55,15 +56,15 @@
 
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
-            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center italic">Nuevo Pedido</h2>
+            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center italic">Lanzar Pedido</h2>
             <div class="space-y-3">
-                <input type="text" id="in-ori" placeholder="📍 ¿Dónde se retira? (Dirección/Local)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-                <input type="text" id="in-des" placeholder="🏁 ¿Dónde se entrega? (Dirección/Barrio)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-                <input type="number" id="in-pre" placeholder="💰 ¿Cuánto pagás por esto? $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
-                <input type="number" id="in-tel" placeholder="📱 Tu WhatsApp" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="text" id="in-ori" placeholder="📍 Origen (Ciudad/País)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="text" id="in-des" placeholder="🏁 Destino (Ciudad/País)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="number" id="in-pre" placeholder="💰 Pago ofrecido (en moneda local) $" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
+                <input type="number" id="in-tel" placeholder="📱 WhatsApp con prefijo (Ej: 549...)" class="w-full p-4 bg-white/5 rounded-2xl outline-none text-sm border border-white/5">
             </div>
-            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest italic mt-2 text-white">Lanzar Puja</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase italic text-center">Cancelar</button>
+            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs tracking-widest italic mt-2 text-white">Lanzar Puja al Mundo</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase italic text-center">Cerrar</button>
         </div>
     </div>
 
@@ -100,15 +101,15 @@
         });
 
         window.ofertar = (ori, des, pre) => {
-            const txt = `¡Hola Ani! 👋 Me interesa el pedido de Lumers:\n📍 Retira en: ${ori}\n🏁 Entrega en: ${des}\n💰 Pago ofrecido: $${pre}\n¿Puedo tomarlo o mejorar el precio?`;
+            const txt = `¡Hola Lumers Global! 🌍 Me interesa la puja:\n📍 Origen: ${ori}\n🏁 Destino: ${des}\n💰 Presupuesto: $${pre}\n¿Cómo procedemos con la garantía de pago?`;
             window.location.href = `https://wa.me/3364652349?text=${encodeURIComponent(txt)}`;
         };
 
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Clave:");
-                if(pass === "lumers2026") { isAdmin = true; alert("Admin OK"); cargarDrops(); }
+                const pass = prompt("Gestión Global:");
+                if(pass === "lumers2026") { isAdmin = true; alert("Admin Logística ON"); cargarDrops(); }
                 clickCount = 0;
             }
         };
@@ -136,19 +137,19 @@
                             ${isAdmin ? `<button onclick="borrarDrop('${id}')" class="absolute top-4 right-4 text-red-500/20"><i class="fa-solid fa-trash"></i></button>` : ''}
                             <div class="flex justify-between items-start mb-5">
                                 <div class="space-y-1">
-                                    <p class="text-[9px] font-black text-blue-500 uppercase italic">📍 Retiro</p>
+                                    <p class="text-[9px] font-black text-blue-500 uppercase italic">📍 Origen</p>
                                     <p class="text-[13px] font-bold uppercase">${d.origen}</p>
                                 </div>
                                 <div class="text-right">
                                     <p class="text-[11px] font-black text-blue-400 italic leading-none">$${d.precio}</p>
-                                    <p class="text-[6px] font-bold text-white/30 uppercase mt-1 italic tracking-widest">Presupuesto</p>
+                                    <p class="text-[6px] font-bold text-white/30 uppercase mt-1 italic tracking-widest">Base</p>
                                 </div>
                             </div>
                             <div class="space-y-1 mb-6">
-                                <p class="text-[9px] font-black text-blue-500 uppercase italic">🏁 Entrega</p>
+                                <p class="text-[9px] font-black text-blue-500 uppercase italic">🏁 Destino</p>
                                 <p class="text-[13px] font-bold uppercase">${d.destino}</p>
                             </div>
-                            <button onclick="ofertar('${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[9px] uppercase tracking-widest text-blue-400 italic">Entrar a la Puja</button>
+                            <button onclick="ofertar('${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[9px] uppercase tracking-widest text-blue-400 italic">Entrar a la Puja Global</button>
                         </div>
                     `;
                 });
