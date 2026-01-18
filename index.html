@@ -25,28 +25,32 @@
 <body class="bg-main">
 
     <div id="view-login" class="hidden min-h-screen flex flex-col items-center p-6 text-center">
-        <div class="logo-organic mt-6 mb-4"><i class="fa-solid fa-shield-check text-3xl text-white"></i></div>
+        <div class="logo-organic mt-6 mb-4"><i class="fa-solid fa-box-open text-3xl text-white"></i></div>
         <h1 class="text-5xl font-black italic text-blue-500 uppercase leading-none tracking-tighter">LUMERS</h1>
         <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mt-2 italic">Una entrega a la vez</p>
 
         <div class="w-full max-w-sm glass rounded-[2rem] p-6 my-6 text-left border-t border-blue-500/20">
-            <h2 class="text-[12px] font-black italic text-white uppercase mb-4 border-b border-white/10 pb-2 text-center">Garantía Lumers</h2>
+            <h2 class="text-[12px] font-black italic text-white uppercase mb-4 border-b border-white/10 pb-2 text-center">Nexo Logístico Seguro</h2>
             <div class="space-y-4 text-[11px] italic text-white/80">
-                <p><i class="fa-solid fa-lock text-blue-400 mr-2"></i><b>Pago Protegido:</b> Retenemos el monto del envío hasta que el pedido llegue a destino.</p>
-                <p><i class="fa-solid fa-gavel text-blue-400 mr-2"></i><b>Subastas:</b> Transportistas y viajeros compiten por darte el mejor precio.</p>
+                <p><i class="fa-solid fa-lock text-blue-400 mr-2"></i><b>Garantía Aníbal:</b> Retengo el monto del envío hasta que el pedido llegue a destino.</p>
+                <p><i class="fa-solid fa-gavel text-blue-400 mr-2"></i><b>Subasta Real:</b> Raiders y fletes compiten por tu viaje para darte el mejor precio.</p>
+                <p><i class="fa-solid fa-location-dot text-blue-400 mr-2"></i><b>Seguimiento:</b> Controlá el estado de tu pedido en tiempo real.</p>
             </div>
         </div>
 
         <div class="w-full max-w-sm space-y-3 mb-8 text-left">
-            <p class="text-[10px] font-black text-blue-400 uppercase ml-2 italic">💡 Ejemplos de la Red:</p>
+            <p class="text-[10px] font-black text-blue-400 uppercase ml-2 italic">💡 Opciones de la Red:</p>
             <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">
-                "<b>Traer Tablet de China o EEUU:</b> Busco viajero. Pago $60.000."
+                "<b>Internacional:</b> Traer Tablet de China o EEUU. Pago $60.000."
             </div>
             <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">
-                "<b>Viajo a Buenos Aires:</b> Llevo paquetes. $5.000 c/u."
+                "<b>Colaborativo:</b> Viajo a Bs As. Llevo paquetes por $5.000 c/u."
             </div>
             <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">
-                "<b>Necesito Flete:</b> Traer Heladera de Bs As. Pago $45.000."
+                "<b>Fletes:</b> Traer Heladera de Bs As a San Nicolás. Pago $45.000."
+            </div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">
+                "<b>Delivery:</b> Hamburguesa zona centro. Pago $3.000."
             </div>
         </div>
 
@@ -71,6 +75,10 @@
             <div id="lista-drops" class="space-y-4"></div>
         </main>
 
+        <footer class="p-6 text-center mt-auto opacity-30 text-[8px] italic font-black">
+            <p>© LUMERS | ANÍBAL | REGISTRO NIC & INTI</p>
+        </footer>
+
         <button onclick="toggleModal(true)" class="fixed bottom-10 right-8 btn-blue w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl z-50">
             <i class="fa-solid fa-plus text-white"></i>
         </button>
@@ -81,13 +89,13 @@
             <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center">Publicar</h2>
             <div class="space-y-3">
                 <input type="text" id="in-det" placeholder="📦 ¿Qué enviás o qué ofrecés?" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
-                <input type="text" id="in-ori" placeholder="📍 Origen" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
-                <input type="text" id="in-des" placeholder="🏁 Destino" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
-                <input type="number" id="in-pre" placeholder="💰 Precio Sugerido $" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
-                <input type="number" id="in-tel" placeholder="📱 WhatsApp" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
+                <input type="text" id="in-ori" placeholder="📍 Origen / Retiro" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
+                <input type="text" id="in-des" placeholder="🏁 Destino / Entrega" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
+                <input type="number" id="in-pre" placeholder="💰 Precio por bulto/viaje $" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
+                <input type="number" id="in-tel" placeholder="📱 WhatsApp (ej: 3364652349)" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none">
             </div>
-            <p class="text-[9px] text-blue-400 italic text-center px-4">Lumers retiene el pago en custodia para tu seguridad.</p>
-            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs">Publicar</button>
+            <p class="text-[9px] text-blue-400 italic text-center px-4 font-bold">Aníbal retiene el pago hasta que el pedido llegue.</p>
+            <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs mt-2">Publicar en la Red</button>
             <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase text-center">Cancelar</button>
         </div>
     </div>
@@ -127,19 +135,19 @@
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Gestión:");
+                const pass = prompt("Acceso Gestión:");
                 if(pass === "lumers2026") { isAdmin = true; alert("Modo Gestión ON"); cargarDrops(); }
                 clickCount = 0;
             }
         };
 
-        window.ofertar = (det, ori, des, pre) => {
-            const ticket = `🔨 *OFERTA LOGÍSTICA LUMERS*\n--------------------------\n📦 *DETALLE:* ${det}\n📍 *ORIGEN:* ${ori}\n🏁 *DESTINO:* ${des}\n💰 *VALOR:* $${pre}\n--------------------------\n_Hola! Acepto la custodia de Aníbal. ¿Coordinamos el viaje?_`;
-            window.location.href = `https://wa.me/3364652349?text=${encodeURIComponent(ticket)}`;
-        };
-
         window.cambiarEstado = async (id, nuevoEstado) => {
             await updateDoc(doc(db, "viajes", id), { estado: nuevoEstado });
+        };
+
+        window.ofertar = (det, ori, des, pre) => {
+            const ticket = `🔨 *OFERTA LOGÍSTICA LUMERS*\n--------------------------\n📦 *DETALLE:* ${det}\n📍 *ORIGEN:* ${ori}\n🏁 *DESTINO:* ${des}\n💰 *VALOR:* $${pre}\n--------------------------\n_Hola! Acepto la custodia de Aníbal. ¿Coordinamos el viaje y el precio final?_`;
+            window.location.href = `https://wa.me/3364652349?text=${encodeURIComponent(ticket)}`;
         };
 
         window.crearDrop = async () => {
@@ -166,12 +174,14 @@
                             <div class="flex justify-between items-center mb-4">
                                 <span class="badge status-${d.estado}">${statusText}</span>
                                 ${isAdmin ? `
-                                    <select onchange="cambiarEstado('${id}', this.value)" class="bg-white/10 text-[9px] rounded p-1">
-                                        <option value="subasta">Subasta</option>
-                                        <option value="camino">Camino</option>
-                                        <option value="entregado">Entregado</option>
-                                    </select>
-                                    <button onclick="borrarDrop('${id}')" class="text-red-500/40 ml-2"><i class="fa-solid fa-trash"></i></button>
+                                    <div class="flex items-center space-x-2">
+                                        <select onchange="cambiarEstado('${id}', this.value)" class="bg-white/10 text-[9px] rounded p-1 outline-none">
+                                            <option value="subasta" ${d.estado === 'subasta' ? 'selected' : ''}>Subasta</option>
+                                            <option value="camino" ${d.estado === 'camino' ? 'selected' : ''}>Camino</option>
+                                            <option value="entregado" ${d.estado === 'entregado' ? 'selected' : ''}>Entregado</option>
+                                        </select>
+                                        <button onclick="borrarDrop('${id}')" class="text-red-500/40"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
                                 ` : ''}
                             </div>
                             <div class="mb-4">
@@ -187,7 +197,7 @@
                                     <p class="text-[8px] text-blue-300 italic">Pago Custodiado</p>
                                 </div>
                             </div>
-                            <button onclick="ofertar('${d.detalle}', '${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[10px] uppercase text-blue-400">ENTRAR EN LA PUJA</button>
+                            <button onclick="ofertar('${d.detalle}', '${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[10px] uppercase text-blue-400 hover:bg-blue-500 hover:text-white transition-all">ENTRAR EN LA PUJA</button>
                         </div>
                     `;
                 });
@@ -197,7 +207,7 @@
         window.logout = () => signOut(auth);
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
         document.getElementById('btnLogin').onclick = () => signInWithPopup(auth, provider);
-        window.borrarDrop = async (id) => { if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "viajes", id)); };
+        window.borrarDrop = async (id) => { if(confirm("¿Eliminar publicación?")) await deleteDoc(doc(db, "viajes", id)); };
     </script>
 </body>
 </html>
