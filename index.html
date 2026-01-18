@@ -83,13 +83,13 @@
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
             <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center">Publicar</h2>
             <div class="space-y-3">
-                <input type="text" id="in-det" placeholder="📦 ¿Qué enviás?" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
-                <input type="text" id="in-ori" placeholder="📍 Origen" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
-                <input type="text" id="in-des" placeholder="🏁 Destino" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
+                <input type="text" id="in-det" placeholder="📦 ¿Qué enviás o qué ofrecés?" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
+                <input type="text" id="in-ori" placeholder="📍 Origen / Retiro" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
+                <input type="text" id="in-des" placeholder="🏁 Destino / Entrega" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
                 <input type="number" id="in-pre" placeholder="💰 Precio Sugerido $" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
                 <input type="number" id="in-tel" placeholder="📱 WhatsApp (ej: 3364652349)" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
             </div>
-            <p class="text-[9px] text-blue-400 italic text-center font-bold uppercase">Lumers retiene el pago hasta la entrega final.</p>
+            <p class="text-[9px] text-blue-400 italic text-center font-bold uppercase">Lumers retiene el pago hasta que el pedido llegue.</p>
             <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs">Publicar</button>
             <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase text-center mt-2">Cancelar</button>
         </div>
@@ -130,8 +130,8 @@
         window.adminHack = () => {
             clickCount++;
             if(clickCount >= 5) {
-                const pass = prompt("Gestión Aníbal:");
-                if(pass === "lumers2026") { isAdmin = true; alert("Modo Admin On"); cargarDrops(); }
+                const pass = prompt("Acceso Gestión:");
+                if(pass === "lumers2026") { isAdmin = true; alert("Gestión Activa"); cargarDrops(); }
                 clickCount = 0;
             }
         };
@@ -141,7 +141,7 @@
         };
 
         window.ofertar = (det, ori, des, pre) => {
-            const ticket = `🔨 *OFERTA LUMERS*\n📦 *DETALLE:* ${det}\n📍 *ORIGEN:* ${ori}\n🏁 *DESTINO:* ${des}\n💰 *VALOR:* $${pre}\n_Acepto pago custodiado por LUMERS._`;
+            const ticket = `🔨 *OFERTA LUMERS*\n📦 *DETALLE:* ${det}\n📍 *ORIGEN:* ${ori}\n🏁 *DESTINO:* ${des}\n💰 *VALOR:* $${pre}\n_Acepto custodia LUMERS._`;
             window.open(`https://wa.me/3364652349?text=${encodeURIComponent(ticket)}`, '_blank');
         };
 
@@ -195,7 +195,7 @@
                                     <p class="text-[7px] text-blue-300 italic">Pago Protegido</p>
                                 </div>
                             </div>
-                            <button onclick="ofertar('${d.detalle}', '${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[10px] uppercase text-blue-400">PUJAR</button>
+                            <button onclick="ofertar('${d.detalle}', '${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[10px] uppercase text-blue-400">ENTRAR EN LA PUJA</button>
                         </div>
                     `;
                 });
