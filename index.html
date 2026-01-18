@@ -35,21 +35,20 @@
                 <p><i class="fa-solid fa-gavel text-blue-400 mr-2"></i><b>Subasta Logística:</b> Raiders y fletes compiten para darte el mejor precio.</p>
             </div>
         </div>
-        <div class="w-full max-w-sm space-y-3 mb-8 text-left">
+        <div class="w-full max-w-sm space-y-3 mb-8 text-left text-[11px]">
             <p class="text-[10px] font-black text-blue-400 uppercase ml-2 italic">💡 Opciones de la Red:</p>
-            <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">"<b>Internacional:</b> Traer Tablet de China o EEUU. Pago $60.000."</div>
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">"<b>Colaborativo:</b> Viajo a Bs As. Llevo paquetes por $5.000 c/u."</div>
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">"<b>Fletes:</b> Traer Heladera de Bs As a San Nicolás. Pago $45.000."</div>
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-[11px] text-white/90 leading-tight">"<b>Delivery:</b> Hamburguesa zona centro. Pago $3.000."</div>
+            <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 italic text-white/90">"<b>Internacional:</b> Traer Tablet de China. Pago $60.000."</div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-white/90">"<b>Colaborativo:</b> Viajo a Bs As. Llevo paquetes."</div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-white/90">"<b>Fletes:</b> Heladera a San Nicolás. Pago $45.000."</div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-white/90">"<b>Delivery:</b> Hamburguesa centro. Pago $3.000."</div>
         </div>
         <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl mb-8">INGRESAR AHORA</button>
-        <footer class="mt-auto pb-6 text-[8px] opacity-40 font-black uppercase tracking-widest text-center">© 2026 LUMERS | NIC ARGENTINA | INTI</footer>
     </div>
 
     <div id="view-app" class="hidden min-h-screen flex flex-col">
         <header class="p-6 glass flex justify-between items-center sticky top-0 z-50">
-            <div><h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer leading-none">LUMERS</h1><p class="text-[8px] font-bold text-blue-400 uppercase italic mt-1">Nexo de Pago Protegido</p></div>
-            <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase italic">Salir</button>
+            <div><h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer">LUMERS</h1><p class="text-[8px] font-bold text-blue-400 uppercase italic mt-1">Nexo de Pago Protegido</p></div>
+            <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase">Salir</button>
         </header>
         <main class="p-6 pb-32"><div id="lista-drops" class="space-y-4"></div></main>
         <button onclick="toggleModal(true)" class="fixed bottom-10 right-8 btn-blue w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl z-50"><i class="fa-solid fa-plus text-white"></i></button>
@@ -57,7 +56,7 @@
 
     <div id="modal-drop" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-6">
         <div class="w-full max-w-sm glass p-8 rounded-[3rem] space-y-4">
-            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center">Publicar</h2>
+            <h2 class="text-2xl font-black italic text-blue-500 uppercase text-center text-white">Publicar</h2>
             <div class="space-y-3">
                 <input type="text" id="in-det" placeholder="📦 ¿Qué enviás o qué ofrecés?" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
                 <input type="text" id="in-ori" placeholder="📍 Origen / Retiro" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
@@ -66,7 +65,7 @@
                 <input type="number" id="in-tel" placeholder="📱 WhatsApp (ej: 3364652349)" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
             </div>
             <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs">Publicar</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase text-center mt-2">Cancelar</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase mt-2">Cancelar</button>
         </div>
     </div>
 
@@ -75,20 +74,11 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-          apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw",
-          authDomain: "lumers-d1d36.firebaseapp.com",
-          projectId: "lumers-d1d36",
-          storageBucket: "lumers-d1d36.firebasestorage.app",
-          messagingSenderId: "798769127070",
-          appId: "1:798769127070:web:6b591851e4c5c62758258f"
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw", authDomain: "lumers-d1d36.firebaseapp.com", projectId: "lumers-d1d36", storageBucket: "lumers-d1d36.firebasestorage.app", messagingSenderId: "798769127070", appId: "1:798769127070:web:6b591851e4c5c62758258f" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
-
         let isAdmin = false, clickCount = 0;
 
         onAuthStateChanged(auth, (user) => {
@@ -96,25 +86,13 @@
             else { document.getElementById('view-login').classList.remove('hidden'); document.getElementById('view-app').classList.add('hidden'); }
         });
 
-        window.adminHack = () => {
-            clickCount++;
-            if(clickCount >= 5) {
-                const pass = prompt("Acceso Gestión:");
-                if(pass === "lumers2026") { isAdmin = true; alert("Modo Gestión Activo"); cargarDrops(); }
-                clickCount = 0;
-            }
-        };
+        window.adminHack = () => { clickCount++; if(clickCount >= 5) { const pass = prompt("Acceso Gestión:"); if(pass === "lumers2026") { isAdmin = true; alert("Modo Gestión"); cargarDrops(); } clickCount = 0; } };
 
-        window.cambiarEstado = async (id, nuevoEstado, telDueño, detalle) => {
-            await updateDoc(doc(db, "viajes", id), { estado: nuevoEstado });
-            
-            // EL CAMBIO ESTÁ AQUÍ: Agregué un prompt para que el navegador NO bloquee la ventana
-            if(nuevoEstado === 'camino') {
-                if(confirm("PAGO RECIBIDO. ¿Abrir WhatsApp para pasar contacto al fletero?")) {
-                    const msg = `✅ *PAGO CUSTODIADO POR LUMERS*\n\nHola! El cliente ya depositó el monto del envío: *${detalle}*.\n\nYa podés coordinar el retiro y entrega directamente al WhatsApp del dueño:\n📱 https://wa.me/${telDueño}\n\n_Recordá avisar cuando entregues para liberar el pago._`;
-                    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-                }
-            }
+        window.cambiarEstado = async (id, nuevoEstado) => { await updateDoc(doc(db, "viajes", id), { estado: nuevoEstado }); };
+
+        window.habilitarViaje = (tel, det) => {
+            const msg = `✅ *PAGO CUSTODIADO POR LUMERS*\n\nHola! El cliente ya depositó el monto del envío: *${det}*.\n\nYa podés coordinar el retiro y entrega directamente al WhatsApp del dueño:\n📱 https://wa.me/${tel}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
         window.ofertar = (det, ori, des, pre) => {
@@ -141,37 +119,34 @@
                     const d = documento.data(), id = documento.id;
                     const statusText = d.estado === 'subasta' ? 'En Subasta 🔨' : d.estado === 'camino' ? 'En Camino 🚚' : 'Entregado ✅';
                     lista.innerHTML += `
-                        <div class="glass p-7 rounded-[2.5rem] relative border-b-2 border-blue-500/20">
+                        <div class="glass p-7 rounded-[2.5rem] relative border-b border-white/10">
                             <div class="flex justify-between items-center mb-4">
                                 <span class="badge status-${d.estado}">${statusText}</span>
                                 ${isAdmin ? `
-                                    <div class="flex items-center space-x-2">
-                                        <button onclick="window.open('https://wa.me/${d.whatsapp}?text=Hola!%20Soy%20Anibal%20de%20LUMERS.', '_blank')" class="bg-green-600 text-[8px] rounded p-1 px-2 font-black">DUEÑO</button>
-                                        <select onchange="cambiarEstado('${id}', this.value, '${d.whatsapp}', '${d.detalle}')" class="bg-white/10 text-[9px] rounded p-1 text-white outline-none">
+                                    <div class="flex items-center space-x-1">
+                                        <button onclick="window.open('https://wa.me/${d.whatsapp}', '_blank')" class="bg-green-600 text-[8px] rounded px-1 font-black">DUEÑO</button>
+                                        ${d.estado === 'camino' ? `<button onclick="habilitarViaje('${d.whatsapp}', '${d.detalle}')" class="bg-blue-600 text-[8px] rounded px-1 font-black">HABILITAR</button>` : ''}
+                                        <select onchange="cambiarEstado('${id}', this.value)" class="bg-white/10 text-[9px] rounded p-1 text-white outline-none">
                                             <option value="subasta" ${d.estado === 'subasta' ? 'selected' : ''}>Subasta</option>
                                             <option value="camino" ${d.estado === 'camino' ? 'selected' : ''}>Camino</option>
                                             <option value="entregado" ${d.estado === 'entregado' ? 'selected' : ''}>Entregado</option>
                                         </select>
-                                        <button onclick="borrarDrop('${id}')" class="text-red-500/40"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 ` : ''}
                             </div>
-                            <p class="text-[16px] font-black uppercase mb-4 leading-tight">${d.detalle}</p>
+                            <p class="text-[16px] font-black uppercase text-white mb-4 leading-tight">${d.detalle}</p>
                             <div class="flex justify-between items-start mb-5 text-[11px] font-bold uppercase text-white/90">
                                 <div><p class="text-[9px] text-blue-500">📍 ${d.origen}</p><p class="text-[9px] text-blue-500">🏁 ${d.destino}</p></div>
-                                <div class="text-right"><p class="text-xl text-blue-400">$${d.precio}</p><p class="text-[7px]">Pago Protegido</p></div>
+                                <div class="text-right"><p class="text-xl text-blue-400">$${d.precio}</p></div>
                             </div>
                             <button onclick="ofertar('${d.detalle}', '${d.origen}', '${d.destino}', '${d.precio}')" class="w-full bg-blue-500/10 border border-blue-500/30 py-4 rounded-xl font-black text-[10px] text-blue-400">ENTRAR EN LA PUJA</button>
-                        </div>
-                    `;
+                        </div>`;
                 });
             });
         }
-
         window.logout = () => signOut(auth);
         window.toggleModal = (val) => document.getElementById('modal-drop').classList.toggle('hidden', !val);
         document.getElementById('btnLogin').onclick = () => signInWithPopup(auth, provider);
-        window.borrarDrop = async (id) => { if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "viajes", id)); };
     </script>
 </body>
 </html>
