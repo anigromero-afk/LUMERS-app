@@ -39,23 +39,36 @@
             </div>
         </div>
 
-        <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] italic">Una entrega a la vez</p>
-        <div class="w-full max-w-sm glass rounded-[2rem] p-6 my-6 text-left border-t border-blue-500/20 text-[11px] italic">
-            <p class="mb-2"><i class="fa-solid fa-shield-halved text-blue-400 mr-2"></i><b>Garantía LUMERS:</b> Retenemos el pago hasta el destino.</p>
-            <p><i class="fa-solid fa-gavel text-blue-400 mr-2"></i><b>Subastas:</b> El mejor precio gana.</p>
+        <p class="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mt-2 italic">Una entrega a la vez</p>
+
+        <div class="w-full max-w-sm glass rounded-[2rem] p-6 my-6 text-left border-t border-blue-500/20">
+            <h2 class="text-[12px] font-black italic text-white uppercase mb-4 border-b border-white/10 pb-2 text-center">Sistema de Confianza</h2>
+            <div class="space-y-4 text-[11px] italic text-white/80">
+                <p><i class="fa-solid fa-shield-halved text-blue-400 mr-2"></i><b>Garantía LUMERS:</b> Retenemos el monto del envío hasta que el pedido llegue a destino.</p>
+                <p><i class="fa-solid fa-gavel text-blue-400 mr-2"></i><b>Subasta Logística:</b> Raiders y fletes compiten para darte el mejor precio.</p>
+            </div>
         </div>
-        
-        <div class="w-full max-w-sm space-y-2 mb-8 text-left text-[11px]">
-            <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-3 italic text-white/90 leading-tight">"Traer Tablet de China. Pago $60.000."</div>
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-3 italic text-white/90 leading-tight">"Traer Heladera de Bs As. Pago $45.000."</div>
+
+        <div class="w-full max-w-sm space-y-3 mb-8 text-left text-[11px]">
+            <p class="text-[10px] font-black text-blue-400 uppercase ml-2 italic">💡 Opciones de la Red:</p>
+            <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 italic text-white/90 leading-tight">"<b>Internacional:</b> Traer Tablet de China o EEUU. Pago $60.000."</div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-white/90 leading-tight">"<b>Colaborativo:</b> Viajo a Bs As. Llevo paquetes por $5.000 c/u."</div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-white/90 leading-tight">"<b>Fletes:</b> Traer Heladera de Bs As a San Nicolás. Pago $45.000."</div>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 italic text-white/90 leading-tight">"<b>Delivery:</b> Hamburguesa zona centro. Pago $3.000."</div>
         </div>
+
         <button id="btnLogin" class="w-full max-w-xs btn-blue py-5 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl mb-8">INGRESAR AHORA</button>
+
+        <footer class="mt-auto pb-6 text-[8px] opacity-40 font-black uppercase tracking-widest text-center">© 2026 LUMERS | NIC ARGENTINA | INTI</footer>
     </div>
 
     <div id="view-app" class="hidden min-h-screen flex flex-col">
         <header class="p-6 glass flex justify-between items-center sticky top-0 z-50">
-            <div><h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer">LUMERS</h1><p class="text-[8px] font-bold text-blue-400 uppercase italic">Nexo de Pago Protegido</p></div>
-            <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase">Salir</button>
+            <div>
+                <h1 onclick="adminHack()" class="text-2xl font-black italic text-blue-500 uppercase cursor-pointer leading-none">LUMERS</h1>
+                <p class="text-[8px] font-bold text-blue-400 uppercase italic mt-1">Nexo de Pago Protegido</p>
+            </div>
+            <button onclick="logout()" class="text-white/30 text-[9px] font-black uppercase italic">Salir</button>
         </header>
         <main class="p-6 pb-32"><div id="lista-drops" class="space-y-4"></div></main>
         <button onclick="toggleModal(true)" class="fixed bottom-10 right-8 btn-blue w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl z-50"><i class="fa-solid fa-plus text-white"></i></button>
@@ -72,14 +85,14 @@
                 <input type="number" id="in-tel" placeholder="📱 WhatsApp (ej: 3364652349)" class="w-full p-4 bg-white/5 rounded-2xl text-white text-sm outline-none border border-white/5">
             </div>
             <button onclick="crearDrop()" class="w-full btn-blue py-5 rounded-2xl font-black uppercase text-xs">Publicar</button>
-            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase mt-2">Cancelar</button>
+            <button onclick="toggleModal(false)" class="w-full text-white/20 text-[10px] font-bold uppercase text-center mt-2">Cancelar</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc, increment, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyBDWQG6zKK2CDsnHASgE2jtO3DEnU2RsHw", authDomain: "lumers-d1d36.firebaseapp.com", projectId: "lumers-d1d36", storageBucket: "lumers-d1d36.firebasestorage.app", messagingSenderId: "798769127070", appId: "1:798769127070:web:6b591851e4c5c62758258f" };
         const app = initializeApp(firebaseConfig);
@@ -88,12 +101,9 @@
         const provider = new GoogleAuthProvider();
         let isAdmin = false, clickCount = 0;
 
-        // CONTADORES LÓGICA
         async function manejarStats() {
             const statsRef = doc(db, "config", "stats");
-            await updateDoc(statsRef, { visitas: increment(1) }).catch(async () => {
-                await setDoc(statsRef, { visitas: 1, subastas: 0 });
-            });
+            await updateDoc(statsRef, { visitas: increment(1) }).catch(async () => { await setDoc(statsRef, { visitas: 1, subastas: 0 }); });
             onSnapshot(statsRef, (snap) => {
                 if(snap.exists()){
                     document.getElementById('count-visitas').innerText = snap.data().visitas;
